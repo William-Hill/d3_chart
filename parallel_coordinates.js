@@ -54,7 +54,7 @@ d3.csv("mycsvfile.csv", function(data) {
 
   // The path function take a row of the csv as input, and return x and y coordinates of the line to draw for this raw.
   function path(d) {
-    console.log("d in path function:", d)
+    console.log("d in path function:", d);
     return d3.line()(
       dimensions.map(function(p) {
         console.log("p:", p);
@@ -62,6 +62,8 @@ d3.csv("mycsvfile.csv", function(data) {
       })
     );
   }
+
+  let colorScale_3 = d3.scaleSequential(d3.interpolateViridis);
 
   // Draw the lines
   svg
@@ -71,7 +73,9 @@ d3.csv("mycsvfile.csv", function(data) {
     .append("path")
     .attr("d", path)
     .style("fill", "none")
-    .style("stroke", "#69b3a2")
+    .style("stroke", function(d, i) {
+      return colorScale_3(i / data.length);
+    })
     .style("opacity", 0.5);
 
   // Draw the axis:
@@ -79,7 +83,8 @@ d3.csv("mycsvfile.csv", function(data) {
     .selectAll("myAxis")
     // For each dimension of the dataset I add a 'g' element:
     .data(dimensions)
-    .enter().append("g")
+    .enter()
+    .append("g")
     // I translate this element to its right position on the x axis
     .attr("transform", function(d) {
       return "translate(" + x(d) + ")";
@@ -96,4 +101,9 @@ d3.csv("mycsvfile.csv", function(data) {
       return d;
     })
     .style("fill", "black");
+
+  var grid = d3.divgrid();
+  d3.select("#grid")
+    .datum(data)
+    .call(grid);
 });
