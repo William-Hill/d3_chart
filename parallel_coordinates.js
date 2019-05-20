@@ -76,7 +76,10 @@ d3.csv("mycsvfile.csv", function(data) {
     .style("stroke", function(d, i) {
       return colorScale_3(i / data.length);
     })
-    .style("opacity", 0.5);
+    .style("opacity", 0.5)
+    .attr("class", function(d) {
+      return d["model_name"];
+    });
 
   // Draw the axis:
   svg
