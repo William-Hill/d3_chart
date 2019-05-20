@@ -78,7 +78,7 @@ d3.csv("mycsvfile.csv", function(data) {
     })
     .style("opacity", 0.5)
     .attr("class", function(d) {
-      return d["model_name"];
+      return "coordinate_path " + d["model_name"];
     });
 
   // Draw the axis:

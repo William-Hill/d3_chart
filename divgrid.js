@@ -11,8 +11,24 @@ d3.divgrid = function(config) {
   function rowClicked(d, i) {
     console.log("rowClicked: ", d);
     console.log("this:", this);
+    let path = d3.select("path." + d["model_name"]);
+    console.log("path stroke width:", path.style("stroke"));
+    console.log("path:", path);
+    if (path.classed("path_highlight")) {
+      path.classed("path_highlight", false);
+      path.classed("path_regular", true);
+    } else {
+      path.classed("path_highlight", true);
+      path.classed("path_regular", false);
+    }
+    // path.classed("path_highlight", !path.classed("highlight"));
+    console.log("path stroke width:", path.style("stroke-width"));
     let clickedRow = d3.select(this);
     clickedRow.classed("highlight", !clickedRow.classed("highlight"));
+
+    corresponding_path = d3.selectAll(".coordinate_path", function(pathInfo) {
+      console.log("pathInfo:", pathInfo);
+    });
     // if (active === d["model_name"]) return reset();
     // d3.select(this).classed("highlight", true);
     // active = d["model_name"];
