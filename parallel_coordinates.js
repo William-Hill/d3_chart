@@ -58,6 +58,8 @@ d3.csv("mycsvfile.csv", function(data) {
     return d3.line()(
       dimensions.map(function(p) {
         console.log("p:", p);
+        console.log(`${p} -> x(p) in path function:`, x(p));
+        console.log(`${p} for y[p](d(p)) in path function:`, y[p](d[p]));
         return [x(p), y[p](d[p])];
       })
     );
@@ -80,6 +82,40 @@ d3.csv("mycsvfile.csv", function(data) {
     .attr("class", function(d) {
       return "coordinate_path " + d["model_name"];
     });
+
+  svg
+    .append("g")
+    .attr("id", "scatter")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+    .selectAll(".dot")
+    .data(data)
+    .enter()
+    .append("circle")
+    .attr("class", "dot")
+    .attr("r", 6)
+    .attr("cx", function(d) {
+      // return xScale(d.x);
+      return dimensions.map(function(p) {
+        console.log("p:", p);
+        console.log(`${p} -> x(p) in circle function:`, x(p));
+        return x(p);
+        // return [x(p), y[p](d[p])];
+      });
+      // console.log("d in cx:", d);
+      // console.log("x(d) in circle:", x(d));
+      // return x(d);
+    })
+    .attr("cy", function(d) {
+      dimensions.map(function(p) {
+        console.log(`${p} for y[p](d(p)) in circle function:`, y[p](d[p]));
+        // console.log("y[p](d[p])")
+        return y[p](d[p]);
+      });
+      // return yScale(d.y);
+    })
+    .attr("stroke", "white")
+    .attr("stroke-width", "2px")
+    .style("fill", "brown");
 
   // Draw the axis:
   svg
