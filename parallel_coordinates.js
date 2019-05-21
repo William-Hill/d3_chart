@@ -58,13 +58,48 @@ d3.csv("mycsvfile.csv", function(data) {
     return d3.line()(
       dimensions.map(function(p) {
         console.log("p:", p);
+        console.log("d[p] in path function:", d[p]);
         console.log(`${p} -> x(p) in path function:`, x(p));
-        console.log(`${p} for y[p](d(p)) in path function:`, y[p](d[p]));
+        console.log(`${p} for y[p](d[p]) in path function:`, y[p](d[p]));
         return [x(p), y[p](d[p])];
       })
     );
   }
 
+  function appendCircle(circleData) {
+    console.log("d in appendCircle: ", circleData);
+    svg
+      .append("g")
+      .attr("id", "scatter")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+      .selectAll(".dot")
+      .data(dimensions)
+      .enter()
+      .append("circle")
+      .attr("class", "dot")
+      .attr("r", 6)
+      .attr("cx", function(d) {
+        console.log("circle cx d:", d);
+        console.log("x(d) cx d: ", x(d));
+        return x(d);
+      })
+      .attr("cy", function(d) {
+        console.log("circleData in cy: ", circleData);
+        console.log("circle cy d:", d);
+        console.log(
+          `${d} for y[d](circleData[d]) in circle function:`,
+          y[d](circleData[d])
+        );
+        return y[d](circleData[d]);
+        return dimensions.map(function(p) {
+          console.log(`${p} for y[p](d[p]) in circle function:`, y[p](d[p]));
+          return y[p](d[p]);
+        });
+      })
+      .attr("stroke", "white")
+      .attr("stroke-width", "2px")
+      .style("fill", "brown");
+  }
   let colorScale_3 = d3.scaleSequential(d3.interpolateViridis);
 
   // Draw the lines
@@ -83,39 +118,14 @@ d3.csv("mycsvfile.csv", function(data) {
       return "coordinate_path " + d["model_name"];
     });
 
-  svg
-    .append("g")
-    .attr("id", "scatter")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-    .selectAll(".dot")
-    .data(data)
-    .enter()
-    .append("circle")
-    .attr("class", "dot")
-    .attr("r", 6)
-    .attr("cx", function(d) {
-      // return xScale(d.x);
-      return dimensions.map(function(p) {
-        console.log("p:", p);
-        console.log(`${p} -> x(p) in circle function:`, x(p));
-        return x(p);
-        // return [x(p), y[p](d[p])];
-      });
-      // console.log("d in cx:", d);
-      // console.log("x(d) in circle:", x(d));
-      // return x(d);
-    })
-    .attr("cy", function(d) {
-      dimensions.map(function(p) {
-        console.log(`${p} for y[p](d(p)) in circle function:`, y[p](d[p]));
-        // console.log("y[p](d[p])")
-        return y[p](d[p]);
-      });
-      // return yScale(d.y);
-    })
-    .attr("stroke", "white")
-    .attr("stroke-width", "2px")
-    .style("fill", "brown");
+  for (i in data) {
+    console.log("datapoint:", data[i]);
+    console.log("datapoint type:", typeof data[i]);
+    console.log("datapoint is object:", data[i] instanceof Object);
+    if (i < 2) {
+      appendCircle(data[i]);
+    }
+  }
 
   // Draw the axis:
   svg
