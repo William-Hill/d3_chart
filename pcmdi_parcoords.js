@@ -22,6 +22,7 @@ var height =
 
 console.log("width:", width);
 console.log("height:", 900);
+let selectedModels = [];
 
 var parcoords = ParCoords()("#example")
   .height(900)
@@ -29,6 +30,20 @@ var parcoords = ParCoords()("#example")
 // .color(color)
 // .alpha(0.4);
 // load csv file and create the chart
+
+d3.select("#reset_brush").on("click", function() {
+  console.log("resetting brushes");
+  parcoords.brushReset();
+});
+
+// Refresh page
+d3.select("#refresh-page").on("click", function() {
+  parcoords.unhighlight();
+  d3.select("#grid")
+    .selectAll(".row")
+    .classed("row_highlight", false);
+  selectedModels = [];
+});
 d3.csv("mycsvfile.csv").then(function(data) {
   console.log("data:", data);
   let modelNames = data.map(x => x["model_name"]);
@@ -164,7 +179,6 @@ d3.csv("mycsvfile.csv").then(function(data) {
     .scaleOrdinal()
     .domain(modelNames)
     .range(colorRange);
-  let selectedModels = [];
 
   console.log("modelNames:", modelNames);
   parcoords
@@ -206,9 +220,7 @@ d3.csv("mycsvfile.csv").then(function(data) {
     let clickedRow = d3.select(this);
     clickedRow.classed("row_highlight", !clickedRow.classed("row_highlight"));
   });
-  rows.on("dblclick", function(d) {
-    parcoords.unhighlight([d]);
-  });
+
   // update data table on brush event
   parcoords.on("brush", function(d) {
     d3.select("#grid")

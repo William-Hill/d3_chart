@@ -39,12 +39,35 @@
       .row_highlight {
         background: #2ecc40 !important;
       }
+      button {
+        background: none repeat scroll 0 0 #3c3f45;
+        //color: #23262C;
+        color: white;
+        cursor: pointer;
+        display: inline-block;
+        font-size: 14px;
+        font-weight: 500;
+        margin-top: 30px;
+        padding: 5px 40px;
+        text-align: center;
+        transition: background 0.1s linear 0s, color 0.1s linear 0s;
+        vertical-align: middle;
+        width: auto;
+        border: 0;
+      }
+
+      button:hover {
+        background: none repeat scroll 0 0 #de5e60;
+        color: #ffffff;
+      }
     </style>
     <script src="https://d3js.org/d3.v5.js"></script>
     <script src="parcoords.standalone.js"></script>
     <script src="divgrid.js"></script>
   </head>
   <body>
+    <button id="refresh-page">Refresh-page</button>
+    <button id="reset_brush">Reset Brush</button>
     <div id="example" class="parcoords" style="height:900px;"></div>
     <div id="grid"></div>
     <script type="module" src="pcmdi_parcoords.js"></script>
