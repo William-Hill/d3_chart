@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>PCMDI Parallel Coordinates</title>
+    <link rel="stylesheet" type="text/css" href="parcoords.css" />
+    <style>
+      /* data table styles */
+      #grid {
+        height: 198px;
+      }
+      .row,
+      .header {
+        clear: left;
+        font-size: 12px;
+        line-height: 18px;
+        height: 18px;
+      }
+      .row:nth-child(odd) {
+        background: rgba(0, 0, 0, 0.05);
+      }
+      .header {
+        font-weight: bold;
+      }
+      .cell {
+        float: left;
+        overflow: hidden;
+        white-space: nowrap;
+        width: 100px;
+        height: 18px;
+      }
+      .col-0 {
+        width: 180px;
+      }
+      .row:hover {
+        background-color: #069;
+        color: white;
+      }
+      .row_highlight {
+        background: #2ecc40 !important;
+      }
+    </style>
+    <script src="https://d3js.org/d3.v5.js"></script>
+    <script src="parcoords.standalone.js"></script>
+    <script src="divgrid.js"></script>
+  </head>
+  <body>
+    <div id="example" class="parcoords" style="height:900px;"></div>
+    <div id="grid"></div>
+    <script type="module" src="pcmdi_parcoords.js"></script>
+  </body>
+</html>
