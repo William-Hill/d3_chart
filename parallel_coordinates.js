@@ -51,6 +51,30 @@ d3.csv("test.csv", function(data) {
 
   function calculatePoint(row) {
     console.log("row:", row);
+    for (const [variable, value] of Object.entries(row)) {
+      if (variable == "model_name") {
+        continue;
+      }
+      console.log("variable in row:", variable);
+      console.log("value in row:", value);
+      let xPoint = x(variable);
+      console.log("xPoint:", xPoint);
+      let yPoint = y[variable](value);
+      console.log("yPoint:", yPoint);
+
+      svg
+        .append("g")
+        .attr("id", "scatter")
+        .append("circle")
+        .attr("class", "dot_manual")
+        .attr("r", 6)
+        .attr("cx", xPoint)
+        .attr("cy", yPoint)
+        .attr("stroke", "white")
+        .attr("stroke-width", "2px")
+        .style("fill", "brown");
+      // let yPoint = y[]
+    }
   }
 
   // The path function take a row of the csv as input, and return x and y coordinates of the line to draw for this raw.
