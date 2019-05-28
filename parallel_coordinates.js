@@ -75,9 +75,8 @@ d3.csv("test.csv", function(data) {
     .style("stroke", function(d, i) {
       return colorScale_3(i / data.length);
     })
-    .style("opacity", 0.5)
     .attr("class", function(d) {
-      return "coordinate_path " + d["model_name"];
+      return "path_regular coordinate_path " + d["model_name"];
     });
 
   function plotPoints(data) {
