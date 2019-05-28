@@ -49,34 +49,6 @@ d3.csv("test.csv", function(data) {
 
   console.log("x:", x);
 
-  function calculatePoint(row) {
-    console.log("row:", row);
-    for (const [variable, value] of Object.entries(row)) {
-      if (variable == "model_name") {
-        continue;
-      }
-      console.log("variable in row:", variable);
-      console.log("value in row:", value);
-      let xPoint = x(variable);
-      console.log("xPoint:", xPoint);
-      let yPoint = y[variable](value);
-      console.log("yPoint:", yPoint);
-
-      svg
-        .append("g")
-        .attr("id", "scatter")
-        .append("circle")
-        .attr("class", "dot_manual")
-        .attr("r", 6)
-        .attr("cx", xPoint)
-        .attr("cy", yPoint)
-        .attr("stroke", "white")
-        .attr("stroke-width", "2px")
-        .style("fill", "brown");
-      // let yPoint = y[]
-    }
-  }
-
   // The path function take a row of the csv as input, and return x and y coordinates of the line to draw for this raw.
   function path(d) {
     console.log("d in path function:", d);
@@ -108,50 +80,37 @@ d3.csv("test.csv", function(data) {
       return "coordinate_path " + d["model_name"];
     });
 
-  for (row in data) {
-    console.log("row:", row);
-    console.log("row type:", typeof row);
-    console.log("row in data:", data[row]);
-    if (!isNaN(row)) {
-      console.log("index is number");
-      calculatePoint(data[row]);
+  function plotPoints(data) {
+    for (row in data) {
+      if (!isNaN(row)) {
+        calculatePoint(data[row]);
+      }
     }
   }
 
-  // svg
-  //   .append("g")
-  //   .attr("id", "scatter")
-  //   .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-  //   .selectAll(".dot")
-  //   .data(data)
-  //   .enter()
-  //   .call(function(d){
-  //     calculatePoint(d)
-  //   })
-  //   .append("circle")
-  //   .attr("class", "dot")
-  //   .attr("r", 6)
-  //   .attr("cx", function(d) {
-  //     // return xScale(d.x);
-  //     calculatePoint(d);
-  //     return dimensions.map(function(p) {
-  //       console.log("p:", p);
-  //       console.log(`${p} -> x(p) in circle function:`, x(p));
-  //       return x(p);
-  //       // return [x(p), y[p](d[p])];
-  //     });
-  //     // console.log("d in cx:", d);
-  //     // console.log("x(d) in circle:", x(d));
-  //     // return x(d);
-  //   })
-  //   .attr("cy", function(d) {
-  //     dimensions.map(function(p) {
-  //       console.log(`${p} for y[p](d(p)) in circle function:`, y[p](d[p]));
-  //       // console.log("y[p](d[p])")
-  //       return y[p](d[p]);
-  //     });
-  //     // return yScale(d.y);
-  //   })
+  function calculatePoint(row) {
+    for (const [variable, value] of Object.entries(row)) {
+      if (variable == "model_name") {
+        continue;
+      }
+      let xPoint = x(variable);
+      let yPoint = y[variable](value);
+
+      svg
+        .append("g")
+        .attr("id", "scatter")
+        .append("circle")
+        .attr("class", "dot_manual")
+        .attr("r", 6)
+        .attr("cx", xPoint)
+        .attr("cy", yPoint)
+        .attr("stroke", "white")
+        .attr("stroke-width", "2px")
+        .style("fill", "brown");
+    }
+  }
+
+  plotPoints(data);
 
   // Draw the axis:
   svg
