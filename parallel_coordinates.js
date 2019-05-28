@@ -1,3 +1,5 @@
+import { parcoordsColors } from "./parcoords_colors.js";
+
 // set the dimensions and margins of the graph
 let margin = { top: 30, right: 10, bottom: 10, left: 0 };
 let width = 1600 - margin.left - margin.right;
@@ -24,14 +26,23 @@ function calculateDomain(data, name) {
 d3.csv("test.csv", function(data) {
   // Extract the list of dimensions we want to keep in the plot. Here I keep all except the column called model_name
   console.log("data:", data);
-  dimensions = d3.keys(data[0]).filter(function(d) {
+  const dimensions = d3.keys(data[0]).filter(function(d) {
     return d != "model_name";
   });
   console.log("dimensions:", dimensions);
 
+  const model_names = data.map(d => d["model_name"]);
+
+  console.log("model_names:", model_names);
+
+  let colorScale = d3
+    .scaleOrdinal()
+    .domain(model_names)
+    .range(parcoordsColors);
+
   // For each dimension, I build a linear scale. I store all in a y object
   var y = {};
-  for (i in dimensions) {
+  for (let i in dimensions) {
     name = dimensions[i];
     y[name] = d3
       .scaleLinear()
@@ -41,7 +52,7 @@ d3.csv("test.csv", function(data) {
   console.log("y:", y);
 
   // Build the X scale -> it find the best position for each Y axis
-  x = d3
+  let x = d3
     .scalePoint()
     .range([0, width])
     .padding(1)
@@ -80,7 +91,7 @@ d3.csv("test.csv", function(data) {
     });
 
   function plotPoints(data) {
-    for (row in data) {
+    for (let row in data) {
       if (!isNaN(row)) {
         calculatePoint(data[row]);
       }
@@ -88,6 +99,7 @@ d3.csv("test.csv", function(data) {
   }
 
   function calculatePoint(row) {
+    let row_model_name = row["model_name"];
     for (const [variable, value] of Object.entries(row)) {
       if (variable == "model_name") {
         continue;
@@ -105,11 +117,14 @@ d3.csv("test.csv", function(data) {
         .attr("cy", yPoint)
         .attr("stroke", "white")
         .attr("stroke-width", "2px")
-        .style("fill", "brown");
+        .style("fill", () => colorScale(row_model_name));
     }
   }
 
   plotPoints(data);
+
+  console.log("symbols:", d3.symbols);
+  console.log("colors:", parcoordsColors);
 
   // Draw the axis:
   svg
