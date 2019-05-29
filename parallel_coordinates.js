@@ -2,7 +2,7 @@ import { parcoordsColors } from "./parcoords_colors.js";
 
 // set the dimensions and margins of the graph
 let margin = { top: 30, right: 10, bottom: 10, left: 0 };
-let width = 1600 - margin.left - margin.right;
+let width = 2400 - margin.left - margin.right;
 let height = 900 - margin.top - margin.bottom;
 
 // append the svg object to the body of the page
@@ -23,7 +23,7 @@ function calculateDomain(data, name) {
 }
 
 // Parse the Data
-d3.csv("test.csv", function(data) {
+d3.csv("mycsvfile.csv", function(data) {
   // Extract the list of dimensions we want to keep in the plot. Here I keep all except the column called model_name
   console.log("data:", data);
   const dimensions = d3.keys(data[0]).filter(function(d) {
@@ -32,8 +32,6 @@ d3.csv("test.csv", function(data) {
   console.log("dimensions:", dimensions);
 
   const model_names = data.map(d => d["model_name"]);
-
-  console.log("model_names:", model_names);
 
   let colorScale = d3
     .scaleOrdinal()
@@ -111,26 +109,10 @@ d3.csv("test.csv", function(data) {
       let xPoint = x(variable);
       let yPoint = y[variable](value);
 
-      // svg
-      //   .append("g")
-      //   .attr("id", "scatter")
-      //   .append("circle")
-      //   .attr("class", "dot_manual")
-      //   .attr("r", 6)
-      //   .attr("cx", xPoint)
-      //   .attr("cy", yPoint)
-      //   .attr("stroke", "white")
-      //   .attr("stroke-width", "2px")
-      //   .style("fill", () => colorScale(row_model_name));
-
       svg
         .append("path")
         .attr("class", "symbol")
         .attr("d", function(d, i) {
-          console.log("variable:", variable);
-          console.log("symbolScale(variable):", symbolScale(variable));
-          console.log("symbol type:", symbol.type(symbolScale(variable))());
-          // console.log("symbol calculated:", symbol.type(symbols(variable)()));
           return symbol.type(symbolScale(row_model_name))();
         })
         .style("fill", function(d) {
@@ -144,7 +126,52 @@ d3.csv("test.csv", function(data) {
 
   plotPoints(data);
 
-  console.log("symbols:", d3.symbols);
+  // add legend
+  var legendWidth = 400;
+  var legendHeight = 400;
+
+  var legend = d3
+    .select("#legend")
+    .append("svg")
+    .attr("width", legendWidth)
+    .attr("height", legendHeight);
+
+  legend
+    .append("rect")
+    .attr("x", 0)
+    .attr("y", 0)
+    .attr("width", legendWidth)
+    .attr("height", legendHeight)
+    .attr("stroke", "black")
+    .attr("fill", "white");
+
+  let pointRadius = 100;
+
+  model_names.forEach(function(d, i) {
+    var x = pointRadius + 10;
+    var y = 23 + i * 20;
+
+    var symbol = d3
+      .symbol()
+      .type(symbolScale(d))
+      .size(pointRadius);
+
+    legend
+      .append("path")
+      .attr("d", symbol)
+      .attr("fill", colorScale(d))
+      .attr("stroke", "black")
+      .attr("stroke-width", 1)
+      .attr("transform", "translate(" + x + "," + y + ")");
+
+    legend
+      .append("text")
+      .attr("class", "legend")
+      .attr("x", pointRadius + 20)
+      .attr("y", y)
+      .attr("dominant-baseline", "central")
+      .text(d);
+  });
 
   // Draw the axis:
   svg

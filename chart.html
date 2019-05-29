@@ -2,6 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>PCMDI Parallel Coordinates</title>
     <style type="text/css">
       html,
@@ -58,10 +59,22 @@
     </style>
     <script src="https://d3js.org/d3.v4.js"></script>
     <script src="divgrid.js"></script>
+    <script src="https://cdnjs.com/libraries/d3-legend"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css"
+    />
+    <script
+      defer
+      src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"
+    ></script>
   </head>
   <body>
     <!-- Create a div where the graph will take place -->
-    <div id="my_dataviz"></div>
+    <div id="viz_div" class="columns">
+      <div id="my_dataviz" class="column is-four-fifths"></div>
+      <div id="legend" class="column"></div>
+    </div>
     <div id="grid"></div>
     <script type="module" src="parallel_coordinates.js"></script>
   </body>
