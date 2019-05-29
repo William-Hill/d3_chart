@@ -98,6 +98,10 @@ d3.csv("test.csv", function(data) {
     }
   }
 
+  let symbolScale = d3.scaleOrdinal(d3.symbols);
+  // creates a generator for symbols
+  var symbol = d3.symbol().size(100);
+
   function calculatePoint(row) {
     let row_model_name = row["model_name"];
     for (const [variable, value] of Object.entries(row)) {
@@ -107,24 +111,40 @@ d3.csv("test.csv", function(data) {
       let xPoint = x(variable);
       let yPoint = y[variable](value);
 
+      // svg
+      //   .append("g")
+      //   .attr("id", "scatter")
+      //   .append("circle")
+      //   .attr("class", "dot_manual")
+      //   .attr("r", 6)
+      //   .attr("cx", xPoint)
+      //   .attr("cy", yPoint)
+      //   .attr("stroke", "white")
+      //   .attr("stroke-width", "2px")
+      //   .style("fill", () => colorScale(row_model_name));
+
       svg
-        .append("g")
-        .attr("id", "scatter")
-        .append("circle")
-        .attr("class", "dot_manual")
-        .attr("r", 6)
-        .attr("cx", xPoint)
-        .attr("cy", yPoint)
-        .attr("stroke", "white")
-        .attr("stroke-width", "2px")
-        .style("fill", () => colorScale(row_model_name));
+        .append("path")
+        .attr("class", "symbol")
+        .attr("d", function(d, i) {
+          console.log("variable:", variable);
+          console.log("symbolScale(variable):", symbolScale(variable));
+          console.log("symbol type:", symbol.type(symbolScale(variable))());
+          // console.log("symbol calculated:", symbol.type(symbols(variable)()));
+          return symbol.type(symbolScale(row_model_name))();
+        })
+        .style("fill", function(d) {
+          return colorScale(row_model_name);
+        })
+        .attr("transform", function(d) {
+          return "translate(" + xPoint + "," + yPoint + ")";
+        });
     }
   }
 
   plotPoints(data);
 
   console.log("symbols:", d3.symbols);
-  console.log("colors:", parcoordsColors);
 
   // Draw the axis:
   svg
