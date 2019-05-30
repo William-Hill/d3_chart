@@ -38,22 +38,22 @@ d3.divgrid = function(config) {
       .data([true])
       .enter()
       .append("div")
-      .attr("class", "header");
+      .attr("class", "columns header");
 
     var header = selection
       .select(".header")
-      .selectAll(".cell")
+      .selectAll(".columns")
       .data(columns);
 
     header
       .enter()
       .append("div")
       .attr("class", function(d, i) {
-        return "col-" + i;
-      })
-      .classed("cell", true);
+        return "column col-" + i;
+      });
+    // .classed("cell", true);
 
-    selection.selectAll(".header .cell").text(function(d) {
+    selection.selectAll(".header .column").text(function(d) {
       return d;
     });
 
@@ -68,7 +68,7 @@ d3.divgrid = function(config) {
       .enter()
       .append("div")
       .attr("class", function(d) {
-        return "row " + d["model_name"];
+        return "columns row " + d["model_name"];
       })
       .on("click", rowClicked);
     // .attr("class", "row");
@@ -89,7 +89,7 @@ d3.divgrid = function(config) {
       .enter()
       .append("div")
       .attr("class", function(d, i) {
-        return "col-" + i;
+        return "column col-" + i;
       })
       .classed("cell", true);
 
