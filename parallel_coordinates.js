@@ -2,12 +2,9 @@ import { parcoordsColors } from "./parcoords_colors.js";
 
 // set the dimensions and margins of the graph
 let margin = { top: 30, right: 10, bottom: 10, left: 0 };
-// let width = 2400 - margin.left - margin.right;
-// let height = 900 - margin.top - margin.bottom;
 
 var parentDiv = document.getElementById("my_dataviz");
 let width = parentDiv.clientWidth;
-// let height = parentDiv.clientHeight;
 let height = document.body.clientHeight;
 
 console.log("width:", width);
@@ -19,13 +16,7 @@ var svg = d3
   .append("svg")
   .attr("width", "100%")
   .attr("height", "100%")
-  // .attr(
-  //   "viewBox",
-  //   "0 0 " + Math.min(width, height) + " " + Math.min(width, height)
-  // )
   .attr("preserveAspectRatio", "xMinYMin")
-  // .attr("width", width + margin.left + margin.right)
-  // .attr("height", height + margin.top + margin.bottom)
   .append("g")
   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -64,9 +55,7 @@ d3.csv("mycsvfile.csv", function(data) {
   }
   console.log("y:", y);
 
-  // Build the X scale -> it find the best position for each Y axis
-  console.log("width before x:", width);
-  console.log("parentdiv width:", parentDiv.clientWidth);
+  // Build the X scale -> it find the best position for each Y axisLeft
 
   let x = d3
     .scalePoint()
@@ -159,20 +148,13 @@ d3.csv("mycsvfile.csv", function(data) {
       .attr("id", "column_" + d);
 
     let legendColumn = d3.select("#column_" + d);
-    console.log("legendColumn:", legendColumn);
     legendColumn
       .append("svg")
       .attr("class", "legendKey_" + d)
       .attr("width", "100%")
       .attr("height", "100%");
 
-    console.log(
-      "legendColumn width:",
-      legendColumn.style("width").slice(0, -2)
-    );
     var clientHeight = document.getElementById("column_" + d).clientHeight;
-    console.log("clientHeight:", clientHeight);
-    console.log("legendColumn height:", legendColumn.style("height"));
     let symbolXCoord = +legendColumn.style("width").slice(0, -2) * 0.1;
     let symbolYCoord =
       +document.getElementById("column_" + d).clientHeight * 0.4;
@@ -190,7 +172,6 @@ d3.csv("mycsvfile.csv", function(data) {
       .attr("stroke", "black")
       .attr("stroke-width", 1)
       .attr("transform", `translate(${symbolXCoord}, ${symbolYCoord})`);
-    // .attr("transform", "translate(" + x + "," + y + ")");
 
     legendSvg
       .append("text")
@@ -201,53 +182,6 @@ d3.csv("mycsvfile.csv", function(data) {
       .style("font-size", "0.75em")
       .text(d);
   });
-
-  // add legend
-  // var legendWidth = 400;
-  // var legendHeight = 400;
-  //
-  // var legend = d3
-  //   .select("#legend")
-  //   .append("svg")
-  //   .attr("width", "100%")
-  //   .attr("height", "100%");
-  //
-  // legend
-  //   .append("rect")
-  //   .attr("x", 0)
-  //   .attr("y", 0)
-  //   .attr("width", "100%")
-  //   .attr("height", "100%")
-  //   .attr("stroke", "black")
-  //   .attr("fill", "white");
-  //
-  // let pointRadius = 100;
-  //
-  // model_names.forEach(function(d, i) {
-  //   var x = pointRadius + 10;
-  //   var y = 23 + i * 20;
-  //
-  //   var symbol = d3
-  //     .symbol()
-  //     .type(symbolScale(d))
-  //     .size(pointRadius);
-  //
-  //   legend
-  //     .append("path")
-  //     .attr("d", symbol)
-  //     .attr("fill", colorScale(d))
-  //     .attr("stroke", "black")
-  //     .attr("stroke-width", 1)
-  //     .attr("transform", "translate(" + x + "," + y + ")");
-  //
-  //   legend
-  //     .append("text")
-  //     .attr("class", "legend")
-  //     .attr("x", pointRadius + 20)
-  //     .attr("y", y)
-  //     .attr("dominant-baseline", "central")
-  //     .text(d);
-  // });
 
   // Draw the axis:
   svg
