@@ -28,48 +28,93 @@ function calculateDomain(data, name) {
   });
 }
 
-// Parse the Data
-d3.csv("mycsvfile.csv", function(data) {
-  // Extract the list of dimensions we want to keep in the plot. Here I keep all except the column called model_name
-  console.log("data:", data);
-  const dimensions = d3.keys(data[0]).filter(function(d) {
+/**
+ * @description Gets the list of climate variables from the dataset
+ * @param data An object representing the dataset that was parsed by D3.
+ * @returns array - An Array containing the Variable names
+ */
+function getVariables(data) {
+  const variables = d3.keys(data[0]).filter(function(d) {
     return d != "model_name";
   });
-  console.log("dimensions:", dimensions);
 
-  const model_names = data.map(d => d["model_name"]);
+  return variables;
+}
 
-  let colorScale = d3
+/**
+ * @description Create an ordinal scale to map climate models to unique colors
+ * @param model_names An array of model names from the dataset
+ * @returns d3 Ordinal scale - An ordinal scale that will map to colors
+ */
+function createColorScale(model_names) {
+  return d3
     .scaleOrdinal()
     .domain(model_names)
     .range(parcoordsColors);
+}
 
-  // For each dimension, I build a linear scale. I store all in a y object
-  var y = {};
-  for (let i in dimensions) {
-    name = dimensions[i];
-    y[name] = d3
+/**
+ * @description Create an object with each climate variable as a key and a linear scale to calculate y axis position as a value
+ * @param variables An Array containing the Variable names
+ * @param data An object representing the dataset that was parsed by D3.
+ * @param height The height of the SVG container
+ * @returns Object - An object with climate variables and its associated linear scale as key:value pairs
+ */
+function createValueScale(variables, data, height) {
+  let valueScale = {};
+  for (let i in variables) {
+    name = variables[i];
+    valueScale[name] = d3
       .scaleLinear()
       .domain(calculateDomain(data, name))
       .range([height * 0.6, 0]);
   }
+  return valueScale;
+}
+
+function createModelScale(variables, width) {
+  return d3
+    .scalePoint()
+    .range([0, width])
+    .padding(1)
+    .domain(variables);
+}
+
+function calculatePath(data) {
+  return d3.line()(function(data) {
+    for (const [variable, value] of Object.entries(row)) {
+      if (variable == "model_name") {
+        continue;
+      }
+      let xPoint = x(variable);
+      let yPoint = y[variable](value);
+      return [xPoint, yPoint];
+    }
+  });
+}
+// Parse the Data
+d3.csv("mycsvfile.csv", function(data) {
+  // Extract the list of variables we want to keep in the plot. Here I keep all except the column called model_name
+  console.log("data:", data);
+  const variables = getVariables(data);
+
+  const model_names = data.map(d => d["model_name"]);
+
+  let colorScale = createColorScale(model_names);
+
+  // For each dimension, I build a linear scale. I store all in a y object
+  let y = createValueScale(variables, data, height);
   console.log("y:", y);
 
   // Build the X scale -> it find the best position for each Y axisLeft
-
-  let x = d3
-    .scalePoint()
-    .range([0, parentDiv.clientWidth])
-    .padding(1)
-    .domain(dimensions);
-
+  let x = createModelScale(variables, parentDiv.clientWidth);
   console.log("x:", x);
 
   // The path function take a row of the csv as input, and return x and y coordinates of the line to draw for this raw.
   function path(d) {
     console.log("d in path function:", d);
     return d3.line()(
-      dimensions.map(function(p) {
+      variables.map(function(p) {
         console.log("p:", p);
         console.log(`${p} -> x(p) in path function:`, x(p));
         console.log(`${p} for y[p](d(p)) in path function:`, y[p](d[p]));
@@ -190,7 +235,7 @@ d3.csv("mycsvfile.csv", function(data) {
   svg
     .selectAll("myAxis")
     // For each dimension of the dataset I add a 'g' element:
-    .data(dimensions)
+    .data(variables)
     .enter()
     .append("g")
     // I translate this element to its right position on the x axis
