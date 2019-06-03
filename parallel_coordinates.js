@@ -132,56 +132,59 @@ d3.csv("mycsvfile.csv", function(data) {
   }
 
   plotPoints(data);
+  createLegend(model_names);
 
-  let legend = d3.select("#legendColumns");
+  function createLegend(model_names) {
+    let legend = d3.select("#legendColumns");
 
-  let pointRadius = 50;
+    let pointRadius = 50;
 
-  model_names.forEach(function(d, i) {
-    var x = pointRadius + 10;
-    var y = 23 + i * 20;
-    console.log("model names d:", d);
-    legend
-      .append("div")
-      .attr("class", "column is-one-quarter")
-      .style("height", "8%")
-      .attr("id", "column_" + d);
+    model_names.forEach(function(d, i) {
+      var x = pointRadius + 10;
+      var y = 23 + i * 20;
+      console.log("model names d:", d);
+      legend
+        .append("div")
+        .attr("class", "column is-one-quarter")
+        .style("height", "8%")
+        .attr("id", "column_" + d);
 
-    let legendColumn = d3.select("#column_" + d);
-    legendColumn
-      .append("svg")
-      .attr("class", "legendKey_" + d)
-      .attr("width", "100%")
-      .attr("height", "100%");
+      let legendColumn = d3.select("#column_" + d);
+      legendColumn
+        .append("svg")
+        .attr("class", "legendKey_" + d)
+        .attr("width", "100%")
+        .attr("height", "100%");
 
-    var clientHeight = document.getElementById("column_" + d).clientHeight;
-    let symbolXCoord = +legendColumn.style("width").slice(0, -2) * 0.1;
-    let symbolYCoord =
-      +document.getElementById("column_" + d).clientHeight * 0.4;
-    var symbol = d3
-      .symbol()
-      .type(symbolScale(d))
-      .size(pointRadius);
+      var clientHeight = document.getElementById("column_" + d).clientHeight;
+      let symbolXCoord = +legendColumn.style("width").slice(0, -2) * 0.1;
+      let symbolYCoord =
+        +document.getElementById("column_" + d).clientHeight * 0.4;
+      var symbol = d3
+        .symbol()
+        .type(symbolScale(d))
+        .size(pointRadius);
 
-    let legendSvg = d3.select(".legendKey_" + d);
+      let legendSvg = d3.select(".legendKey_" + d);
 
-    legendSvg
-      .append("path")
-      .attr("d", symbol)
-      .attr("fill", colorScale(d))
-      .attr("stroke", "black")
-      .attr("stroke-width", 1)
-      .attr("transform", `translate(${symbolXCoord}, ${symbolYCoord})`);
+      legendSvg
+        .append("path")
+        .attr("d", symbol)
+        .attr("fill", colorScale(d))
+        .attr("stroke", "black")
+        .attr("stroke-width", 1)
+        .attr("transform", `translate(${symbolXCoord}, ${symbolYCoord})`);
 
-    legendSvg
-      .append("text")
-      .attr("class", "legend")
-      .attr("x", symbolXCoord + 15)
-      .attr("y", symbolYCoord)
-      .attr("dominant-baseline", "central")
-      .style("font-size", "0.75em")
-      .text(d);
-  });
+      legendSvg
+        .append("text")
+        .attr("class", "legend")
+        .attr("x", symbolXCoord + 15)
+        .attr("y", symbolYCoord)
+        .attr("dominant-baseline", "central")
+        .style("font-size", "0.75em")
+        .text(d);
+    });
+  }
 
   // Draw the axis:
   svg
