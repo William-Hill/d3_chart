@@ -65,7 +65,7 @@
     </style>
     <script src="https://d3js.org/d3.v4.js"></script>
     <script src="divgrid.js"></script>
-    <script src="https://cdnjs.com/libraries/d3-legend"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css"
@@ -84,7 +84,9 @@
     <!-- Create a div where the graph will take place -->
     <div id="viz_div" class="columns">
       <div id="my_dataviz" class="column is-four-fifths"></div>
-      <div id="legend" class="column"></div>
+      <div id="legend" class="column">
+        <div id="legendColumns" class="columns is-multiline"></div>
+      </div>
     </div>
     <div id="grid"></div>
     <script type="module" src="parallel_coordinates.js"></script>

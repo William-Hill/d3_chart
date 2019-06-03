@@ -144,52 +144,110 @@ d3.csv("mycsvfile.csv", function(data) {
 
   plotPoints(data);
 
-  // add legend
-  var legendWidth = 400;
-  var legendHeight = 400;
+  let legend = d3.select("#legendColumns");
 
-  var legend = d3
-    .select("#legend")
-    .append("svg")
-    .attr("width", legendWidth)
-    .attr("height", legendHeight);
-
-  legend
-    .append("rect")
-    .attr("x", 0)
-    .attr("y", 0)
-    .attr("width", legendWidth)
-    .attr("height", legendHeight)
-    .attr("stroke", "black")
-    .attr("fill", "white");
-
-  let pointRadius = 100;
+  let pointRadius = 50;
 
   model_names.forEach(function(d, i) {
     var x = pointRadius + 10;
     var y = 23 + i * 20;
+    console.log("model names d:", d);
+    legend
+      .append("div")
+      .attr("class", "column is-one-quarter")
+      .style("height", "8%")
+      .attr("id", "column_" + d);
 
+    let legendColumn = d3.select("#column_" + d);
+    console.log("legendColumn:", legendColumn);
+    legendColumn
+      .append("svg")
+      .attr("class", "legendKey_" + d)
+      .attr("width", "100%")
+      .attr("height", "100%");
+
+    console.log(
+      "legendColumn width:",
+      legendColumn.style("width").slice(0, -2)
+    );
+    var clientHeight = document.getElementById("column_" + d).clientHeight;
+    console.log("clientHeight:", clientHeight);
+    console.log("legendColumn height:", legendColumn.style("height"));
+    let symbolXCoord = +legendColumn.style("width").slice(0, -2) * 0.1;
+    let symbolYCoord =
+      +document.getElementById("column_" + d).clientHeight * 0.4;
     var symbol = d3
       .symbol()
       .type(symbolScale(d))
       .size(pointRadius);
 
-    legend
+    let legendSvg = d3.select(".legendKey_" + d);
+
+    legendSvg
       .append("path")
       .attr("d", symbol)
       .attr("fill", colorScale(d))
       .attr("stroke", "black")
       .attr("stroke-width", 1)
-      .attr("transform", "translate(" + x + "," + y + ")");
+      .attr("transform", `translate(${symbolXCoord}, ${symbolYCoord})`);
+    // .attr("transform", "translate(" + x + "," + y + ")");
 
-    legend
+    legendSvg
       .append("text")
       .attr("class", "legend")
-      .attr("x", pointRadius + 20)
-      .attr("y", y)
+      .attr("x", symbolXCoord + 15)
+      .attr("y", symbolYCoord)
       .attr("dominant-baseline", "central")
+      .style("font-size", "0.75em")
       .text(d);
   });
+
+  // add legend
+  // var legendWidth = 400;
+  // var legendHeight = 400;
+  //
+  // var legend = d3
+  //   .select("#legend")
+  //   .append("svg")
+  //   .attr("width", "100%")
+  //   .attr("height", "100%");
+  //
+  // legend
+  //   .append("rect")
+  //   .attr("x", 0)
+  //   .attr("y", 0)
+  //   .attr("width", "100%")
+  //   .attr("height", "100%")
+  //   .attr("stroke", "black")
+  //   .attr("fill", "white");
+  //
+  // let pointRadius = 100;
+  //
+  // model_names.forEach(function(d, i) {
+  //   var x = pointRadius + 10;
+  //   var y = 23 + i * 20;
+  //
+  //   var symbol = d3
+  //     .symbol()
+  //     .type(symbolScale(d))
+  //     .size(pointRadius);
+  //
+  //   legend
+  //     .append("path")
+  //     .attr("d", symbol)
+  //     .attr("fill", colorScale(d))
+  //     .attr("stroke", "black")
+  //     .attr("stroke-width", 1)
+  //     .attr("transform", "translate(" + x + "," + y + ")");
+  //
+  //   legend
+  //     .append("text")
+  //     .attr("class", "legend")
+  //     .attr("x", pointRadius + 20)
+  //     .attr("y", y)
+  //     .attr("dominant-baseline", "central")
+  //     .text(d);
+  // });
 
   // Draw the axis:
   svg
