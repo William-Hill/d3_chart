@@ -1,44 +1,136 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" dir="ltr">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>d3.js Canvas Parallel Coordinates - Jiwoo Lee</title>
-    <script src="underscore-min.js"></script>
-    <script src="jquery.js"></script>
-    <script src="d3_004.js" charset="utf-8"></script>
-    <script src="d3_003.js"></script>
-    <script src="d3_002.js"></script>
-    <script src="d3.js"></script>
-    <link rel="stylesheet" href="droid.css" type="text/css" charset="utf-8">
-    <link href="d3.css" rel="stylesheet">
-    <link href="bigdata.css" rel="stylesheet">
-    <!--<script src="http://d3js.org/d3.v3.min.js"></script>-->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PCMDI Parallel Coordinates</title>
+    <style type="text/css">
+      html,
+      body {
+        background: #f7f7f7;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        color: #111;
+        font-family: Ubuntu, Helvetica, sans-serif;
+        font-size: 12px;
+        line-height: 1.35em;
+      }
+      a {
+        color: #6be;
+        text-decoration: none;
+      }
+      .row,
+      .header,
+      .cell {
+        height: 2rem;
+      }
+      .row,
+      .header {
+        clear: left;
+      }
+      .header {
+        font-weight: bold;
+      }
+      .cell {
+        float: left;
+        overflow: hidden;
+        white-space: nowrap;
+        width: 100px;
+      }
+      .col-0 {
+        width: 180px;
+      }
+      .row:hover {
+        background-color: #069;
+        color: white;
+      }
+      .highlight {
+        background-color: #2ecc40;
+      }
+      .path_highlight {
+        stroke-width: 4px;
+        opacity: 0.8;
+      }
+      .path_regular {
+        stroke-width: 1px;
+        opacity: 0;
+      }
+      #viz_div {
+        height: 70%;
+      }
+      #my_dataviz {
+        height: 100%;
+      }
+    </style>
+    <script src="https://d3js.org/d3.v4.js"></script>
+    <script src="divgrid.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css"
+    />
+    <script
+      defer
+      src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"
+    ></script>
+    <style>
+      .column {
+        display: flex;
+      }
+    </style>
   </head>
-  <body style="">
-    <div id="title">
-        <h1>
-            <a href="https://pcmdi.llnl.gov/" target="_blank"><img src="PCMDILogo_200x65px_72dpi.png" height="60" align="bottom" title="Program for Climate Model Diagnosis and Intercomparison"></a> 
-            <u>Modes of Variability Metrics for CMIP5 Models</u>
-            <a href="https://github.com/PCMDI/pcmdi_metrics" target="_blank"><img src="PMPLogo_1359x1146px_300dpi.png" align="bottom" height="60" title="PCMDI Metrics Package"></a>
-         </h1>
-    </div>
-    <div id="footer">This is a <font color="red"><b>PROTOTYPE</b></font> of interactive parallel coordinate plot that is for Modes of Variability Metrics for <a href="https://pcmdi.llnl.gov/mips/cmip5/" target="_blank">CMIP5</a> models. The Modes of Variability Metrics is developed at Program for Climate Model Diagnosis and Intercomparison (<a href="https://pcmdi.llnl.gov/" target="_blank">PCMDI</a>) of Lawrence Livermore Natioanal Laboratory (<a href="https://www.llnl.gov/" target="_blank">LLNL</a>). Visualization is done by <b><i>Jiwoo Lee</i></b> and the metrics were developed by <b><i>Jiwoo Lee, Ken Sperber, Peter Gleckler, Celine Bonfils, and Karl Taylor</i></b>. Detailed descriptions can be found at <a href="https://link.springer.com/article/10.1007/s00382-018-4355-4" target="_blank">Lee et al. (2018) "Quantifying the agreement between observed and simulated extratropical modes of interannual variability" (Climate Dynamics)</a>, especially from Fig. 14. Visualized statistical values are for ratio of simulated to observed temporal variability as estimated by the standard deviations of the PC time series. The CBF PC is used for simulations. For sea-level pressure based modes (PNA, NPO, NAO, NAM, and SAM) in the model results are shown relative to 20CR. For SST based modes (PDO and NPGO), results are shown relative to HadISSTv1.1 The ratios are unitless. Last updated in October 2018.<br>
-            <b><font color="blue">Usuage:</font></b><br>
-            - Click and drag down on vertical axis to begin brush<br>
-            - Click vertical axis to clear brush<br>
-            - Click a label to color data by z-scores<br>
-            <font color="red">* Please note this page is optimized for screen resolution wider than 1700 pixels.<br></font>
-    </div>
-    <!--<button id="keep-data">Keep</button>
-    <button id="exclude-data">Exclude</button>
-    <button id="reset-data">Reset</button>-->
-    <button id="refresh-page">Refresh-page</button>
-    <div id="wrapper" class="parcoords" style="width:100%;height:600px">
+  <body>
+    <section class="section">
+      <div id="container">
+        This is a <font color="red"><b>PROTOTYPE</b></font> of interactive
+        parallel coordinate plot that is for Modes of Variability Metrics for
+        <a href="https://pcmdi.llnl.gov/mips/cmip5/" target="_blank">CMIP5</a>
+        models. The Modes of Variability Metrics is developed at Program for
+        Climate Model Diagnosis and Intercomparison (<a
+          href="https://pcmdi.llnl.gov/"
+          target="_blank"
+          >PCMDI</a
+        >) of Lawrence Livermore Natioanal Laboratory (<a
+          href="https://www.llnl.gov/"
+          target="_blank"
+          >LLNL</a
+        >). Visualization is done by
+        <b><i>Jiwoo Lee and William Hill</i></b> and the metrics were developed
+        by
+        <b
+          ><i
+            >Jiwoo Lee, Ken Sperber, Peter Gleckler, Celine Bonfils, and Karl
+            Taylor</i
+          ></b
+        >. Detailed descriptions can be found at
+        <a
+          href="https://link.springer.com/article/10.1007/s00382-018-4355-4"
+          target="_blank"
+          >Lee et al. (2018) "Quantifying the agreement between observed and
+          simulated extratropical modes of interannual variability" (Climate
+          Dynamics)</a
+        >, especially from Fig. 14. Visualized statistical values are for ratio
+        of simulated to observed temporal variability as estimated by the
+        standard deviations of the PC time series. The CBF PC is used for
+        simulations. For sea-level pressure based modes (PNA, NPO, NAO, NAM, and
+        SAM) in the model results are shown relative to 20CR. For SST based
+        modes (PDO and NPGO), results are shown relative to HadISSTv1.1 The
+        ratios are unitless. Last updated in October 2018.<br />
+        <font color="red"
+          >* Please note this page is optimized for screen resolution wider than
+          1700 pixels.<br
+        /></font>
       </div>
-      <div id="pcoord">
-        <script type="text/javascript" src="bigdata.js"></script>
+    </section>
+    <!-- Create a div where the graph will take place -->
+    <div id="viz_div" class="columns">
+      <div id="my_dataviz" class="column is-four-fifths"></div>
+      <div id="legend" class="column">
+        <div id="legendColumns" class="columns is-multiline"></div>
       </div>
     </div>
-    <div id="grid"></div>  
+    <div id="grid"></div>
+    <script type="module" src="parallel_coordinates.js"></script>
   </body>
 </html>

@@ -261,7 +261,7 @@ function drawAxis(variables, x, y) {
 }
 
 // Parse the Data
-d3.csv("mycsvfile.csv", function(data) {
+d3.csv("csv_files/test.csv", function(data) {
   // Extract the list of variables we want to keep in the plot. Here I keep all except the column called model_name
   console.log("data:", data);
   const variables = getVariables(data);
