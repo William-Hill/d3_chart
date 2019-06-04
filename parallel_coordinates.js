@@ -80,6 +80,40 @@ function createModelScale(variables, width) {
     .domain(variables);
 }
 
+function plotPoints(data, x, y, symbolScale, colorScale) {
+  for (let row in data) {
+    if (!isNaN(row)) {
+      calculatePoint(data[row], x, y, symbolScale, colorScale);
+    }
+  }
+}
+
+function calculatePoint(row, x, y, symbolScale, colorScale) {
+  let row_model_name = row["model_name"];
+  for (const [variable, value] of Object.entries(row)) {
+    if (variable == "model_name") {
+      continue;
+    }
+    let xPoint = x(variable);
+    let yPoint = y[variable](value);
+    // creates a generator for symbols
+    var symbol = d3.symbol().size(100);
+
+    svg
+      .append("path")
+      .attr("class", "symbol")
+      .attr("d", function(d, i) {
+        return symbol.type(symbolScale(row_model_name))();
+      })
+      .style("fill", function(d) {
+        return colorScale(row_model_name);
+      })
+      .attr("transform", function(d) {
+        return "translate(" + xPoint + "," + yPoint + ")";
+      });
+  }
+}
+
 function calculatePath(data) {
   return d3.line()(function(data) {
     for (const [variable, value] of Object.entries(row)) {
@@ -90,6 +124,58 @@ function calculatePath(data) {
       let yPoint = y[variable](value);
       return [xPoint, yPoint];
     }
+  });
+}
+
+function createLegend(model_names, symbolScale, colorScale) {
+  let legend = d3.select("#legendColumns");
+
+  let pointRadius = 50;
+
+  model_names.forEach(function(d, i) {
+    var x = pointRadius + 10;
+    var y = 23 + i * 20;
+    console.log("model names d:", d);
+    legend
+      .append("div")
+      .attr("class", "column is-one-quarter")
+      .style("height", "8%")
+      .attr("id", "column_" + d);
+
+    let legendColumn = d3.select("#column_" + d);
+    legendColumn
+      .append("svg")
+      .attr("class", "legendKey_" + d)
+      .attr("width", "100%")
+      .attr("height", "100%");
+
+    var clientHeight = document.getElementById("column_" + d).clientHeight;
+    let symbolXCoord = +legendColumn.style("width").slice(0, -2) * 0.1;
+    let symbolYCoord =
+      +document.getElementById("column_" + d).clientHeight * 0.4;
+    var legendSymbol = d3
+      .symbol()
+      .type(symbolScale(d))
+      .size(pointRadius);
+
+    let legendSvg = d3.select(".legendKey_" + d);
+
+    legendSvg
+      .append("path")
+      .attr("d", legendSymbol)
+      .attr("fill", colorScale(d))
+      .attr("stroke", "black")
+      .attr("stroke-width", 1)
+      .attr("transform", `translate(${symbolXCoord}, ${symbolYCoord})`);
+
+    legendSvg
+      .append("text")
+      .attr("class", "legend")
+      .attr("x", symbolXCoord + 15)
+      .attr("y", symbolYCoord)
+      .attr("dominant-baseline", "central")
+      .style("font-size", "0.75em")
+      .text(d);
   });
 }
 // Parse the Data
@@ -140,96 +226,10 @@ d3.csv("mycsvfile.csv", function(data) {
       return "path_regular coordinate_path " + d["model_name"];
     });
 
-  function plotPoints(data) {
-    for (let row in data) {
-      if (!isNaN(row)) {
-        calculatePoint(data[row]);
-      }
-    }
-  }
-
   let symbolScale = d3.scaleOrdinal(d3.symbols);
-  // creates a generator for symbols
-  var symbol = d3.symbol().size(100);
 
-  function calculatePoint(row) {
-    let row_model_name = row["model_name"];
-    for (const [variable, value] of Object.entries(row)) {
-      if (variable == "model_name") {
-        continue;
-      }
-      let xPoint = x(variable);
-      let yPoint = y[variable](value);
-
-      svg
-        .append("path")
-        .attr("class", "symbol")
-        .attr("d", function(d, i) {
-          return symbol.type(symbolScale(row_model_name))();
-        })
-        .style("fill", function(d) {
-          return colorScale(row_model_name);
-        })
-        .attr("transform", function(d) {
-          return "translate(" + xPoint + "," + yPoint + ")";
-        });
-    }
-  }
-
-  plotPoints(data);
-  createLegend(model_names);
-
-  function createLegend(model_names) {
-    let legend = d3.select("#legendColumns");
-
-    let pointRadius = 50;
-
-    model_names.forEach(function(d, i) {
-      var x = pointRadius + 10;
-      var y = 23 + i * 20;
-      console.log("model names d:", d);
-      legend
-        .append("div")
-        .attr("class", "column is-one-quarter")
-        .style("height", "8%")
-        .attr("id", "column_" + d);
-
-      let legendColumn = d3.select("#column_" + d);
-      legendColumn
-        .append("svg")
-        .attr("class", "legendKey_" + d)
-        .attr("width", "100%")
-        .attr("height", "100%");
-
-      var clientHeight = document.getElementById("column_" + d).clientHeight;
-      let symbolXCoord = +legendColumn.style("width").slice(0, -2) * 0.1;
-      let symbolYCoord =
-        +document.getElementById("column_" + d).clientHeight * 0.4;
-      var symbol = d3
-        .symbol()
-        .type(symbolScale(d))
-        .size(pointRadius);
-
-      let legendSvg = d3.select(".legendKey_" + d);
-
-      legendSvg
-        .append("path")
-        .attr("d", symbol)
-        .attr("fill", colorScale(d))
-        .attr("stroke", "black")
-        .attr("stroke-width", 1)
-        .attr("transform", `translate(${symbolXCoord}, ${symbolYCoord})`);
-
-      legendSvg
-        .append("text")
-        .attr("class", "legend")
-        .attr("x", symbolXCoord + 15)
-        .attr("y", symbolYCoord)
-        .attr("dominant-baseline", "central")
-        .style("font-size", "0.75em")
-        .text(d);
-    });
-  }
+  plotPoints(data, x, y, symbolScale, colorScale);
+  createLegend(model_names, symbolScale, colorScale);
 
   // Draw the axis:
   svg
