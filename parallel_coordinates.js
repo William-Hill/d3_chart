@@ -7,9 +7,6 @@ var parentDiv = document.getElementById("my_dataviz");
 let width = parentDiv.clientWidth;
 let height = document.body.clientHeight;
 
-console.log("width:", width);
-console.log("height:", height);
-
 // append the svg object to the body of the page
 var svg = d3
   .select("#my_dataviz")
@@ -103,6 +100,35 @@ function plotSymbols(data, x, y, symbolScale, colorScale) {
 }
 
 /**
+ * @description Displays a tooltip with the model name and value when a symbol is moused over
+ * @param symbolDOMElement The symbol SVG element in the DOM
+ */
+function showTooltip(symbolDOMElement) {
+  tooltipDiv
+    .transition()
+    .duration(200)
+    .style("opacity", 0.9);
+  tooltipDiv
+    .html(
+      symbolDOMElement.dataset.model_name +
+        "<br/>" +
+        symbolDOMElement.dataset.value
+    )
+    .style("left", d3.event.pageX + "px")
+    .style("top", d3.event.pageY - 28 + "px");
+}
+
+/**
+ * @description Hides a tooltip moused out of a symbol
+ */
+function hideTooltip() {
+  tooltipDiv
+    .transition()
+    .duration(500)
+    .style("opacity", 0);
+}
+
+/**
  * @description Calculate the position of a symbol on the Parallel Coordinate visualization
  * @param row An object representing a row of the dataset that was parsed by D3.
  * @param x A d3 scale to map climate variable names to a point between 0 and the width of the SVG container
@@ -132,7 +158,13 @@ function calculatePoint(row, x, y, symbolScale, colorScale) {
       })
       .attr("transform", function(d) {
         return "translate(" + xPoint + "," + yPoint + ")";
-      });
+      })
+      .attr("data-model_name", row_model_name)
+      .attr("data-value", value)
+      .on("mouseover", function(d) {
+        showTooltip(this);
+      })
+      .on("mouseout", hideTooltip);
   }
 }
 
@@ -150,7 +182,6 @@ function createLegend(model_names, symbolScale, colorScale) {
   model_names.forEach(function(d, i) {
     var x = pointRadius + 10;
     var y = 23 + i * 20;
-    console.log("model names d:", d);
     legend
       .append("div")
       .attr("class", "column is-one-quarter")
@@ -260,10 +291,16 @@ function drawAxis(variables, x, y) {
     .style("fill", "black");
 }
 
+// Define the div for the tooltip
+let tooltipDiv = d3
+  .select("body")
+  .append("div")
+  .attr("class", "tooltip")
+  .style("opacity", 0);
+
 // Parse the Data
-d3.csv("csv_files/test.csv", function(data) {
+d3.csv("csv_files/mycsvfile.csv", function(data) {
   // Extract the list of variables we want to keep in the plot. Here I keep all except the column called model_name
-  console.log("data:", data);
   const variables = getVariables(data);
 
   const model_names = data.map(d => d["model_name"]);
@@ -272,27 +309,15 @@ d3.csv("csv_files/test.csv", function(data) {
 
   // For each dimension, I build a linear scale. I store all in a y object
   let y = createValueScale(variables, data, height);
-  console.log("y:", y);
 
   // Build the X scale -> it find the best position for each Y axisLeft
   let x = createModelScale(variables, parentDiv.clientWidth);
-  console.log("x:", x);
 
   // The path function take a row of the csv as input, and return x and y coordinates of the line to draw for this raw.
   function calculatePath(row) {
-    console.log("row in path function:", row);
     return d3.line()(
       variables.map(function(variable) {
-        console.log("variable:", variable);
-        console.log(
-          `${variable} -> x(variable) in path function:`,
-          x(variable)
-        );
         let variableValue = row[variable];
-        console.log(
-          `${variable} for y[variable](variableValue) in path function:`,
-          y[variable](variableValue)
-        );
         return [x(variable), y[variable](variableValue)];
       })
     );
