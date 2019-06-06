@@ -255,9 +255,8 @@ function createLegend(model_names, symbolScale, colorScale) {
  * @param data An object representing the dataset that was parsed by D3.
  * @param calculatePath a callback function to calculate a SVG path through the values of each Variable of a climate model
  */
-function drawCoordinateLines(data, calculatePath) {
+function drawCoordinateLines(data, calculatePath, colorScale) {
   // Draw the lines
-  let colorScale_3 = d3.scaleSequential(d3.interpolateViridis);
   svg
     .selectAll("myPath")
     .data(data)
@@ -266,7 +265,7 @@ function drawCoordinateLines(data, calculatePath) {
     .attr("d", calculatePath)
     .style("fill", "none")
     .style("stroke", function(d, i) {
-      return colorScale_3(i / data.length);
+      return colorScale(d.model_name);
     })
     .attr("class", function(d) {
       return "path_regular coordinate_path " + d["model_name"];
@@ -348,7 +347,7 @@ d3.csv("csv_files/test.csv", function(data) {
     );
   }
 
-  drawCoordinateLines(data, calculatePath);
+  drawCoordinateLines(data, calculatePath, colorScale);
 
   let symbolScale = d3.scaleOrdinal(d3.symbols);
 
