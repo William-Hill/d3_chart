@@ -10,8 +10,6 @@ d3.divgrid = function(config) {
 
   function togglePathHighlight(d) {
     let path = d3.select("path." + d["model_name"]);
-    console.log("path stroke width:", path.style("stroke"));
-    console.log("path:", path);
     if (path.classed("path_highlight")) {
       path.classed("path_highlight", false);
       path.classed("path_regular", true);
@@ -22,8 +20,6 @@ d3.divgrid = function(config) {
   }
 
   function rowClicked(d, i) {
-    console.log("rowClicked: ", d);
-    console.log("this:", this);
     togglePathHighlight(d);
     let clickedRow = d3.select(this);
     clickedRow.classed("highlight", !clickedRow.classed("highlight"));
