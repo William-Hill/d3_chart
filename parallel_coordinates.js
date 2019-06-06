@@ -7,9 +7,6 @@ var parentDiv = document.getElementById("my_dataviz");
 let width = parentDiv.clientWidth;
 let height = document.body.clientHeight;
 
-console.log("width:", width);
-console.log("height:", height);
-
 // append the svg object to the body of the page
 var svg = d3
   .select("#my_dataviz")
@@ -185,7 +182,6 @@ function createLegend(model_names, symbolScale, colorScale) {
   model_names.forEach(function(d, i) {
     var x = pointRadius + 10;
     var y = 23 + i * 20;
-    console.log("model names d:", d);
     legend
       .append("div")
       .attr("class", "column is-one-quarter")
@@ -305,7 +301,6 @@ let tooltipDiv = d3
 // Parse the Data
 d3.csv("csv_files/mycsvfile.csv", function(data) {
   // Extract the list of variables we want to keep in the plot. Here I keep all except the column called model_name
-  console.log("data:", data);
   const variables = getVariables(data);
 
   const model_names = data.map(d => d["model_name"]);
@@ -314,27 +309,15 @@ d3.csv("csv_files/mycsvfile.csv", function(data) {
 
   // For each dimension, I build a linear scale. I store all in a y object
   let y = createValueScale(variables, data, height);
-  console.log("y:", y);
 
   // Build the X scale -> it find the best position for each Y axisLeft
   let x = createModelScale(variables, parentDiv.clientWidth);
-  console.log("x:", x);
 
   // The path function take a row of the csv as input, and return x and y coordinates of the line to draw for this raw.
   function calculatePath(row) {
-    console.log("row in path function:", row);
     return d3.line()(
       variables.map(function(variable) {
-        console.log("variable:", variable);
-        console.log(
-          `${variable} -> x(variable) in path function:`,
-          x(variable)
-        );
         let variableValue = row[variable];
-        console.log(
-          `${variable} for y[variable](variableValue) in path function:`,
-          y[variable](variableValue)
-        );
         return [x(variable), y[variable](variableValue)];
       })
     );
