@@ -103,6 +103,35 @@ function plotSymbols(data, x, y, symbolScale, colorScale) {
 }
 
 /**
+ * @description Displays a tooltip with the model name and value when a symbol is moused over
+ * @param symbolDOMElement The symbol SVG element in the DOM
+ */
+function showTooltip(symbolDOMElement) {
+  tooltipDiv
+    .transition()
+    .duration(200)
+    .style("opacity", 0.9);
+  tooltipDiv
+    .html(
+      symbolDOMElement.dataset.model_name +
+        "<br/>" +
+        symbolDOMElement.dataset.value
+    )
+    .style("left", d3.event.pageX + "px")
+    .style("top", d3.event.pageY - 28 + "px");
+}
+
+/**
+ * @description Hides a tooltip moused out of a symbol
+ */
+function hideTooltip() {
+  tooltipDiv
+    .transition()
+    .duration(500)
+    .style("opacity", 0);
+}
+
+/**
  * @description Calculate the position of a symbol on the Parallel Coordinate visualization
  * @param row An object representing a row of the dataset that was parsed by D3.
  * @param x A d3 scale to map climate variable names to a point between 0 and the width of the SVG container
@@ -132,7 +161,13 @@ function calculatePoint(row, x, y, symbolScale, colorScale) {
       })
       .attr("transform", function(d) {
         return "translate(" + xPoint + "," + yPoint + ")";
-      });
+      })
+      .attr("data-model_name", row_model_name)
+      .attr("data-value", value)
+      .on("mouseover", function(d) {
+        showTooltip(this);
+      })
+      .on("mouseout", hideTooltip);
   }
 }
 
@@ -260,8 +295,15 @@ function drawAxis(variables, x, y) {
     .style("fill", "black");
 }
 
+// Define the div for the tooltip
+let tooltipDiv = d3
+  .select("body")
+  .append("div")
+  .attr("class", "tooltip")
+  .style("opacity", 0);
+
 // Parse the Data
-d3.csv("csv_files/test.csv", function(data) {
+d3.csv("csv_files/mycsvfile.csv", function(data) {
   // Extract the list of variables we want to keep in the plot. Here I keep all except the column called model_name
   console.log("data:", data);
   const variables = getVariables(data);
