@@ -129,6 +129,28 @@ function hideTooltip() {
 }
 
 /**
+ * @description Toggles the display of the SVG path for each climate model's values
+ * @param symbolDOMElement The symbol SVG element in the DOM
+ */
+function togglePathHighlight(symbolDOMElement) {
+  let path = d3.select("path." + symbolDOMElement.dataset.model_name);
+  if (path.classed("path_highlight")) {
+    path.classed("path_highlight", false);
+    path.classed("path_regular", true);
+  } else {
+    path.classed("path_highlight", true);
+    path.classed("path_regular", false);
+  }
+
+  let tableRow = d3.select(".row." + symbolDOMElement.dataset.model_name);
+  if (tableRow.classed("highlight")) {
+    tableRow.classed("highlight", false);
+  } else {
+    tableRow.classed("highlight", true);
+  }
+}
+
+/**
  * @description Calculate the position of a symbol on the Parallel Coordinate visualization
  * @param row An object representing a row of the dataset that was parsed by D3.
  * @param x A d3 scale to map climate variable names to a point between 0 and the width of the SVG container
@@ -164,7 +186,10 @@ function calculatePoint(row, x, y, symbolScale, colorScale) {
       .on("mouseover", function(d) {
         showTooltip(this);
       })
-      .on("mouseout", hideTooltip);
+      .on("mouseout", hideTooltip)
+      .on("click", function(d) {
+        togglePathHighlight(this);
+      });
   }
 }
 
@@ -299,7 +324,7 @@ let tooltipDiv = d3
   .style("opacity", 0);
 
 // Parse the Data
-d3.csv("csv_files/mycsvfile.csv", function(data) {
+d3.csv("csv_files/test.csv", function(data) {
   // Extract the list of variables we want to keep in the plot. Here I keep all except the column called model_name
   const variables = getVariables(data);
 
