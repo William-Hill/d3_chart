@@ -8,7 +8,7 @@ let width = parentDiv.clientWidth;
 let height = document.body.clientHeight;
 
 // append the svg object to the body of the page
-var svg = d3
+let svg = d3
   .select("#my_dataviz")
   .append("svg")
   .attr("width", "100%")
@@ -16,6 +16,27 @@ var svg = d3
   .attr("preserveAspectRatio", "xMinYMin")
   .append("g")
   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+// TODO: Cache initial domain and inital coordinate_paths to speed up
+// TODO: synchronize table with char
+// TODO: look at react integration
+function setStaticScale(data, variables, scaleType) {
+  let valueScale = {};
+  let domainValue;
+  for (let i in variables) {
+    name = variables[i];
+    if (scaleType == "static") {
+      domainValue = [0, 2];
+    } else {
+      domainValue = calculateDomain(data, name);
+    }
+    valueScale[name] = d3
+      .scaleLinear()
+      .domain(domainValue)
+      .range([height * 0.6, 0]);
+  }
+  return valueScale;
+}
 
 function calculateDomain(data, name) {
   // d3.extent Returns the minimum and maximum value in the given iterable using natural order
@@ -297,6 +318,7 @@ function drawAxis(variables, x, y) {
     .data(variables)
     .enter()
     .append("g")
+    .attr("class", "y axis")
     // I translate this element to its right position on the x axis
     .attr("transform", function(d) {
       return "translate(" + x(d) + ")";
@@ -336,6 +358,32 @@ d3.csv("csv_files/test.csv", function(data) {
 
   // Build the X scale -> it find the best position for each Y axisLeft
   let x = createModelScale(variables, parentDiv.clientWidth);
+
+  let radioButtons = d3.selectAll("input");
+
+  radioButtons.on("change", function(d) {
+    console.log("radio button this:", this);
+    const selection = this.value;
+    console.log("radio button value:", selection);
+    y = setStaticScale(data, variables, selection);
+    updateAxis(variables, x, y);
+  });
+
+  function updateAxis(variables, x, y) {
+    console.log("inside updateAxis");
+    var t = d3.transition().duration(1000);
+
+    svg
+      .selectAll(".y")
+      .transition(t)
+      .each(function(d) {
+        d3.select(this).call(d3.axisLeft().scale(y[d]));
+        d3.selectAll(".symbol").remove();
+        plotSymbols(data, x, y, symbolScale, colorScale);
+        d3.selectAll(".coordinate_path").remove();
+        drawCoordinateLines(data, calculatePath, colorScale);
+      });
+  }
 
   // The path function take a row of the csv as input, and return x and y coordinates of the line to draw for this raw.
   function calculatePath(row) {

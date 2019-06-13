@@ -70,6 +70,14 @@
       }
       #button_div {
         margin-bottom: 0.8em;
+        margin-left: 0.8em;
+      }
+      .control {
+        margin-left: 0.8em;
+        margin-bottom: 0.8em;
+      }
+      #grid {
+        margin-left: 0.8em;
       }
     </style>
     <script src="https://d3js.org/d3.v4.js"></script>
@@ -133,6 +141,15 @@
       </div>
     </section>
     <!-- Create a div where the graph will take place -->
+    <div class="control">
+      <label class="radio">
+        <input type="radio" name="answer" value="dynamic" checked /> Dynamic
+        Scale
+      </label>
+      <label class="radio">
+        <input type="radio" name="answer" value="static" /> Static Scale
+      </label>
+    </div>
     <div id="viz_div" class="columns">
       <div id="my_dataviz" class="column is-four-fifths"></div>
       <div id="legend" class="column">
