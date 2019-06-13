@@ -14,11 +14,6 @@ function createColorScale(model_names) {
 d3.divgrid = function(config) {
   var columns = [];
   let active;
-  let rowColorScale = function reset() {
-    console.log("inside reset");
-    d3.selectAll(".row").classed("row_highlight", (row_highlight = false));
-    // g.transition().duration(750).attr("transform", "");
-  };
 
   function togglePathHighlight(d) {
     let path = d3.select("path." + d["model_name"]);
@@ -31,7 +26,7 @@ d3.divgrid = function(config) {
     }
   }
 
-  function rowClicked(rowDomElement, d, i, rowColors) {
+  function rowClicked(rowDomElement, d, rowColors) {
     togglePathHighlight(d);
     let clickedRow = d3.select(rowDomElement);
     let modelName = rowDomElement.dataset.model_name;
@@ -44,12 +39,42 @@ d3.divgrid = function(config) {
     }
   }
 
+  function highlightAll(d, rowColors) {
+    let rows = d3
+      .selectAll(".row")
+      .filter(function(d) {
+        return !d3.select(this).classed("row_highlight");
+      })
+      .each(function(d) {
+        rowClicked(this, d, rowColors);
+      });
+  }
+
+  function deselectAll(d, rowColors) {
+    let rows = d3
+      .selectAll(".row")
+      .filter(function(d) {
+        return d3.select(this).classed("row_highlight");
+      })
+      .each(function(d) {
+        rowClicked(this, d, rowColors);
+      });
+  }
+
   var dg = function(selection) {
     if (columns.length == 0) columns = d3.keys(selection.data()[0][0]);
 
     let modelNames = selection.data()[0].map(d => d["model_name"]);
 
     let rowColors = createColorScale(modelNames);
+
+    let selectAllButton = d3.select("#select_all").on("click", function(d) {
+      highlightAll(d, rowColors);
+    });
+
+    let deselectAllButton = d3.select("#deselect_all").on("click", function(d) {
+      deselectAll(d, rowColors);
+    });
 
     // header
     selection
@@ -107,7 +132,7 @@ d3.divgrid = function(config) {
         }
       })
       .on("click", function(d, i) {
-        rowClicked(this, d, i, rowColors);
+        rowClicked(this, d, rowColors);
       });
     // .attr("class", "row");
 
