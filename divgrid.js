@@ -45,11 +45,14 @@ d3.divgrid = function(config) {
       .enter()
       .append("div")
       .attr("class", function(d, i) {
-        return "column col-" + i;
+        return "column is-size-7-desktop col-" + i;
       });
     // .classed("cell", true);
 
     selection.selectAll(".header .column").text(function(d) {
+      if (d == "model_name") {
+        return "name";
+      }
       return d;
     });
 
@@ -85,7 +88,7 @@ d3.divgrid = function(config) {
       .enter()
       .append("div")
       .attr("class", function(d, i) {
-        return "column col-" + i;
+        return "column is-size-7-desktop col-" + i;
       })
       .classed("cell", true);
 
