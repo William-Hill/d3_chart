@@ -7,7 +7,6 @@
     <style type="text/css">
       html,
       body {
-        background: #f7f7f7;
         height: 100%;
         margin: 0;
         padding: 0;
@@ -67,6 +66,10 @@
         border: 0px;
         border-radius: 8px;
         pointer-events: none;
+      }
+      .custom-columns {
+        flex-direction: column;
+        display: flex;
       }
       #button_div {
         margin-bottom: 0.8em;
@@ -134,9 +137,15 @@
     </section>
     <!-- Create a div where the graph will take place -->
     <div id="viz_div" class="columns">
-      <div id="my_dataviz" class="column is-four-fifths"></div>
+      <div
+        id="my_dataviz"
+        class="column is-8-widescreen is-three-fifths-desktop"
+      ></div>
       <div id="legend" class="column">
-        <div id="legendColumns" class="columns is-multiline"></div>
+        <div
+          id="legendColumns"
+          class="columns is-multiline custom-columns"
+        ></div>
       </div>
     </div>
     <div id="button_div">
