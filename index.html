@@ -40,13 +40,6 @@
       .col-0 {
         width: 180px;
       }
-      .row:hover {
-        background-color: #069;
-        color: white;
-      }
-      .highlight {
-        background-color: #2ecc40;
-      }
       .path_highlight {
         stroke-width: 4px;
         opacity: 0.8;
@@ -78,9 +71,12 @@
         flex-direction: column;
         display: flex;
       }
+      #button_div {
+        margin-bottom: 0.8em;
+      }
     </style>
     <script src="https://d3js.org/d3.v4.js"></script>
-    <script src="divgrid.js"></script>
+    <script type="module" src="divgrid.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
     <link
       rel="stylesheet"
@@ -151,6 +147,10 @@
           class="columns is-multiline custom-columns"
         ></div>
       </div>
+    </div>
+    <div id="button_div">
+      <a id="select_all" class="button">Select All</a>
+      <a id="deselect_all" class="button">Deselect All</a>
     </div>
     <div id="grid"></div>
     <script type="module" src="parallel_coordinates.js"></script>
