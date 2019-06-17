@@ -202,15 +202,15 @@ function calculatePoint(row, x, y, symbolScale, colorScale) {
 function createLegend(model_names, symbolScale, colorScale) {
   let legend = d3.select("#legendColumns");
 
-  let pointRadius = 50;
+  let pointRadius = 25;
 
   model_names.forEach(function(d, i) {
     var x = pointRadius + 10;
     var y = 23 + i * 20;
     legend
       .append("div")
-      .attr("class", "column is-one-quarter")
-      .style("height", "8%")
+      .attr("class", "column is-one-quarter-desktop is-one-third-widescreen")
+      .style("height", "9%")
       .attr("id", "column_" + d);
 
     let legendColumn = d3.select("#column_" + d);
@@ -245,7 +245,8 @@ function createLegend(model_names, symbolScale, colorScale) {
       .attr("x", symbolXCoord + 15)
       .attr("y", symbolYCoord)
       .attr("dominant-baseline", "central")
-      .style("font-size", "0.75em")
+      .style("font-size", "0.5rem")
+      // .style("font-size", "0.75em")
       .text(d);
   });
 }
