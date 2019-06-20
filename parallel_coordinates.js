@@ -204,6 +204,7 @@ function calculatePoint(row, x, y, symbolScale, colorScale) {
       })
       .attr("data-model_name", row_model_name)
       .attr("data-value", value)
+      .attr("data-variable", variable)
       .on("mouseover", function(d) {
         showTooltip(this);
       })
@@ -345,7 +346,7 @@ let tooltipDiv = d3
   .style("opacity", 0);
 
 // Parse the Data
-d3.csv("csv_files/test.csv", function(data) {
+d3.csv("csv_files/mycsvfile.csv", function(data) {
   // Extract the list of variables we want to keep in the plot. Here I keep all except the column called model_name
   const variables = getVariables(data);
 
@@ -370,19 +371,30 @@ d3.csv("csv_files/test.csv", function(data) {
   });
 
   function updateAxis(variables, x, y) {
-    console.log("inside updateAxis");
     var t = d3.transition().duration(1000);
 
-    svg
-      .selectAll(".y")
-      .transition(t)
-      .each(function(d) {
-        d3.select(this).call(d3.axisLeft().scale(y[d]));
-        d3.selectAll(".symbol").remove();
-        plotSymbols(data, x, y, symbolScale, colorScale);
-        d3.selectAll(".coordinate_path").remove();
-        drawCoordinateLines(data, calculatePath, colorScale);
-      });
+    svg.selectAll(".y").each(function(d) {
+      d3.select(this)
+        .transition()
+        .duration(1500)
+        .call(d3.axisLeft().scale(y[d]));
+    });
+    d3.selectAll(".symbol").each(function() {
+      let xPoint = x(this.dataset.variable);
+      let yPoint = y[this.dataset.variable](this.dataset.value);
+      d3.select(this)
+        .transition()
+        .duration(1500)
+        .attr("transform", function(d) {
+          return "translate(" + xPoint + "," + yPoint + ")";
+        });
+    });
+    d3.selectAll(".coordinate_path").each(function() {
+      d3.select(this)
+        .transition()
+        .duration(1500)
+        .attr("d", calculatePath);
+    });
   }
 
   // The path function take a row of the csv as input, and return x and y coordinates of the line to draw for this raw.
