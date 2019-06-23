@@ -25,7 +25,7 @@ function setStaticScale(data, variables, scaleType) {
   let domainValue;
   for (let i in variables) {
     name = variables[i];
-    if (scaleType == "static") {
+    if (scaleType == "custom") {
       domainValue = [0, 2];
     } else {
       domainValue = calculateDomain(data, name);
@@ -360,12 +360,31 @@ d3.csv("csv_files/mycsvfile.csv", function(data) {
   // Build the X scale -> it find the best position for each Y axisLeft
   let x = createModelScale(variables, parentDiv.clientWidth);
 
+  var slider = document.getElementById("slider");
+
+  noUiSlider.create(slider, {
+    start: [0, 4],
+    tooltips: [true, true],
+    connect: true,
+    range: {
+      min: 0,
+      max: 20
+    }
+  });
+
+  slider.setAttribute("disabled", true);
+
   let radioButtons = d3.selectAll("input");
 
   radioButtons.on("change", function(d) {
     console.log("radio button this:", this);
     const selection = this.value;
     console.log("radio button value:", selection);
+    if (selection == "custom") {
+      slider.removeAttribute("disabled");
+    } else {
+      slider.setAttribute("disabled", true);
+    }
     y = setStaticScale(data, variables, selection);
     updateAxis(variables, x, y);
   });

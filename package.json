@@ -18,5 +18,8 @@
   "homepage": "https://github.com/PCMDI/d3_chart#readme",
   "devDependencies": {
     "prettier": "1.17.1"
+  },
+  "dependencies": {
+    "nouislider": "^14.0.1"
   }
 }
