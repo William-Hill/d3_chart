@@ -59,6 +59,15 @@ d3.divgrid = function(config) {
       .each(function(d) {
         rowClicked(this, d, rowColors);
       });
+
+    let paths = d3.selectAll(".coordinate_path").filter(function() {
+      return d3.select(this).classed("path_highlight");
+    });
+    if (!paths.empty()) {
+      paths.each(function(d) {
+        togglePathHighlight(d);
+      });
+    }
   }
 
   var dg = function(selection) {

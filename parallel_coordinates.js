@@ -153,7 +153,7 @@ function hideTooltip() {
  * @description Toggles the display of the SVG path for each climate model's values
  * @param symbolDOMElement The symbol SVG element in the DOM
  */
-function togglePathHighlight(symbolDOMElement) {
+function togglePathHighlight(symbolDOMElement, colorScale) {
   let path = d3.select("path." + symbolDOMElement.dataset.model_name);
   if (path.classed("path_highlight")) {
     path.classed("path_highlight", false);
@@ -164,10 +164,14 @@ function togglePathHighlight(symbolDOMElement) {
   }
 
   let tableRow = d3.select(".row." + symbolDOMElement.dataset.model_name);
-  if (tableRow.classed("highlight")) {
-    tableRow.classed("highlight", false);
+  if (tableRow.classed("row_highlight")) {
+    tableRow.classed("row_highlight", false);
+    tableRow.style("background", "none").style("color", "#4a4a4a");
   } else {
-    tableRow.classed("highlight", true);
+    tableRow.classed("row_highlight", true);
+    let modelName = symbolDOMElement.dataset.model_name;
+    tableRow.style("background-color", colorScale(modelName));
+    tableRow.style("color", "#deffffff");
   }
 }
 
@@ -210,7 +214,7 @@ function calculatePoint(row, x, y, symbolScale, colorScale) {
       })
       .on("mouseout", hideTooltip)
       .on("click", function(d) {
-        togglePathHighlight(this);
+        togglePathHighlight(this, colorScale);
       });
   }
 }
