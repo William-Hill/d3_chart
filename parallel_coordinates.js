@@ -8,7 +8,7 @@ let width = parentDiv.clientWidth;
 let height = document.body.clientHeight;
 
 // append the svg object to the body of the page
-var svg = d3
+let svg = d3
   .select("#my_dataviz")
   .append("svg")
   .attr("width", "100%")
@@ -16,6 +16,27 @@ var svg = d3
   .attr("preserveAspectRatio", "xMinYMin")
   .append("g")
   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+// TODO: Cache initial domain and inital coordinate_paths to speed up
+// TODO: synchronize table with char
+// TODO: look at react integration
+function setStaticScale(data, variables, scaleType, lowerBound, upperBound) {
+  let valueScale = {};
+  let domainValue;
+  for (let i in variables) {
+    name = variables[i];
+    if (scaleType == "custom") {
+      domainValue = [lowerBound, upperBound];
+    } else {
+      domainValue = calculateDomain(data, name);
+    }
+    valueScale[name] = d3
+      .scaleLinear()
+      .domain(domainValue)
+      .range([height * 0.6, 0]);
+  }
+  return valueScale;
+}
 
 function calculateDomain(data, name) {
   // d3.extent Returns the minimum and maximum value in the given iterable using natural order
@@ -183,6 +204,7 @@ function calculatePoint(row, x, y, symbolScale, colorScale) {
       })
       .attr("data-model_name", row_model_name)
       .attr("data-value", value)
+      .attr("data-variable", variable)
       .on("mouseover", function(d) {
         showTooltip(this);
       })
@@ -298,6 +320,7 @@ function drawAxis(variables, x, y) {
     .data(variables)
     .enter()
     .append("g")
+    .attr("class", "y axis")
     // I translate this element to its right position on the x axis
     .attr("transform", function(d) {
       return "translate(" + x(d) + ")";
@@ -323,8 +346,20 @@ let tooltipDiv = d3
   .attr("class", "tooltip")
   .style("opacity", 0);
 
+let slider = document.getElementById("slider");
+
+noUiSlider.create(slider, {
+  start: [0, 4],
+  tooltips: [true, true],
+  connect: true,
+  range: {
+    min: 0,
+    max: 20
+  }
+});
+
 // Parse the Data
-d3.csv("csv_files/test.csv", function(data) {
+d3.csv("csv_files/mycsvfile.csv", function(data) {
   // Extract the list of variables we want to keep in the plot. Here I keep all except the column called model_name
   const variables = getVariables(data);
 
@@ -337,6 +372,56 @@ d3.csv("csv_files/test.csv", function(data) {
 
   // Build the X scale -> it find the best position for each Y axisLeft
   let x = createModelScale(variables, parentDiv.clientWidth);
+
+  slider.setAttribute("disabled", true);
+
+  let customScaleButton = document.getElementById("updateScaleButton");
+
+  customScaleButton.addEventListener("click", function() {
+    let values = slider.noUiSlider.get();
+    y = setStaticScale(data, variables, "custom", values[0], values[1]);
+    updateAxis(variables, x, y);
+  });
+
+  let customScaleCheckbox = d3.selectAll("input");
+
+  customScaleCheckbox.on("change", function() {
+    if (this.checked) {
+      slider.removeAttribute("disabled");
+      customScaleButton.disabled = false;
+    } else {
+      slider.setAttribute("disabled", true);
+      y = setStaticScale(data, variables, "static");
+      updateAxis(variables, x, y);
+    }
+  });
+
+  function updateAxis(variables, x, y) {
+    var t = d3.transition().duration(1000);
+
+    svg.selectAll(".y").each(function(d) {
+      d3.select(this)
+        .transition()
+        .duration(1500)
+        .call(d3.axisLeft().scale(y[d]));
+    });
+    d3.selectAll(".symbol").each(function() {
+      let xPoint = x(this.dataset.variable);
+      let yPoint = y[this.dataset.variable](this.dataset.value);
+      d3.select(this)
+        .transition()
+        .duration(1500)
+        .attr("transform", function(d) {
+          return "translate(" + xPoint + "," + yPoint + ")";
+        });
+    });
+    d3.selectAll(".coordinate_path").each(function() {
+      d3.select(this)
+        .transition()
+        .duration(1500)
+        .attr("d", calculatePath);
+    });
+  }
 
   // The path function take a row of the csv as input, and return x and y coordinates of the line to draw for this raw.
   function calculatePath(row) {
