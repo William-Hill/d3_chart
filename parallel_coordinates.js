@@ -20,13 +20,13 @@ let svg = d3
 // TODO: Cache initial domain and inital coordinate_paths to speed up
 // TODO: synchronize table with char
 // TODO: look at react integration
-function setStaticScale(data, variables, scaleType) {
+function setStaticScale(data, variables, scaleType, lowerBound, upperBound) {
   let valueScale = {};
   let domainValue;
   for (let i in variables) {
     name = variables[i];
     if (scaleType == "custom") {
-      domainValue = [0, 2];
+      domainValue = [lowerBound, upperBound];
     } else {
       domainValue = calculateDomain(data, name);
     }
@@ -345,6 +345,18 @@ let tooltipDiv = d3
   .attr("class", "tooltip")
   .style("opacity", 0);
 
+let slider = document.getElementById("slider");
+
+noUiSlider.create(slider, {
+  start: [0, 4],
+  tooltips: [true, true],
+  connect: true,
+  range: {
+    min: 0,
+    max: 20
+  }
+});
+
 // Parse the Data
 d3.csv("csv_files/mycsvfile.csv", function(data) {
   // Extract the list of variables we want to keep in the plot. Here I keep all except the column called model_name
@@ -360,33 +372,27 @@ d3.csv("csv_files/mycsvfile.csv", function(data) {
   // Build the X scale -> it find the best position for each Y axisLeft
   let x = createModelScale(variables, parentDiv.clientWidth);
 
-  var slider = document.getElementById("slider");
-
-  noUiSlider.create(slider, {
-    start: [0, 4],
-    tooltips: [true, true],
-    connect: true,
-    range: {
-      min: 0,
-      max: 20
-    }
-  });
-
   slider.setAttribute("disabled", true);
 
-  let radioButtons = d3.selectAll("input");
+  let customScaleButton = document.getElementById("updateScaleButton");
 
-  radioButtons.on("change", function(d) {
-    console.log("radio button this:", this);
-    const selection = this.value;
-    console.log("radio button value:", selection);
-    if (selection == "custom") {
+  customScaleButton.addEventListener("click", function() {
+    let values = slider.noUiSlider.get();
+    y = setStaticScale(data, variables, "custom", values[0], values[1]);
+    updateAxis(variables, x, y);
+  });
+
+  let customScaleCheckbox = d3.selectAll("input");
+
+  customScaleCheckbox.on("change", function() {
+    if (this.checked) {
       slider.removeAttribute("disabled");
+      customScaleButton.disabled = false;
     } else {
       slider.setAttribute("disabled", true);
+      y = setStaticScale(data, variables, "static");
+      updateAxis(variables, x, y);
     }
-    y = setStaticScale(data, variables, selection);
-    updateAxis(variables, x, y);
   });
 
   function updateAxis(variables, x, y) {

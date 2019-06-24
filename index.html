@@ -84,6 +84,7 @@
         margin-left: auto;
         margin-right: auto;
         margin-top: 2em;
+        margin-bottom: 2em;
       }
     </style>
     <script src="https://d3js.org/d3.v4.js"></script>
@@ -149,14 +150,11 @@
     </section>
     <!-- Create a div where the graph will take place -->
     <div class="control">
-      <label class="radio">
-        <input type="radio" name="answer" value="dynamic" checked /> Dynamic
-        Scale
-      </label>
-      <label class="radio">
-        <input type="radio" name="answer" value="custom" /> Custom Scale
-      </label>
-      <div class="sliderDiv" id="slider">
+      <input type="checkbox" id="customScaleToggle"> Custom Scale </input>
+      <div class="has-text-centered">
+        <div class="sliderDiv" id="slider">
+      </div>
+        <button class="button" id="updateScaleButton" disabled>Update Scale</button>
       </div>
     </div>
     <div id="viz_div" class="columns">
