@@ -359,7 +359,7 @@ noUiSlider.create(slider, {
 });
 
 // Parse the Data
-d3.csv("csv_files/mycsvfile.csv", function(data) {
+d3.csv("csv_files/test.csv", function(data) {
   // Extract the list of variables we want to keep in the plot. Here I keep all except the column called model_name
   const variables = getVariables(data);
 
@@ -391,6 +391,7 @@ d3.csv("csv_files/mycsvfile.csv", function(data) {
       customScaleButton.disabled = false;
     } else {
       slider.setAttribute("disabled", true);
+      customScaleButton.disabled = true;
       y = setStaticScale(data, variables, "static");
       updateAxis(variables, x, y);
     }
