@@ -343,6 +343,16 @@ function drawAxis(variables, x, y) {
     .style("fill", "black");
 }
 
+function uploadFile() {
+  console.log("inside uploadFile");
+  var file = document.getElementById("file_uploader");
+  file.onchange = function() {
+    if (file.files.length > 0) {
+      document.getElementById("file_name_span").innerHTML = file.files[0].name;
+    }
+  };
+}
+
 // Define the div for the tooltip
 let tooltipDiv = d3
   .select("body")
@@ -362,8 +372,18 @@ noUiSlider.create(slider, {
   }
 });
 
+var file = document.getElementById("file_uploader");
+file.onchange = function() {
+  console.log("filename changed");
+  if (file.files.length > 0) {
+    document.getElementById("file_name_span").innerHTML = file.files[0].name;
+  }
+};
+
+let data_file_name = "csv_files/test.csv";
+document.getElementById("file_name_span").innerHTML = data_file_name;
 // Parse the Data
-d3.csv("csv_files/test.csv", function(data) {
+d3.csv(data_file_name, function(data) {
   // Extract the list of variables we want to keep in the plot. Here I keep all except the column called model_name
   const variables = getVariables(data);
 
