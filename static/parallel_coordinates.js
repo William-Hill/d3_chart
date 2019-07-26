@@ -394,6 +394,30 @@ function updateAxis(variables, x, y) {
   });
 }
 
+function addScaleEventHandlers(data, variables, x, y) {
+  let customScaleButton = document.getElementById("updateScaleButton");
+
+  customScaleButton.addEventListener("click", function() {
+    let values = slider.noUiSlider.get();
+    y = setStaticScale(data, variables, "custom", values[0], values[1]);
+    updateAxis(variables, x, y);
+  });
+
+  let customScaleCheckbox = d3.selectAll("input");
+
+  customScaleCheckbox.on("change", function() {
+    if (this.checked) {
+      slider.removeAttribute("disabled");
+      customScaleButton.disabled = false;
+    } else {
+      slider.setAttribute("disabled", true);
+      customScaleButton.disabled = true;
+      y = setStaticScale(data, variables, "static");
+      updateAxis(variables, x, y);
+    }
+  });
+}
+
 // Define the div for the tooltip
 let tooltipDiv = d3
   .select("body")
@@ -443,27 +467,7 @@ d3.csv(data_file_name, function(data) {
 
   slider.setAttribute("disabled", true);
 
-  let customScaleButton = document.getElementById("updateScaleButton");
-
-  customScaleButton.addEventListener("click", function() {
-    let values = slider.noUiSlider.get();
-    y = setStaticScale(data, variables, "custom", values[0], values[1]);
-    updateAxis(variables, x, y);
-  });
-
-  let customScaleCheckbox = d3.selectAll("input");
-
-  customScaleCheckbox.on("change", function() {
-    if (this.checked) {
-      slider.removeAttribute("disabled");
-      customScaleButton.disabled = false;
-    } else {
-      slider.setAttribute("disabled", true);
-      customScaleButton.disabled = true;
-      y = setStaticScale(data, variables, "static");
-      updateAxis(variables, x, y);
-    }
-  });
+  addScaleEventHandlers(data, variables, x, y);
 
   drawCoordinateLines(data, calculatePath, variables, x, y, colorScale);
 
