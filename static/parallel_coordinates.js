@@ -380,9 +380,12 @@ file.onchange = function() {
   }
 };
 
-let data_file_name = "csv_files/test.csv";
+// let data_file_name = "csv_files/test.csv";
+let data_file_name =
+  "/static/mean_climate_json_files/tas_2.5x2.5_regrid2_regrid2_metrics.json.csv";
 document.getElementById("file_name_span").innerHTML = data_file_name;
 // Parse the Data
+// TODO: extract this to updateChart() function
 d3.csv(data_file_name, function(data) {
   // Extract the list of variables we want to keep in the plot. Here I keep all except the column called model_name
   const variables = getVariables(data);

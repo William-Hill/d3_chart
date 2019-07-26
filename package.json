@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/PCMDI/d3_chart#readme",
   "devDependencies": {
+    "eslint": "^6.0.1",
     "prettier": "1.17.1"
   },
   "dependencies": {
