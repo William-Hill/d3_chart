@@ -418,6 +418,39 @@ function addScaleEventHandlers(data, variables, x, y) {
   });
 }
 
+function updateChart(data_file_name) {
+  // Parse the Data
+  d3.csv(data_file_name, function(data) {
+    // Extract the list of variables we want to keep in the plot. Here I keep all except the column called model_name
+    const variables = getVariables(data);
+
+    const model_names = data.map(d => d["model_name"]);
+
+    let colorScale = createColorScale(model_names);
+
+    // For each dimension, I build a linear scale. I store all in a y object
+    let y = createValueScale(variables, data, height);
+
+    // Build the X scale -> it find the best position for each Y axisLeft
+    let x = createModelScale(variables, parentDiv.clientWidth);
+
+    slider.setAttribute("disabled", true);
+
+    addScaleEventHandlers(data, variables, x, y);
+
+    drawCoordinateLines(data, calculatePath, variables, x, y, colorScale);
+
+    let symbolScale = d3.scaleOrdinal(d3.symbols);
+
+    plotSymbols(data, x, y, symbolScale, colorScale);
+    createLegend(model_names, symbolScale, colorScale);
+
+    drawAxis(variables, x, y);
+
+    createTable(data);
+  });
+}
+
 // Define the div for the tooltip
 let tooltipDiv = d3
   .select("body")
@@ -449,34 +482,5 @@ file.onchange = function() {
 let data_file_name =
   "/static/mean_climate_json_files/tas_2.5x2.5_regrid2_regrid2_metrics.json.csv";
 document.getElementById("file_name_span").innerHTML = data_file_name;
-// Parse the Data
-// TODO: extract this to updateChart() function
-d3.csv(data_file_name, function(data) {
-  // Extract the list of variables we want to keep in the plot. Here I keep all except the column called model_name
-  const variables = getVariables(data);
 
-  const model_names = data.map(d => d["model_name"]);
-
-  let colorScale = createColorScale(model_names);
-
-  // For each dimension, I build a linear scale. I store all in a y object
-  let y = createValueScale(variables, data, height);
-
-  // Build the X scale -> it find the best position for each Y axisLeft
-  let x = createModelScale(variables, parentDiv.clientWidth);
-
-  slider.setAttribute("disabled", true);
-
-  addScaleEventHandlers(data, variables, x, y);
-
-  drawCoordinateLines(data, calculatePath, variables, x, y, colorScale);
-
-  let symbolScale = d3.scaleOrdinal(d3.symbols);
-
-  plotSymbols(data, x, y, symbolScale, colorScale);
-  createLegend(model_names, symbolScale, colorScale);
-
-  drawAxis(variables, x, y);
-
-  createTable(data);
-});
+updateChart(data_file_name);
