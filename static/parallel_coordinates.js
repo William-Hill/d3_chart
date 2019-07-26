@@ -282,14 +282,16 @@ function createLegend(model_names, symbolScale, colorScale) {
  * @param data An object representing the dataset that was parsed by D3.
  * @param calculatePath a callback function to calculate a SVG path through the values of each Variable of a climate model
  */
-function drawCoordinateLines(data, calculatePath, colorScale) {
+function drawCoordinateLines(data, calculatePath, variables, x, y, colorScale) {
   // Draw the lines
   svg
     .selectAll("myPath")
     .data(data)
     .enter()
     .append("path")
-    .attr("d", calculatePath)
+    .attr("d", function(d) {
+      return calculatePath(d, variables, x, y);
+    })
     .style("fill", "none")
     .style("stroke", function(d, i) {
       return colorScale(d.model_name);
@@ -351,6 +353,45 @@ function uploadFile() {
       document.getElementById("file_name_span").innerHTML = file.files[0].name;
     }
   };
+}
+
+// The path function take a row of the csv as input, and return x and y coordinates of the line to draw for this raw.
+function calculatePath(row, variables, x, y) {
+  return d3.line()(
+    variables.map(function(variable) {
+      let variableValue = row[variable];
+      return [x(variable), y[variable](variableValue)];
+    })
+  );
+}
+
+function updateAxis(variables, x, y) {
+  var t = d3.transition().duration(1000);
+
+  svg.selectAll(".y").each(function(d) {
+    d3.select(this)
+      .transition()
+      .duration(1500)
+      .call(d3.axisLeft().scale(y[d]));
+  });
+  d3.selectAll(".symbol").each(function() {
+    let xPoint = x(this.dataset.variable);
+    let yPoint = y[this.dataset.variable](this.dataset.value);
+    d3.select(this)
+      .transition()
+      .duration(1500)
+      .attr("transform", function(d) {
+        return "translate(" + xPoint + "," + yPoint + ")";
+      });
+  });
+  d3.selectAll(".coordinate_path").each(function() {
+    d3.select(this)
+      .transition()
+      .duration(1500)
+      .attr("d", function(d) {
+        return calculatePath(d, variables, x, y);
+      });
+  });
 }
 
 // Define the div for the tooltip
@@ -424,44 +465,7 @@ d3.csv(data_file_name, function(data) {
     }
   });
 
-  function updateAxis(variables, x, y) {
-    var t = d3.transition().duration(1000);
-
-    svg.selectAll(".y").each(function(d) {
-      d3.select(this)
-        .transition()
-        .duration(1500)
-        .call(d3.axisLeft().scale(y[d]));
-    });
-    d3.selectAll(".symbol").each(function() {
-      let xPoint = x(this.dataset.variable);
-      let yPoint = y[this.dataset.variable](this.dataset.value);
-      d3.select(this)
-        .transition()
-        .duration(1500)
-        .attr("transform", function(d) {
-          return "translate(" + xPoint + "," + yPoint + ")";
-        });
-    });
-    d3.selectAll(".coordinate_path").each(function() {
-      d3.select(this)
-        .transition()
-        .duration(1500)
-        .attr("d", calculatePath);
-    });
-  }
-
-  // The path function take a row of the csv as input, and return x and y coordinates of the line to draw for this raw.
-  function calculatePath(row) {
-    return d3.line()(
-      variables.map(function(variable) {
-        let variableValue = row[variable];
-        return [x(variable), y[variable](variableValue)];
-      })
-    );
-  }
-
-  drawCoordinateLines(data, calculatePath, colorScale);
+  drawCoordinateLines(data, calculatePath, variables, x, y, colorScale);
 
   let symbolScale = d3.scaleOrdinal(d3.symbols);
 
