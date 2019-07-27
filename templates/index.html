@@ -152,6 +152,13 @@
       </div>
     </section>
     <!-- Create a div where the graph will take place -->
+    <div class="select">
+      <select id="file_selector">
+        {% for file in files %}
+          <option href="{{ file }}">{{ file }}</option>
+        {% endfor %}
+      </select>
+    </div>
     <div class="control">
       <div class="file has-name is-fullwidth">
         <label class="file-label">
