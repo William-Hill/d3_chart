@@ -113,6 +113,12 @@ function createModelScale(variables, width) {
  * @param colorScale an ordinal scale to map climate models to unique colors
  */
 function plotSymbols(data, x, y, symbolScale, colorScale) {
+  let symbolSelection = d3.selectAll(".symbol");
+  if (!symbolSelection.empty()) {
+    console.log("Found existing symbols");
+    console.log("symbolSelection:", symbolSelection);
+    symbolSelection.remove();
+  }
   for (let row in data) {
     if (!isNaN(row)) {
       calculatePoint(data[row], x, y, symbolScale, colorScale);
@@ -284,9 +290,15 @@ function createLegend(model_names, symbolScale, colorScale) {
  */
 function drawCoordinateLines(data, calculatePath, variables, x, y, colorScale) {
   // Draw the lines
-  svg
-    .selectAll("myPath")
-    .data(data)
+  let pathSelection = d3.selectAll(".coordinate_path");
+  if (!pathSelection.empty()) {
+    console.log("Found existing paths");
+    console.log("pathSelection:", pathSelection);
+    pathSelection.remove();
+  }
+
+  let paths = svg.selectAll(".coordinate_path").data(data);
+  paths
     .enter()
     .append("path")
     .attr("d", function(d) {
@@ -320,10 +332,10 @@ function createTable(data) {
  */
 function drawAxis(variables, x, y) {
   // Draw the axis:
-  svg
-    .selectAll("myAxis")
-    // For each dimension of the dataset I add a 'g' element:
-    .data(variables)
+  let axis = svg.selectAll(".axis").data(variables);
+
+  axis.exit().remove();
+  axis
     .enter()
     .append("g")
     .attr("class", "y axis")
@@ -479,13 +491,13 @@ file.onchange = function() {
 };
 
 // let data_file_name = "csv_files/test.csv";
-let data_file_name =
-  "/static/mean_climate_json_files/tas_2.5x2.5_regrid2_regrid2_metrics.json.csv";
+let file_selector = d3.select("#file_selector");
+let default_file_name = file_selector.property("options")[0].innerText;
+let data_file_name = `/static/mean_climate_json_files/${default_file_name}`;
+
 document.getElementById("file_name_span").innerHTML = data_file_name;
 
 updateChart(data_file_name);
-
-let file_selector = d3.select("#file_selector");
 
 file_selector.on("change", function() {
   console.log("this:", this);
