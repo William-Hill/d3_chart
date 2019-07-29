@@ -89,6 +89,13 @@
         margin-top: 2em;
         margin-bottom: 2em;
       }
+      .csv_selector, .submitButton {
+        margin-left: 0.8em;
+        margin-bottom: 0.8em;  
+      }
+      .custom_scale_checkbox {
+        margin-top: 0.8em;  
+      }
     </style>
     <script src="https://d3js.org/d3.v4.js"></script>
     <script type="module" src="{{url_for('static', filename='divgrid.js')}}"></script>
@@ -152,7 +159,7 @@
       </div>
     </section>
     <!-- Create a div where the graph will take place -->
-    <div class="select">
+    <div class="select csv_selector">
       <select id="file_selector">
         {% for file in files %}
           <option href="{{ file }}">{{ file }}</option>
@@ -161,7 +168,7 @@
     </div>
     <div class="control">
       <form method="post" action="/" enctype="multipart/form-data">
-        <div class="file has-name is-fullwidth">
+        <div class="file is-boxed has-name">
           <label class="file-label">
             <input
               id="file_uploader"
@@ -181,11 +188,11 @@
             <span id="file_name_span" class="file-name"> </span>
           </label>
           <p>
-		        <input type="submit" value="Submit">
+		        <input class="button submitButton" type="submit" value="Submit">
 	        </p>
         </div>
       </form>
-      <label class="checkbox">
+      <label class="checkbox custom_scale_checkbox">
         <input type="checkbox" id="customScaleToggle" /> Custom Scale
       </label>
       <div class="has-text-centered">
