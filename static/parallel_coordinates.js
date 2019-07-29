@@ -503,8 +503,6 @@ let file_selector = d3.select("#file_selector");
 let default_file_name = file_selector.property("options")[0].innerText;
 let data_file_name = `/static/mean_climate_json_files/${default_file_name}`;
 
-document.getElementById("file_name_span").innerHTML = data_file_name;
-
 updateChart(data_file_name);
 
 file_selector.on("change", function() {
