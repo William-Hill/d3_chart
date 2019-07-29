@@ -115,8 +115,6 @@ function createModelScale(variables, width) {
 function plotSymbols(data, x, y, symbolScale, colorScale) {
   let symbolSelection = d3.selectAll(".symbol");
   if (!symbolSelection.empty()) {
-    console.log("Found existing symbols");
-    console.log("symbolSelection:", symbolSelection);
     symbolSelection.remove();
   }
   for (let row in data) {
@@ -234,8 +232,6 @@ function calculatePoint(row, x, y, symbolScale, colorScale) {
 function createLegend(model_names, symbolScale, colorScale) {
   let legendColumnsSelection = d3.selectAll("#legendColumns .column");
   if (!legendColumnsSelection.empty()) {
-    console.log("Found existing legend columns");
-    console.log("legendColumnsSelection:", legendColumnsSelection);
     legendColumnsSelection.remove();
   }
 
@@ -299,8 +295,6 @@ function drawCoordinateLines(data, calculatePath, variables, x, y, colorScale) {
   // Draw the lines
   let pathSelection = d3.selectAll(".coordinate_path");
   if (!pathSelection.empty()) {
-    console.log("Found existing paths");
-    console.log("pathSelection:", pathSelection);
     pathSelection.remove();
   }
 
@@ -344,8 +338,6 @@ function createTable(data) {
 function drawAxis(variables, x, y) {
   let axisSelection = d3.selectAll(".axis");
   if (!axisSelection.empty()) {
-    console.log("Found existing paths");
-    console.log("axisSelection:", axisSelection);
     axisSelection.remove();
   }
   // Draw the axis:
@@ -516,9 +508,7 @@ document.getElementById("file_name_span").innerHTML = data_file_name;
 updateChart(data_file_name);
 
 file_selector.on("change", function() {
-  console.log("this:", this);
   var value = this.options[this.selectedIndex].value;
-  console.log("value:", value);
   data_file_name = `/static/mean_climate_json_files/${value}`;
   updateChart(data_file_name);
 });
