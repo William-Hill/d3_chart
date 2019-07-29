@@ -325,6 +325,10 @@ function drawCoordinateLines(data, calculatePath, variables, x, y, colorScale) {
  * @param data An object representing the dataset that was parsed by D3.
  */
 function createTable(data) {
+  d3.select("#grid")
+    .selectAll("*")
+    .remove();
+
   let grid = d3.divgrid();
   d3.select("#grid")
     .datum(data)
