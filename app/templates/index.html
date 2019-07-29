@@ -109,6 +109,7 @@
       defer
       src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"
     ></script>
+    <link href="{{url_for('static', filename='bulma-switch.min.css')}}" rel="stylesheet" />
     <style>
       .column {
         display: flex;
@@ -192,9 +193,10 @@
 	        </p>
         </div>
       </form>
-      <label class="checkbox custom_scale_checkbox">
-        <input type="checkbox" id="customScaleToggle" /> Custom Scale
-      </label>
+      <div class="field custom_scale_checkbox">
+        <input type="checkbox" name="customScaleToggle" class="switch" id="customScaleToggle">
+        <label for="customScaleToggle">Custom Scale</label>
+      </div>
       <div class="has-text-centered">
         <div class="sliderDiv" id="slider"></div>
         <button class="button" id="updateScaleButton" disabled>
