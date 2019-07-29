@@ -232,6 +232,13 @@ function calculatePoint(row, x, y, symbolScale, colorScale) {
  * @param colorScale an ordinal scale to map climate models to unique colors
  */
 function createLegend(model_names, symbolScale, colorScale) {
+  let legendColumnsSelection = d3.selectAll("#legendColumns .column");
+  if (!legendColumnsSelection.empty()) {
+    console.log("Found existing legend columns");
+    console.log("legendColumnsSelection:", legendColumnsSelection);
+    legendColumnsSelection.remove();
+  }
+
   let legend = d3.select("#legendColumns");
 
   let pointRadius = 25;
