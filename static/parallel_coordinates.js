@@ -342,10 +342,15 @@ function createTable(data) {
  * @param y an object with each climate variable as a key and a linear scale to calculate y axis position as a value
  */
 function drawAxis(variables, x, y) {
+  let axisSelection = d3.selectAll(".axis");
+  if (!axisSelection.empty()) {
+    console.log("Found existing paths");
+    console.log("axisSelection:", axisSelection);
+    axisSelection.remove();
+  }
   // Draw the axis:
   let axis = svg.selectAll(".axis").data(variables);
 
-  axis.exit().remove();
   axis
     .enter()
     .append("g")
