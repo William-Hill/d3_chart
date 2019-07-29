@@ -50,5 +50,6 @@ def index(name=None):
     print("climate_csv_file_paths:", climate_csv_file_paths)
     climate_csv_files = [
         Path(filename).name for filename in climate_csv_file_paths]
+    climate_csv_files.sort()
     print("climate_csv_files:", climate_csv_files)
     return render_template('index.html', files=climate_csv_files)
