@@ -113,6 +113,10 @@ function createModelScale(variables, width) {
  * @param colorScale an ordinal scale to map climate models to unique colors
  */
 function plotSymbols(data, x, y, symbolScale, colorScale) {
+  let symbolSelection = d3.selectAll(".symbol");
+  if (!symbolSelection.empty()) {
+    symbolSelection.remove();
+  }
   for (let row in data) {
     if (!isNaN(row)) {
       calculatePoint(data[row], x, y, symbolScale, colorScale);
@@ -226,6 +230,11 @@ function calculatePoint(row, x, y, symbolScale, colorScale) {
  * @param colorScale an ordinal scale to map climate models to unique colors
  */
 function createLegend(model_names, symbolScale, colorScale) {
+  let legendColumnsSelection = d3.selectAll("#legendColumns .column");
+  if (!legendColumnsSelection.empty()) {
+    legendColumnsSelection.remove();
+  }
+
   let legend = d3.select("#legendColumns");
 
   let pointRadius = 25;
@@ -282,14 +291,20 @@ function createLegend(model_names, symbolScale, colorScale) {
  * @param data An object representing the dataset that was parsed by D3.
  * @param calculatePath a callback function to calculate a SVG path through the values of each Variable of a climate model
  */
-function drawCoordinateLines(data, calculatePath, colorScale) {
+function drawCoordinateLines(data, calculatePath, variables, x, y, colorScale) {
   // Draw the lines
-  svg
-    .selectAll("myPath")
-    .data(data)
+  let pathSelection = d3.selectAll(".coordinate_path");
+  if (!pathSelection.empty()) {
+    pathSelection.remove();
+  }
+
+  let paths = svg.selectAll(".coordinate_path").data(data);
+  paths
     .enter()
     .append("path")
-    .attr("d", calculatePath)
+    .attr("d", function(d) {
+      return calculatePath(d, variables, x, y);
+    })
     .style("fill", "none")
     .style("stroke", function(d, i) {
       return colorScale(d.model_name);
@@ -304,6 +319,10 @@ function drawCoordinateLines(data, calculatePath, colorScale) {
  * @param data An object representing the dataset that was parsed by D3.
  */
 function createTable(data) {
+  d3.select("#grid")
+    .selectAll("*")
+    .remove();
+
   let grid = d3.divgrid();
   d3.select("#grid")
     .datum(data)
@@ -317,11 +336,14 @@ function createTable(data) {
  * @param y an object with each climate variable as a key and a linear scale to calculate y axis position as a value
  */
 function drawAxis(variables, x, y) {
+  let axisSelection = d3.selectAll(".axis");
+  if (!axisSelection.empty()) {
+    axisSelection.remove();
+  }
   // Draw the axis:
-  svg
-    .selectAll("myAxis")
-    // For each dimension of the dataset I add a 'g' element:
-    .data(variables)
+  let axis = svg.selectAll(".axis").data(variables);
+
+  axis
     .enter()
     .append("g")
     .attr("class", "y axis")
@@ -343,42 +365,56 @@ function drawAxis(variables, x, y) {
     .style("fill", "black");
 }
 
-// Define the div for the tooltip
-let tooltipDiv = d3
-  .select("body")
-  .append("div")
-  .attr("class", "tooltip")
-  .style("opacity", 0);
+function uploadFile() {
+  console.log("inside uploadFile");
+  var file = document.getElementById("file_uploader");
+  file.onchange = function() {
+    if (file.files.length > 0) {
+      document.getElementById("file_name_span").innerHTML = file.files[0].name;
+    }
+  };
+}
 
-let slider = document.getElementById("slider");
+// The path function take a row of the csv as input, and return x and y coordinates of the line to draw for this raw.
+function calculatePath(row, variables, x, y) {
+  return d3.line()(
+    variables.map(function(variable) {
+      let variableValue = row[variable];
+      return [x(variable), y[variable](variableValue)];
+    })
+  );
+}
 
-noUiSlider.create(slider, {
-  start: [0, 4],
-  tooltips: [true, true],
-  connect: true,
-  range: {
-    min: 0,
-    max: 20
-  }
-});
+function updateAxis(variables, x, y) {
+  var t = d3.transition().duration(1000);
 
-// Parse the Data
-d3.csv("csv_files/test.csv", function(data) {
-  // Extract the list of variables we want to keep in the plot. Here I keep all except the column called model_name
-  const variables = getVariables(data);
+  svg.selectAll(".y").each(function(d) {
+    d3.select(this)
+      .transition()
+      .duration(1500)
+      .call(d3.axisLeft().scale(y[d]));
+  });
+  d3.selectAll(".symbol").each(function() {
+    let xPoint = x(this.dataset.variable);
+    let yPoint = y[this.dataset.variable](this.dataset.value);
+    d3.select(this)
+      .transition()
+      .duration(1500)
+      .attr("transform", function(d) {
+        return "translate(" + xPoint + "," + yPoint + ")";
+      });
+  });
+  d3.selectAll(".coordinate_path").each(function() {
+    d3.select(this)
+      .transition()
+      .duration(1500)
+      .attr("d", function(d) {
+        return calculatePath(d, variables, x, y);
+      });
+  });
+}
 
-  const model_names = data.map(d => d["model_name"]);
-
-  let colorScale = createColorScale(model_names);
-
-  // For each dimension, I build a linear scale. I store all in a y object
-  let y = createValueScale(variables, data, height);
-
-  // Build the X scale -> it find the best position for each Y axisLeft
-  let x = createModelScale(variables, parentDiv.clientWidth);
-
-  slider.setAttribute("disabled", true);
-
+function addScaleEventHandlers(data, variables, x, y) {
   let customScaleButton = document.getElementById("updateScaleButton");
 
   customScaleButton.addEventListener("click", function() {
@@ -400,52 +436,77 @@ d3.csv("csv_files/test.csv", function(data) {
       updateAxis(variables, x, y);
     }
   });
+}
 
-  function updateAxis(variables, x, y) {
-    var t = d3.transition().duration(1000);
+function updateChart(data_file_name) {
+  // Parse the Data
+  d3.csv(data_file_name, function(data) {
+    // Extract the list of variables we want to keep in the plot. Here I keep all except the column called model_name
+    const variables = getVariables(data);
 
-    svg.selectAll(".y").each(function(d) {
-      d3.select(this)
-        .transition()
-        .duration(1500)
-        .call(d3.axisLeft().scale(y[d]));
-    });
-    d3.selectAll(".symbol").each(function() {
-      let xPoint = x(this.dataset.variable);
-      let yPoint = y[this.dataset.variable](this.dataset.value);
-      d3.select(this)
-        .transition()
-        .duration(1500)
-        .attr("transform", function(d) {
-          return "translate(" + xPoint + "," + yPoint + ")";
-        });
-    });
-    d3.selectAll(".coordinate_path").each(function() {
-      d3.select(this)
-        .transition()
-        .duration(1500)
-        .attr("d", calculatePath);
-    });
+    const model_names = data.map(d => d["model_name"]);
+
+    let colorScale = createColorScale(model_names);
+
+    // For each dimension, I build a linear scale. I store all in a y object
+    let y = createValueScale(variables, data, height);
+
+    // Build the X scale -> it find the best position for each Y axisLeft
+    let x = createModelScale(variables, parentDiv.clientWidth);
+
+    slider.setAttribute("disabled", true);
+
+    addScaleEventHandlers(data, variables, x, y);
+
+    drawCoordinateLines(data, calculatePath, variables, x, y, colorScale);
+
+    let symbolScale = d3.scaleOrdinal(d3.symbols);
+
+    plotSymbols(data, x, y, symbolScale, colorScale);
+    createLegend(model_names, symbolScale, colorScale);
+
+    drawAxis(variables, x, y);
+
+    createTable(data);
+  });
+}
+
+// Define the div for the tooltip
+let tooltipDiv = d3
+  .select("body")
+  .append("div")
+  .attr("class", "tooltip")
+  .style("opacity", 0);
+
+let slider = document.getElementById("slider");
+
+noUiSlider.create(slider, {
+  start: [0, 4],
+  tooltips: [true, true],
+  connect: true,
+  range: {
+    min: 0,
+    max: 20
   }
+});
 
-  // The path function take a row of the csv as input, and return x and y coordinates of the line to draw for this raw.
-  function calculatePath(row) {
-    return d3.line()(
-      variables.map(function(variable) {
-        let variableValue = row[variable];
-        return [x(variable), y[variable](variableValue)];
-      })
-    );
+var file = document.getElementById("file_uploader");
+file.onchange = function() {
+  console.log("filename changed");
+  if (file.files.length > 0) {
+    document.getElementById("file_name_span").innerHTML = file.files[0].name;
   }
+};
 
-  drawCoordinateLines(data, calculatePath, colorScale);
+// let data_file_name = "csv_files/test.csv";
+let file_selector = d3.select("#file_selector");
+let default_file_name = file_selector.property("options")[0].innerText;
+let data_file_name = `/static/mean_climate_json_files/${default_file_name}`;
 
-  let symbolScale = d3.scaleOrdinal(d3.symbols);
+updateChart(data_file_name);
 
-  plotSymbols(data, x, y, symbolScale, colorScale);
-  createLegend(model_names, symbolScale, colorScale);
-
-  drawAxis(variables, x, y);
-
-  createTable(data);
+file_selector.on("change", function() {
+  var value = this.options[this.selectedIndex].value;
+  data_file_name = `/static/mean_climate_json_files/${value}`;
+  updateChart(data_file_name);
 });

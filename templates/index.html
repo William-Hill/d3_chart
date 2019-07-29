@@ -89,10 +89,17 @@
         margin-top: 2em;
         margin-bottom: 2em;
       }
+      .csv_selector, .submitButton {
+        margin-left: 0.8em;
+        margin-bottom: 0.8em;  
+      }
+      .custom_scale_checkbox {
+        margin-top: 0.8em;  
+      }
     </style>
     <script src="https://d3js.org/d3.v4.js"></script>
-    <script type="module" src="divgrid.js"></script>
-    <link href="nouislider.min.css" rel="stylesheet">
+    <script type="module" src="{{url_for('static', filename='divgrid.js')}}"></script>
+    <link href="{{url_for('static', filename='nouislider.min.css')}}" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
     <link
       rel="stylesheet"
@@ -152,12 +159,47 @@
       </div>
     </section>
     <!-- Create a div where the graph will take place -->
+    <div class="select csv_selector">
+      <select id="file_selector">
+        {% for file in files %}
+          <option href="{{ file }}">{{ file }}</option>
+        {% endfor %}
+      </select>
+    </div>
     <div class="control">
-      <input type="checkbox" id="customScaleToggle"> Custom Scale </input>
+      <form method="post" action="/" enctype="multipart/form-data">
+        <div class="file is-boxed has-name">
+          <label class="file-label">
+            <input
+              id="file_uploader"
+              class="file-input"
+              type="file"
+              name="file"
+              accept=".csv, .json"
+            />
+            <span class="file-cta">
+              <span class="file-icon">
+                <i class="fas fa-upload"></i>
+              </span>
+              <span class="file-label">
+                Choose a file…
+              </span>
+            </span>
+            <span id="file_name_span" class="file-name"> </span>
+          </label>
+          <p>
+		        <input class="button submitButton" type="submit" value="Submit">
+	        </p>
+        </div>
+      </form>
+      <label class="checkbox custom_scale_checkbox">
+        <input type="checkbox" id="customScaleToggle" /> Custom Scale
+      </label>
       <div class="has-text-centered">
-        <div class="sliderDiv" id="slider">
-      </div>
-        <button class="button" id="updateScaleButton" disabled>Update Scale</button>
+        <div class="sliderDiv" id="slider"></div>
+        <button class="button" id="updateScaleButton" disabled>
+          Update Scale
+        </button>
       </div>
     </div>
     <div id="viz_div" class="columns">
@@ -177,7 +219,7 @@
       <a id="deselect_all" class="button">Deselect All</a>
     </div>
     <div id="grid"></div>
-    <script src="nouislider.min.js"></script>
-    <script type="module" src="parallel_coordinates.js"></script>
+    <script src="{{url_for('static', filename='nouislider.min.js')}}"></script>
+    <script type="module" src="{{url_for('static', filename='parallel_coordinates.js')}}"></script>
   </body>
 </html>
