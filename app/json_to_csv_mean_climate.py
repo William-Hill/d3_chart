@@ -2,6 +2,7 @@ import json
 import csv
 import glob
 import os
+from pathlib import Path
 
 
 def convert_to_csv(filename, region, statistic, output):
@@ -73,19 +74,64 @@ def convert_to_csv(filename, region, statistic, output):
                 pass
 
 
-def main():
+def all_variables_by_season(region, statistic, season):
+    output = []
     json_files_path = os.path.join(
-        os.path.dirname(__file__), '../mean_climate_json_files')
-
+        os.path.dirname(__file__), 'static', 'mean_climate_json_files')
+    
+    headerline = ['model_name']
     mean_climate_files = glob.glob("{}/*.json".format(json_files_path))
+    mean_climate_files.sort()
+    for json_file_path in mean_climate_files:
+        # json_file = os.path.join(json_files_path, climate_file)
+        json_file_name = Path(json_file_path).name
+        variable_name = json_file_name.split("_")[0]
+        headerline.append(variable_name)
 
-    region = "global"
-    statistic = "rms_xy"
+        json_file_object = open(json_file_path)
+        json_object = json.load(json_file_object) 
+        json_file_object.close()
 
-    output = {}
-    for climate_file in mean_climate_files:
-        convert_to_csv(climate_file, region, statistic, output)
+        models_list = list(json_object["RESULTS"].keys())
+        # models_list.sort()
+        # print("models_list:", models_list)
+        if not output:
+            output.append(models_list)
 
+        values = []
+        for model in models_list:
+            values.append(json_object["RESULTS"][model]["defaultReference"]['r1i1p1'][region][statistic][season])
+        output.append(values)
+    
+    # rows = zip(models_list, values)
+    rows = zip(*output)
+    csv_file_name = "all_variable_{}-{}-{}.csv".format(region, statistic, season)
+    with open(csv_file_name, 'w') as csvfile:
+        csvwriter = csv.writer(csvfile)
+        csvwriter.writerow(headerline)
+        for row in rows:
+            try:
+                csvwriter.writerow(row)
+            except Exception as error:
+                print("csv error:", error)
+                pass
+
+
+
+def main():
+    # json_files_path = os.path.join(
+    #     os.path.dirname(__file__), '../mean_climate_json_files')
+
+    # mean_climate_files = glob.glob("{}/*.json".format(json_files_path))
+
+    # region = "global"
+    # statistic = "rms_xy"
+
+    # output = {}
+    # for climate_file in mean_climate_files:
+    #     convert_to_csv(climate_file, region, statistic, output)
+
+    all_variables_by_season("global", "bias_xy", "ann")
 
 if __name__ == "__main__":
     main()
