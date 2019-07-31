@@ -167,6 +167,30 @@
         {% endfor %}
       </select>
     </div>
+
+    <div class="select csv_selector">
+      <select id="region_selector">
+        {% for region in regions %}
+          <option href="{{ region }}">{{ region }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="select csv_selector">
+      <select id="statistic_selector">
+        {% for statistic in statistics %}
+          <option href="{{ statistic }}">{{ statistic }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="select csv_selector">
+      <select id="season_selector">
+        {% for season in seasons %}
+          <option href="{{ season }}">{{ season }}</option>
+        {% endfor %}
+      </select>
+    </div>
     <div class="control">
       <form method="post" action="/" enctype="multipart/form-data">
         <div class="file is-boxed has-name">

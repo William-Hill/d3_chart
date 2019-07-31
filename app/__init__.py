@@ -57,6 +57,8 @@ def get_json_attributes(filename):
     variables = get_variables_from_json_filenames()
     print("variables:", variables)
 
+    return {"models": models_list, "regions": regions, "statistics": statistics, "seasons": season_list}
+
 @app.route('/', methods=['POST'])
 def upload_file():
     if request.method == 'POST':
@@ -87,5 +89,5 @@ def index(name=None):
         Path(filename).name for filename in climate_csv_file_paths]
     climate_csv_files.sort()
 
-    get_json_attributes(os.path.join(data_directory, "pr_2.5x2.5_regrid2_regrid2_metrics.json"))
-    return render_template('index.html', files=climate_csv_files)
+    json_attributes = get_json_attributes(os.path.join(data_directory, "pr_2.5x2.5_regrid2_regrid2_metrics.json"))
+    return render_template('index.html', files=climate_csv_files, statistics=json_attributes["statistics"], regions=json_attributes["regions"], seasons=json_attributes["seasons"])
