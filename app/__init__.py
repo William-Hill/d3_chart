@@ -6,6 +6,7 @@ from pathlib import Path
 from flask import Flask
 from flask import render_template, current_app as app, flash, request, redirect
 from werkzeug.utils import secure_filename
+from app import mean_climate_parser
 
 
 app = Flask(__name__)
@@ -79,6 +80,13 @@ def upload_file():
         else:
             flash('Allowed file types are json or csv')
             return redirect(request.url)
+
+
+@app.route("/plot_by_variable", methods=['POST'])
+def generate_all_variables_by_season():
+    print("request:", request.form)
+    # mean_climate_parserall_variables_by_season(region, statistic, season)
+    return ""
 
 
 @app.route('/')
