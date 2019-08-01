@@ -168,12 +168,19 @@
         </select>
       </div>
       <div class="select csv_selector">
-        <select id="statistic_selector">
+        <select id="statistic_selector" name="statistic">
           {% for statistic in statistics %}
             <option href="{{ statistic }}">{{ statistic }}</option>
           {% endfor %}
         </select>
       </div>
+      <div class="select csv_selector">
+        <select id="season_selector" name="season">
+          {% for season in seasons %}
+            <option href="{{ season }}">{{ season }}</option>
+          {% endfor %}
+        </select>
+    </div>
       <input type="submit" value="Plot">
     </form>
     <!-- Create a div where the graph will take place -->
@@ -181,14 +188,6 @@
       <select id="file_selector">
         {% for file in files %}
           <option href="{{ file }}">{{ file }}</option>
-        {% endfor %}
-      </select>
-    </div>
-
-    <div class="select csv_selector">
-      <select id="season_selector">
-        {% for season in seasons %}
-          <option href="{{ season }}">{{ season }}</option>
         {% endfor %}
       </select>
     </div>

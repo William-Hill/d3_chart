@@ -4,7 +4,7 @@ import json
 import re
 from pathlib import Path
 from flask import Flask
-from flask import render_template, current_app as app, flash, request, redirect
+from flask import render_template, current_app as app, flash, request, redirect, jsonify
 from werkzeug.utils import secure_filename
 from app import mean_climate_parser
 
@@ -43,9 +43,10 @@ def get_json_attributes(filename):
 
     models_list = list(json_object["RESULTS"].keys())
     regions = list(json_object['RESULTS'][models_list[0]]
-                       ['defaultReference']['r1i1p1'].keys())
+                   ['defaultReference']['r1i1p1'].keys())
 
-    statistics = list(json_object['RESULTS'][models_list[0]]['defaultReference']["r1i1p1"][regions[0]].keys())
+    statistics = list(json_object['RESULTS'][models_list[0]]
+                      ['defaultReference']["r1i1p1"][regions[0]].keys())
 
     season_list = list(json_object['RESULTS']['ACCESS1-0']
                        ['defaultReference']['r1i1p1'][regions[0]][statistics[0]].keys())
@@ -59,6 +60,7 @@ def get_json_attributes(filename):
     print("variables:", variables)
 
     return {"models": models_list, "regions": regions, "statistics": statistics, "seasons": season_list}
+
 
 @app.route('/', methods=['POST'])
 def upload_file():
@@ -84,9 +86,21 @@ def upload_file():
 
 @app.route("/plot_by_variable", methods=['POST'])
 def generate_all_variables_by_season():
-    print("request:", request.form)
-    # mean_climate_parserall_variables_by_season(region, statistic, season)
+    print("request:", request.get_json())
+    request_json = request.get_json()
+    mean_climate_parser.all_variables_by_season(
+        request_json["region"], request_json["statistic"], request_json["season"])
     return ""
+
+
+@app.route('/newest_file')
+def get_newest_file():
+    data_directory = os.path.join(app.static_folder, "mean_climate_json_files")
+    climate_json_file_paths = glob.glob("{}/*.csv".format(data_directory))
+    latest_file = max(climate_json_file_paths, key=os.path.getctime)
+    latest_file = Path(latest_file).name
+    print("latest_file:", latest_file)
+    return jsonify(latestfile=latest_file)
 
 
 @app.route('/')
@@ -97,5 +111,6 @@ def index(name=None):
         Path(filename).name for filename in climate_csv_file_paths]
     climate_csv_files.sort()
 
-    json_attributes = get_json_attributes(os.path.join(data_directory, "pr_2.5x2.5_regrid2_regrid2_metrics.json"))
+    json_attributes = get_json_attributes(os.path.join(
+        data_directory, "pr_2.5x2.5_regrid2_regrid2_metrics.json"))
     return render_template('index.html', files=climate_csv_files, statistics=json_attributes["statistics"], regions=json_attributes["regions"], seasons=json_attributes["seasons"])

@@ -78,7 +78,7 @@ def all_variables_by_season(region, statistic, season):
     output = []
     json_files_path = os.path.join(
         os.path.dirname(__file__), 'static', 'mean_climate_json_files')
-    
+
     headerline = ['model_name']
     mean_climate_files = glob.glob("{}/*.json".format(json_files_path))
     mean_climate_files.sort()
@@ -89,7 +89,7 @@ def all_variables_by_season(region, statistic, season):
         headerline.append(variable_name)
 
         json_file_object = open(json_file_path)
-        json_object = json.load(json_file_object) 
+        json_object = json.load(json_file_object)
         json_file_object.close()
 
         models_list = list(json_object["RESULTS"].keys())
@@ -100,13 +100,23 @@ def all_variables_by_season(region, statistic, season):
 
         values = []
         for model in models_list:
-            values.append(json_object["RESULTS"][model]["defaultReference"]['r1i1p1'][region][statistic][season])
+            try:
+                values.append(
+                    json_object["RESULTS"][model]["defaultReference"]['r1i1p1'][region][statistic][season])
+            except KeyError as error:
+                print("error occurred with variable {} regarding model: {}".format(
+                    json_file_name, model))
+                print("error:", error)
+                raise
         output.append(values)
-    
+
     # rows = zip(models_list, values)
     rows = zip(*output)
-    csv_file_name = "all_variable_{}-{}-{}.csv".format(region, statistic, season)
-    with open(csv_file_name, 'w') as csvfile:
+    csv_file_name = "all_variable_{}-{}-{}.csv".format(
+        region, statistic, season)
+    csv_file_path = os.path.join(json_files_path, csv_file_name)
+    print("csv_file_path:", csv_file_path)
+    with open(csv_file_path, 'w') as csvfile:
         csvwriter = csv.writer(csvfile)
         csvwriter.writerow(headerline)
         for row in rows:
@@ -115,7 +125,6 @@ def all_variables_by_season(region, statistic, season):
             except Exception as error:
                 print("csv error:", error)
                 pass
-
 
 
 def main():
@@ -132,6 +141,7 @@ def main():
     #     convert_to_csv(climate_file, region, statistic, output)
 
     all_variables_by_season("global", "bias_xy", "ann")
+
 
 if __name__ == "__main__":
     main()
