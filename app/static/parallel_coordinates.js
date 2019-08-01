@@ -364,16 +364,6 @@ function drawAxis(variables, x, y) {
         .style("fill", "black");
 }
 
-function uploadFile() {
-    console.log("inside uploadFile");
-    var file = document.getElementById("file_uploader");
-    file.onchange = function() {
-        if (file.files.length > 0) {
-            document.getElementById("file_name_span").innerHTML = file.files[0].name;
-        }
-    };
-}
-
 // The path function take a row of the csv as input, and return x and y coordinates of the line to draw for this raw.
 function calculatePath(row, variables, x, y) {
     return d3.line()(
@@ -488,14 +478,6 @@ noUiSlider.create(slider, {
         max: 20
     }
 });
-
-var file = document.getElementById("file_uploader");
-file.onchange = function() {
-    console.log("filename changed");
-    if (file.files.length > 0) {
-        document.getElementById("file_name_span").innerHTML = file.files[0].name;
-    }
-};
 
 // let data_file_name = "csv_files/test.csv";
 let file_selector = d3.select("#file_selector");
