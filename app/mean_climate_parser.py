@@ -2,8 +2,10 @@ import json
 import csv
 import glob
 import os
+import logging
 from pathlib import Path
 
+logging.basicConfig(level=logging.WARNING, format="%(asctime)s:%(levelname)s:%(filename)s:%(funcName)s:%(lineno)d:%(message)s")
 
 def convert_to_csv(filename, region, statistic, output):
     OnePerModel = True
@@ -90,14 +92,20 @@ def all_variables_by_season(region, statistic, season):
         if not output:
             output.append(models_list)
 
+        if variable_name == "tas":
+            region = "land_" + region
+        else:
+            region = region
         values = []
         for model in models_list:
             try:
                 values.append(
                     json_object["RESULTS"][model]["defaultReference"]['r1i1p1'][region][statistic][season])
             except KeyError as error:
-                print("error occurred with variable {} regarding model: {}".format(
+                logging.error("error occurred with variable {} regarding model: {}".format(
                     json_file_name, model))
+                # print("error occurred with variable {} regarding model: {}".format(
+                #     json_file_name, model))
                 print("error:", error)
                 raise
         output.append(values)
