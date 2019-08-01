@@ -1,1 +1,5 @@
 node_modules
+*.pyc
+.DS_Store
+.vscode
+app/__pycache__
