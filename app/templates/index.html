@@ -159,30 +159,52 @@
         /></font>
       </div>
     </section>
-    <form id="selector_form">
-      <div class="select csv_selector">
-        <select id="region_selector" name="region">
-          {% for region in regions %}
-            <option value="{{ region }}" href="{{ region }}">{{ region }}</option>
-          {% endfor %}
-        </select>
+    <nav class="level">
+      <div class="level-item has-text-centered">
+        <div class="control">
+          <label class="radio">
+            <input type="radio" name="answer">
+            Plot by Variable
+          </label>
+          <label class="radio">
+            <input type="radio" name="answer">
+            Plot by Season
+          </label>
+        </div>
       </div>
-      <div class="select csv_selector">
-        <select id="statistic_selector" name="statistic">
-          {% for statistic in statistics %}
-            <option href="{{ statistic }}">{{ statistic }}</option>
-          {% endfor %}
-        </select>
+      <div class="level-item has-text-centered">
+        <form id="selector_form">
+          <div class="select csv_selector">
+            <select id="region_selector" name="region">
+              {% for region in regions %}
+                <option value="{{ region }}" href="{{ region }}">{{ region }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="select csv_selector">
+            <select id="statistic_selector" name="statistic">
+              {% for statistic in statistics %}
+                <option href="{{ statistic }}">{{ statistic }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="select csv_selector">
+            <select id="season_selector" name="season">
+              {% for season in seasons %}
+                <option href="{{ season }}">{{ season }}</option>
+              {% endfor %}
+            </select>
+        </div>
+          <input class="button is-primary" type="submit" value="Plot">
+        </form>
       </div>
-      <div class="select csv_selector">
-        <select id="season_selector" name="season">
-          {% for season in seasons %}
-            <option href="{{ season }}">{{ season }}</option>
-          {% endfor %}
-        </select>
-    </div>
-      <input class="button is-primary" type="submit" value="Plot">
-    </form>
+      <div class="level-item has-text-centered">
+        <div>
+          <p class="heading">Followers</p>
+          <p class="title">456K</p>
+        </div>
+      </div>
+    </nav>
     <!-- Create a div where the graph will take place -->
     <div class="select csv_selector">
       <select id="file_selector">
