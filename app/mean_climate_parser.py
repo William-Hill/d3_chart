@@ -51,11 +51,6 @@ def convert_to_csv(filename, region, statistic, output):
         except Exception as error:
             print("error:", error)
             pass
-    # print("models_list:", models_list)
-    # print("json_object:", json_object["RESULTS"])
-    # print("output:", output)
-    # print("season_list:", season_list)
-    # print("season_list:", type(season_list))
 
     headerline = ['model_name'] + season_list
 
@@ -83,7 +78,6 @@ def all_variables_by_season(region, statistic, season):
     mean_climate_files = glob.glob("{}/*.json".format(json_files_path))
     mean_climate_files.sort()
     for json_file_path in mean_climate_files:
-        # json_file = os.path.join(json_files_path, climate_file)
         json_file_name = Path(json_file_path).name
         variable_name = json_file_name.split("_")[0]
         headerline.append(variable_name)
@@ -93,8 +87,6 @@ def all_variables_by_season(region, statistic, season):
         json_file_object.close()
 
         models_list = list(json_object["RESULTS"].keys())
-        # models_list.sort()
-        # print("models_list:", models_list)
         if not output:
             output.append(models_list)
 
@@ -110,7 +102,6 @@ def all_variables_by_season(region, statistic, season):
                 raise
         output.append(values)
 
-    # rows = zip(models_list, values)
     rows = zip(*output)
     csv_file_name = "all_variable_{}-{}-{}.csv".format(
         region, statistic, season)
@@ -128,19 +119,18 @@ def all_variables_by_season(region, statistic, season):
 
 
 def main():
-    # json_files_path = os.path.join(
-    #     os.path.dirname(__file__), '../mean_climate_json_files')
+    json_files_path = os.path.join(
+        os.path.dirname(__file__), '../mean_climate_json_files')
 
-    # mean_climate_files = glob.glob("{}/*.json".format(json_files_path))
+    mean_climate_files = glob.glob("{}/*.json".format(json_files_path))
 
-    # region = "global"
-    # statistic = "rms_xy"
+    region = "global"
+    statistic = "rms_xy"
 
-    # output = {}
-    # for climate_file in mean_climate_files:
-    #     convert_to_csv(climate_file, region, statistic, output)
+    output = {}
+    for climate_file in mean_climate_files:
+        convert_to_csv(climate_file, region, statistic, output)
 
-    all_variables_by_season("global", "bias_xy", "ann")
 
 
 if __name__ == "__main__":

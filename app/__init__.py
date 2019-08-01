@@ -51,13 +51,7 @@ def get_json_attributes(filename):
     season_list = list(json_object['RESULTS']['ACCESS1-0']
                        ['defaultReference']['r1i1p1'][regions[0]][statistics[0]].keys())
 
-    print("models:", models_list)
-    print("regions:", regions)
-    print("statistics:", statistics)
-    print("seasons:", season_list)
-
     variables = get_variables_from_json_filenames()
-    print("variables:", variables)
 
     return {"models": models_list, "regions": regions, "statistics": statistics, "seasons": season_list}
 
@@ -86,7 +80,6 @@ def upload_file():
 
 @app.route("/plot_by_variable", methods=['POST'])
 def generate_all_variables_by_season():
-    print("request:", request.get_json())
     request_json = request.get_json()
     mean_climate_parser.all_variables_by_season(
         request_json["region"], request_json["statistic"], request_json["season"])
@@ -99,7 +92,6 @@ def get_newest_file():
     climate_json_file_paths = glob.glob("{}/*.csv".format(data_directory))
     latest_file = max(climate_json_file_paths, key=os.path.getctime)
     latest_file = Path(latest_file).name
-    print("latest_file:", latest_file)
     return jsonify(latestfile=latest_file)
 
 
