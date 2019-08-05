@@ -104,6 +104,9 @@
         margin-bottom: 0.8em;
         margin-right: 0.8em;
       }
+      .hide{
+        display: none !important;
+      }
     </style>
     <script src="https://d3js.org/d3.v4.js"></script>
     <script type="module" src="{{url_for('static', filename='divgrid.js')}}"></script>
@@ -219,6 +222,14 @@
               <select id="season_selector" name="season">
                 {% for season in seasons %}
                   <option href="{{ season }}">{{ season }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <label id="variable_label" class="label">Variable</label>
+            <div class="select attribute_selector" id="variable_selector_div">
+              <select id="variable_selector" name="variable">
+                {% for variable in variables %}
+                  <option href="{{ variable }}">{{ variable }}</option>
                 {% endfor %}
               </select>
             </div>
