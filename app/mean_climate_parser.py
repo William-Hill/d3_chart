@@ -7,15 +7,19 @@ from pathlib import Path
 
 logging.basicConfig(level=logging.WARNING, format="%(asctime)s:%(levelname)s:%(filename)s:%(funcName)s:%(lineno)d:%(message)s")
 
-def convert_to_csv(filename, region, statistic, output):
+def all_seasons_for_variable(variable_filename, region, statistic):
+    output = {}
     OnePerModel = True
     model_run_list = []
+    print("region type:", type(region))
+    print("statistic type:", type(statistic))
 
-    json_file_object = open(filename)
+    json_file_object = open(variable_filename)
     json_object = json.load(json_file_object)
     json_file_object.close()
-    models_list = json_object["RESULTS"].keys()
-    season_list = list(json_object['RESULTS']['ACCESS1-0']
+    models_list = list(json_object["RESULTS"].keys())
+    print("models_list[0]:", models_list[0])
+    season_list = list(json_object['RESULTS'][models_list[0]]
                        ['defaultReference']['r1i1p1'][region][statistic].keys())
 
     for model in sorted(models_list, key=lambda s: s.lower()):
@@ -46,7 +50,6 @@ def convert_to_csv(filename, region, statistic, output):
                     output[model_run] = seasons
                     print("seasons:", seasons)
                     print("model_run_list:", model_run_list)
-                    # d2[model_run][mode_season] = tmp / ref
                 except Exception as error:
                     print("error:", error)
                     pass
@@ -56,7 +59,7 @@ def convert_to_csv(filename, region, statistic, output):
 
     headerline = ['model_name'] + season_list
 
-    with open('{}.csv'.format(filename), 'w') as csvfile:
+    with open('{}.csv'.format(variable_filename), 'w') as csvfile:
         csvwriter = csv.writer(csvfile)
         csvwriter.writerow(headerline)
         for i, model_run in enumerate(model_run_list):
@@ -135,10 +138,8 @@ def main():
     region = "global"
     statistic = "rms_xy"
 
-    output = {}
     for climate_file in mean_climate_files:
-        convert_to_csv(climate_file, region, statistic, output)
-
+        all_seasons_for_variable(climate_file, region, statistic)
 
 
 if __name__ == "__main__":
