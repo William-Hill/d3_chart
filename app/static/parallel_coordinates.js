@@ -496,6 +496,26 @@ let selector_form = document.getElementById("selector_form");
 
 selector_form.onsubmit = generate_csv;
 
+function handleErrors(response) {
+    if (!response.ok) throw Error(response.statusText);
+    return response;
+}
+
+function chooseAPIEndpoint() {
+    let level = document.querySelector('input[name="level"]:checked').value;
+    let urlEndpoint;
+    console.log("level:", level);
+    if (level == "plotBySeason") {
+        console.log("plotting by season");
+        urlEndpoint = "/plot_by_season";
+    } else {
+        console.log("plotting by variable");
+        urlEndpoint = "/plot_by_variable";
+    }
+
+    return urlEndpoint;
+}
+
 function generate_csv() {
     var formElement = document.getElementById("selector_form");
     let data = {};
@@ -506,14 +526,16 @@ function generate_csv() {
             data[name] = value;
         }
     }
+    let urlEndpoint = chooseAPIEndpoint();
 
-    fetch("/plot_by_variable", {
+    fetch(urlEndpoint, {
             method: "POST",
             body: JSON.stringify(data),
             headers: {
                 "Content-Type": "application/json"
             }
         })
+        .then(handleErrors)
         .then(res => {
             return fetch("/newest_file");
         })
@@ -527,27 +549,35 @@ function generate_csv() {
     return false;
 }
 
+function hideSelectorDisplay(selectorType) {
+    let label = document.getElementById(`${selectorType}_label`);
+    let selectorDiv = document.getElementById(`${selectorType}_selector_div`);
+    let selector = document.getElementById(`${selectorType}_selector`);
+    selector.disabled = true;
+    label.classList.add("hide");
+    selectorDiv.classList.add("hide");
+}
+
+function showSelectorDisplay(selectorType) {
+    let label = document.getElementById(`${selectorType}_label`);
+    let selectorDiv = document.getElementById(`${selectorType}_selector_div`);
+    let selector = document.getElementById(`${selectorType}_selector`);
+    selector.disabled = false;
+    label.classList.remove("hide");
+    selectorDiv.classList.remove("hide");
+}
+
 function addLevelEventHandler() {
     for (
         var radioCounter = 0; radioCounter < document.getElementsByName("level").length; radioCounter++
     ) {
         document.getElementsByName("level")[radioCounter].onclick = function() {
             if (this.value == "plotBySeason") {
-                let selectVariableElement = document.getElementById(
-                    "variable_selector_div"
-                );
-                let selectVariableLabel = document.getElementById("variable_label");
-                document.getElementById("variable_selector").disabled = true;
-                selectVariableElement.classList.add("hide");
-                selectVariableLabel.classList.add("hide");
+                hideSelectorDisplay("variable");
+                showSelectorDisplay("season");
             } else {
-                let selectVariableElement = document.getElementById(
-                    "variable_selector_div"
-                );
-                selectVariableElement.classList.remove("hide");
-                document.getElementById("variable_selector").disabled = false;
-                let selectVariableLabel = document.getElementById("variable_label");
-                selectVariableLabel.classList.remove("hide");
+                showSelectorDisplay("variable");
+                hideSelectorDisplay("season");
             }
         };
     }
