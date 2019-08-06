@@ -217,9 +217,9 @@
                 {% endfor %}
               </select>
             </div>
-            <label class="label">Season</label>
-            <div class="select attribute_selector">
-              <select id="season_selector" name="season">
+            <label id="season_label" class="label hide">Season</label>
+            <div class="select attribute_selector hide" id="season_selector_div">
+              <select id="season_selector" name="season" disabled="disabled">
                 {% for season in seasons %}
                   <option href="{{ season }}">{{ season }}</option>
                 {% endfor %}
