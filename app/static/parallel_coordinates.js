@@ -544,8 +544,24 @@ function generate_csv() {
             var list = document.getElementById("file_selector");
             list.add(new Option(data["latestfile"], data["latestfile"], false, true));
             list.dispatchEvent(new Event("change"));
+            bulmaToast.toast({
+                message: `Created csv file for ${data["latestfile"]}`,
+                duration: 4000,
+                type: "is-success",
+                position: "bottom-center",
+                animate: { in: "fadeIn", out: "fadeOut" }
+            });
         })
-        .catch(error => console.error("Error:", error));
+        .catch(error => {
+            bulmaToast.toast({
+                message: `Error creating csv file: ${error}`,
+                duration: 4000,
+                type: "is-danger",
+                position: "bottom-center",
+                animate: { in: "fadeIn", out: "fadeOut" }
+            });
+            console.error("Error:", error);
+        });
     return false;
 }
 

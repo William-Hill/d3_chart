@@ -111,6 +111,7 @@
     <script src="https://d3js.org/d3.v4.js"></script>
     <script type="module" src="{{url_for('static', filename='divgrid.js')}}"></script>
     <link href="{{url_for('static', filename='nouislider.min.css')}}" rel="stylesheet" />
+    <link href="{{url_for('static', filename='animate.css')}}" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
     <link
       rel="stylesheet"
@@ -121,6 +122,7 @@
       src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"
     ></script>
     <link href="{{url_for('static', filename='bulma-switch.min.css')}}" rel="stylesheet" />
+    <link href="{{url_for('static', filename='bulma-checkradio.min.css')}}" rel="stylesheet" />
     <style>
       .column {
         display: flex;
@@ -186,15 +188,13 @@
     <nav class="level">
       <div class="level-item has-text-centered">
         <div class="control">
-          <label class="radio">
-            <input type="radio" name="level" value="plotByVariable" checked="checked">
-            Plot by Variable
-          </label>
-          <label class="radio">
-            <input type="radio" value="plotBySeason" name="level">
-            Plot by Season
-          </label>
+          <div class="field">
+            <input type="radio" class="is-checkradio" name="level" id="plotByVariable" value="plotByVariable" checked="checked">
+            <label for="plotByVariable">Plot by Variable</label>
+            <input type="radio" class="is-checkradio" id="plotBySeason" value="plotBySeason" name="level">
+            <label for="plotBySeason">Plot by Season</label>
         </div>
+          </div>
       </div>
     </nav>
     <nav class="level">
@@ -285,6 +285,7 @@
     </div>
     <div id="grid"></div>
     <script src="{{url_for('static', filename='nouislider.min.js')}}"></script>
+    <script src="{{url_for('static', filename='bulma-toast.min.js')}}"></script>
     <script type="module" src="{{url_for('static', filename='parallel_coordinates.js')}}"></script>
   </body>
 </html>
