@@ -364,16 +364,6 @@ function drawAxis(variables, x, y) {
         .style("fill", "black");
 }
 
-function uploadFile() {
-    console.log("inside uploadFile");
-    var file = document.getElementById("file_uploader");
-    file.onchange = function() {
-        if (file.files.length > 0) {
-            document.getElementById("file_name_span").innerHTML = file.files[0].name;
-        }
-    };
-}
-
 // The path function take a row of the csv as input, and return x and y coordinates of the line to draw for this raw.
 function calculatePath(row, variables, x, y) {
     return d3.line()(
@@ -422,7 +412,7 @@ function addScaleEventHandlers(data, variables, x, y) {
         updateAxis(variables, x, y);
     });
 
-    let customScaleCheckbox = d3.selectAll("input");
+    let customScaleCheckbox = d3.select("#customScaleToggle");
 
     customScaleCheckbox.on("change", function() {
         if (this.checked) {
@@ -489,14 +479,6 @@ noUiSlider.create(slider, {
     }
 });
 
-var file = document.getElementById("file_uploader");
-file.onchange = function() {
-    console.log("filename changed");
-    if (file.files.length > 0) {
-        document.getElementById("file_name_span").innerHTML = file.files[0].name;
-    }
-};
-
 // let data_file_name = "csv_files/test.csv";
 let file_selector = d3.select("#file_selector");
 let default_file_name = file_selector.property("options")[0].innerText;
@@ -514,6 +496,26 @@ let selector_form = document.getElementById("selector_form");
 
 selector_form.onsubmit = generate_csv;
 
+function handleErrors(response) {
+    if (!response.ok) throw Error(response.statusText);
+    return response;
+}
+
+function chooseAPIEndpoint() {
+    let level = document.querySelector('input[name="level"]:checked').value;
+    let urlEndpoint;
+    console.log("level:", level);
+    if (level == "plotBySeason") {
+        console.log("plotting by season");
+        urlEndpoint = "/plot_by_season";
+    } else {
+        console.log("plotting by variable");
+        urlEndpoint = "/plot_by_variable";
+    }
+
+    return urlEndpoint;
+}
+
 function generate_csv() {
     var formElement = document.getElementById("selector_form");
     let data = {};
@@ -524,14 +526,16 @@ function generate_csv() {
             data[name] = value;
         }
     }
+    let urlEndpoint = chooseAPIEndpoint();
 
-    fetch("/plot_by_variable", {
+    fetch(urlEndpoint, {
             method: "POST",
             body: JSON.stringify(data),
             headers: {
                 "Content-Type": "application/json"
             }
         })
+        .then(handleErrors)
         .then(res => {
             return fetch("/newest_file");
         })
@@ -540,7 +544,59 @@ function generate_csv() {
             var list = document.getElementById("file_selector");
             list.add(new Option(data["latestfile"], data["latestfile"], false, true));
             list.dispatchEvent(new Event("change"));
+            bulmaToast.toast({
+                message: `Created csv file for ${data["latestfile"]}`,
+                duration: 4000,
+                type: "is-success",
+                position: "bottom-center",
+                animate: { in: "fadeIn", out: "fadeOut" }
+            });
         })
-        .catch(error => console.error("Error:", error));
+        .catch(error => {
+            bulmaToast.toast({
+                message: `Error creating csv file: ${error}`,
+                duration: 4000,
+                type: "is-danger",
+                position: "bottom-center",
+                animate: { in: "fadeIn", out: "fadeOut" }
+            });
+            console.error("Error:", error);
+        });
     return false;
 }
+
+function hideSelectorDisplay(selectorType) {
+    let label = document.getElementById(`${selectorType}_label`);
+    let selectorDiv = document.getElementById(`${selectorType}_selector_div`);
+    let selector = document.getElementById(`${selectorType}_selector`);
+    selector.disabled = true;
+    label.classList.add("hide");
+    selectorDiv.classList.add("hide");
+}
+
+function showSelectorDisplay(selectorType) {
+    let label = document.getElementById(`${selectorType}_label`);
+    let selectorDiv = document.getElementById(`${selectorType}_selector_div`);
+    let selector = document.getElementById(`${selectorType}_selector`);
+    selector.disabled = false;
+    label.classList.remove("hide");
+    selectorDiv.classList.remove("hide");
+}
+
+function addLevelEventHandler() {
+    for (
+        var radioCounter = 0; radioCounter < document.getElementsByName("level").length; radioCounter++
+    ) {
+        document.getElementsByName("level")[radioCounter].onclick = function() {
+            if (this.value == "plotBySeason") {
+                hideSelectorDisplay("variable");
+                showSelectorDisplay("season");
+            } else {
+                showSelectorDisplay("variable");
+                hideSelectorDisplay("season");
+            }
+        };
+    }
+}
+
+addLevelEventHandler();

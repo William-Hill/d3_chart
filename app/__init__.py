@@ -51,8 +51,6 @@ def get_json_attributes(filename):
     season_list = list(json_object['RESULTS']['ACCESS1-0']
                        ['defaultReference']['r1i1p1'][regions[0]][statistics[0]].keys())
 
-    variables = get_variables_from_json_filenames()
-
     return {"models": models_list, "regions": regions, "statistics": statistics, "seasons": season_list}
 
 
@@ -79,7 +77,15 @@ def upload_file():
 
 
 @app.route("/plot_by_variable", methods=['POST'])
-def generate_all_variables_by_season():
+def generate_all_seasons_for_variable():
+    request_json = request.get_json()
+    mean_climate_parser.all_seasons_for_variable(
+        request_json["variable"], request_json["region"], request_json["statistic"])
+    return ""
+
+
+@app.route("/plot_by_season", methods=['POST'])
+def generate_all_seasons_by_variable():
     request_json = request.get_json()
     mean_climate_parser.all_variables_by_season(
         request_json["region"], request_json["statistic"], request_json["season"])
@@ -103,6 +109,8 @@ def index(name=None):
         Path(filename).name for filename in climate_csv_file_paths]
     climate_csv_files.sort()
 
+    variables = get_variables_from_json_filenames()
+
     json_attributes = get_json_attributes(os.path.join(
         data_directory, "pr_2.5x2.5_regrid2_regrid2_metrics.json"))
-    return render_template('index.html', files=climate_csv_files, statistics=json_attributes["statistics"], regions=json_attributes["regions"], seasons=json_attributes["seasons"])
+    return render_template('index.html', files=climate_csv_files, statistics=json_attributes["statistics"], regions=json_attributes["regions"], seasons=json_attributes["seasons"], variables=variables)
