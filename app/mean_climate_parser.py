@@ -5,7 +5,8 @@ import os
 import logging
 from pathlib import Path
 
-logging.basicConfig(level=logging.WARNING, format="%(asctime)s:%(levelname)s:%(filename)s:%(funcName)s:%(lineno)d:%(message)s")
+logging.basicConfig(level=logging.WARNING,
+                    format="%(asctime)s:%(levelname)s:%(filename)s:%(funcName)s:%(lineno)d:%(message)s")
 
 
 def all_seasons_for_variable(variable, region, statistic):
@@ -14,7 +15,8 @@ def all_seasons_for_variable(variable, region, statistic):
 
     json_files_path = os.path.join(
         os.path.dirname(__file__), 'static', 'mean_climate_json_files')
-    variable_filename = os.path.join(json_files_path, "{}_2.5x2.5_regrid2_regrid2_metrics.json".format(variable))
+    variable_filename = os.path.join(
+        json_files_path, "{}_2.5x2.5_regrid2_regrid2_metrics.json".format(variable))
 
     json_file_object = open(variable_filename)
     json_object = json.load(json_file_object)
@@ -46,8 +48,6 @@ def all_seasons_for_variable(variable, region, statistic):
         csvwriter = csv.writer(csvfile)
         csvwriter.writerow(headerline)
         for i, model in enumerate(models_list):
-            print("model:", model)
-            print("model data:", output[model])
             try:
                 csvwriter.writerow(
                     [model]
@@ -90,8 +90,6 @@ def all_variables_by_season(region, statistic, season):
             except KeyError as error:
                 logging.error("error occurred with variable {} regarding model: {}".format(
                     json_file_name, model))
-                # print("error occurred with variable {} regarding model: {}".format(
-                #     json_file_name, model))
                 print("error:", error)
                 raise
         output.append(values)
