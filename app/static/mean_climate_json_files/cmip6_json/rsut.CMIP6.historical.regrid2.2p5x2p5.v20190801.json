@@ -1,0 +1,2462 @@
+{
+    "USER_NOTES": "Provenance and results",
+    "json_structure": [
+        "model",
+        "reference",
+        "rip",
+        "region",
+        "statistic",
+        "season"
+    ],
+    "provenance": {
+        "openGL": {
+            "shading language version": "1.30",
+            "GLX": {
+                "client": {
+                    "version": "1.4",
+                    "vendor": "Mesa Project and SGI"
+                },
+                "version": "1.4",
+                "server": {
+                    "version": "1.4",
+                    "vendor": "SGI"
+                }
+            },
+            "version": "2.1 Mesa 11.0.7",
+            "vendor": "VMware, Inc.",
+            "renderer": "Gallium 0.4 on llvmpipe (LLVM 3.6, 128 bits)"
+        },
+        "userId": "gleckler1",
+        "commandLine": "/export_backup/gleckler1/anaconda3/envs/pmpn_0718/bin/mean_climate_driver.py -p /tmp/tmpkWDv2P.py",
+        "osAccess": false,
+        "platform": {
+            "Version": "2.6.32-754.14.2.el6.x86_64",
+            "OS": "Linux",
+            "Name": "crunchy.llnl.gov"
+        },
+        "conda": {
+            "buildVersion": "3.18.8",
+            "Platform": "linux-64",
+            "Version": "4.7.5",
+            "PythonVersion": "3.7.3.final.0"
+        },
+        "date": "2019-08-01 14:30:13",
+        "packages": {
+            "mesalib": null,
+            "clapack": null,
+            "cdutil": "8.1",
+            "lapack": "3.8.0",
+            "cdms": "3.1.3",
+            "vtk": "8.2.0.1916.8.0.2019.04.29.09.55.g5e9164e3da",
+            "esmpy": "7.1.0",
+            "matplotlib": "2.2.4",
+            "genutil": "8.1.2019.03.15.17.57.gd2395cd.npy1.14",
+            "python": "2.7.15",
+            "scipy": null,
+            "cdtime": "3.1.2.2019.02.09.12.03.gba9e0cb",
+            "vcs": "8.1.2019.07.11.14.20.gff404143",
+            "esmf": "7.1.0",
+            "cdat_info": "8.1.1",
+            "PMP": "v1.2-67-g58694f1",
+            "PMPObs": "See 'References' key below, for detailed obs provenance information.",
+            "numpy": "1.16.4",
+            "uvcdat": null,
+            "blas": "0.3.6",
+            "cdp": "1.4.2"
+        },
+        "history": ""
+    },
+    "RESULTS": {
+        "BCC-CSM2-MR": {
+            "SimulationDescription": {
+                "ModellingGroup": "N/A",
+                "ModelFreeSpace": "N/A",
+                "MIPTable": "Amon",
+                "creation_date": "2018-11-26T05:08:27Z",
+                "ModelActivity": "N/A",
+                "Experiment": "all-forcing simulation of the recent past",
+                "tracking_id": "hdl:21.14100/90f45046-7091-4e9c-928f-6d2a5aecae32",
+                "Realization": "r1i1p1",
+                "Model": "BCC-CSM2-MR"
+            },
+            "default": {
+                "source": "CERES-EBAF-4-0",
+                "r1i1p1": {
+                    "GLOBAL": {
+                        "mean-obs_xy": {
+                            "ann": "99.092",
+                            "djf": "104.984",
+                            "mam": "97.430",
+                            "jja": "94.044",
+                            "son": "99.858"
+                        },
+                        "rmsc_xy": {
+                            "ann": "12.199",
+                            "djf": "15.598",
+                            "mam": "15.522",
+                            "jja": "18.347",
+                            "son": "14.100"
+                        },
+                        "rms_xy": {
+                            "ann": "12.203",
+                            "djf": "15.598",
+                            "mam": "15.532",
+                            "jja": "18.430",
+                            "son": "14.148"
+                        },
+                        "std-obs_xy_devzm": {
+                            "ann": "15.669"
+                        },
+                        "mean_xy": {
+                            "ann": "99.393",
+                            "djf": "105.055",
+                            "mam": "97.995",
+                            "jja": "95.794",
+                            "son": "98.694"
+                        },
+                        "std_xy_devzm": {
+                            "ann": "13.635"
+                        },
+                        "std-obs_xyt": {
+                            "ann": "48.948"
+                        },
+                        "cor_xy": {
+                            "ann": "0.774",
+                            "djf": "0.97",
+                            "mam": "0.89",
+                            "jja": "0.94",
+                            "son": "0.91"
+                        },
+                        "std_xy": {
+                            "ann": "18.417",
+                            "djf": "59.597",
+                            "mam": "33.943",
+                            "jja": "54.772",
+                            "son": "31.007"
+                        },
+                        "rms_xyt": {
+                            "ann": "17.325"
+                        },
+                        "rms_devzm": {
+                            "ann": "10.167"
+                        },
+                        "std_xyt": {
+                            "ann": "51.253"
+                        },
+                        "rms_y": {
+                            "ann": "7.119"
+                        },
+                        "std-obs_xy": {
+                            "ann": "17.853",
+                            "djf": "57.774",
+                            "mam": "32.127",
+                            "jja": "48.216",
+                            "son": "33.455"
+                        },
+                        "bias_xy": {
+                            "ann": "0.301",
+                            "djf": "0.071",
+                            "mam": "0.565",
+                            "jja": "1.750",
+                            "son": "-1.163"
+                        },
+                        "mae_xy": {
+                            "ann": "9.377",
+                            "djf": "11.355",
+                            "mam": "11.329",
+                            "jja": "12.411",
+                            "son": "10.621"
+                        }
+                    },
+                    "TROPICS": {
+                        "mean-obs_xy": {
+                            "ann": "93.898",
+                            "djf": "95.843",
+                            "mam": "91.844",
+                            "jja": "91.875",
+                            "son": "95.971"
+                        },
+                        "rmsc_xy": {
+                            "ann": "12.585",
+                            "djf": "15.623",
+                            "mam": "17.240",
+                            "jja": "15.554",
+                            "son": "15.617"
+                        },
+                        "rms_xy": {
+                            "ann": "13.117",
+                            "djf": "15.938",
+                            "mam": "17.549",
+                            "jja": "16.002",
+                            "son": "16.279"
+                        },
+                        "std-obs_xy_devzm": {
+                            "ann": "19.718"
+                        },
+                        "mean_xy": {
+                            "ann": "90.198",
+                            "djf": "92.694",
+                            "mam": "88.565",
+                            "jja": "88.115",
+                            "son": "91.376"
+                        },
+                        "std_xy_devzm": {
+                            "ann": "14.585"
+                        },
+                        "std-obs_xyt": {
+                            "ann": "27.889"
+                        },
+                        "cor_xy": {
+                            "ann": "0.788",
+                            "djf": "0.83",
+                            "mam": "0.71",
+                            "jja": "0.86",
+                            "son": "0.75"
+                        },
+                        "std_xy": {
+                            "ann": "15.886",
+                            "djf": "25.432",
+                            "mam": "18.976",
+                            "jja": "26.072",
+                            "son": "20.032"
+                        },
+                        "rms_xyt": {
+                            "ann": "17.904"
+                        },
+                        "rms_devzm": {
+                            "ann": "12.290"
+                        },
+                        "std_xyt": {
+                            "ann": "24.673"
+                        },
+                        "rms_y": {
+                            "ann": "4.555"
+                        },
+                        "std-obs_xy": {
+                            "ann": "20.457",
+                            "djf": "27.130",
+                            "mam": "24.180",
+                            "jja": "30.560",
+                            "son": "23.039"
+                        },
+                        "bias_xy": {
+                            "ann": "-3.699",
+                            "djf": "-3.149",
+                            "mam": "-3.280",
+                            "jja": "-3.760",
+                            "son": "-4.595"
+                        },
+                        "mae_xy": {
+                            "ann": "9.983",
+                            "djf": "12.218",
+                            "mam": "13.003",
+                            "jja": "12.124",
+                            "son": "12.552"
+                        }
+                    },
+                    "global": {
+                        "mean-obs_xy": {
+                            "ann": "99.092",
+                            "son": "99.858",
+                            "mam": "97.430",
+                            "jja": "94.044",
+                            "djf": "104.984"
+                        },
+                        "rmsc_xy": {
+                            "ann": "12.199",
+                            "son": "14.100",
+                            "mam": "15.522",
+                            "jja": "18.347",
+                            "djf": "15.598"
+                        },
+                        "rms_xy": {
+                            "ann": "12.203",
+                            "son": "14.148",
+                            "mam": "15.532",
+                            "jja": "18.430",
+                            "djf": "15.598"
+                        },
+                        "std-obs_xy_devzm": {
+                            "ann": "15.669"
+                        },
+                        "mean_xy": {
+                            "ann": "99.393",
+                            "son": "98.694",
+                            "mam": "97.995",
+                            "jja": "95.794",
+                            "djf": "105.055"
+                        },
+                        "std_xy_devzm": {
+                            "ann": "13.635"
+                        },
+                        "std-obs_xyt": {
+                            "ann": "48.948"
+                        },
+                        "cor_xy": {
+                            "ann": "0.774",
+                            "son": "0.91",
+                            "mam": "0.89",
+                            "jja": "0.94",
+                            "djf": "0.97"
+                        },
+                        "std_xy": {
+                            "ann": "18.417",
+                            "son": "31.007",
+                            "mam": "33.943",
+                            "jja": "54.772",
+                            "djf": "59.597"
+                        },
+                        "rms_xyt": {
+                            "ann": "17.325"
+                        },
+                        "rms_devzm": {
+                            "ann": "10.167"
+                        },
+                        "std_xyt": {
+                            "ann": "51.253"
+                        },
+                        "rms_y": {
+                            "ann": "7.119"
+                        },
+                        "std-obs_xy": {
+                            "ann": "17.853",
+                            "son": "33.455",
+                            "mam": "32.127",
+                            "jja": "48.216",
+                            "djf": "57.774"
+                        },
+                        "bias_xy": {
+                            "ann": "0.301",
+                            "son": "-1.163",
+                            "mam": "0.565",
+                            "jja": "1.750",
+                            "djf": "0.071"
+                        },
+                        "mae_xy": {
+                            "ann": "9.377",
+                            "son": "10.621",
+                            "mam": "11.329",
+                            "jja": "12.411",
+                            "djf": "11.355"
+                        }
+                    },
+                    "NHEX": {
+                        "mean-obs_xy": {
+                            "ann": "101.254",
+                            "djf": "52.446",
+                            "mam": "134.878",
+                            "jja": "148.425",
+                            "son": "70.067"
+                        },
+                        "rmsc_xy": {
+                            "ann": "9.972",
+                            "djf": "7.349",
+                            "mam": "15.128",
+                            "jja": "25.041",
+                            "son": "7.235"
+                        },
+                        "rms_xy": {
+                            "ann": "12.875",
+                            "djf": "8.140",
+                            "mam": "17.439",
+                            "jja": "28.794",
+                            "son": "9.535"
+                        },
+                        "std-obs_xy_devzm": {
+                            "ann": "11.861"
+                        },
+                        "mean_xy": {
+                            "ann": "109.399",
+                            "djf": "55.947",
+                            "mam": "143.553",
+                            "jja": "162.640",
+                            "son": "76.277"
+                        },
+                        "std_xy_devzm": {
+                            "ann": "15.465"
+                        },
+                        "std-obs_xyt": {
+                            "ann": "55.366"
+                        },
+                        "cor_xy": {
+                            "ann": "0.795",
+                            "djf": "0.98",
+                            "mam": "0.78",
+                            "jja": "0.90",
+                            "son": "0.94"
+                        },
+                        "std_xy": {
+                            "ann": "16.415",
+                            "djf": "32.286",
+                            "mam": "23.797",
+                            "jja": "53.176",
+                            "son": "21.143"
+                        },
+                        "rms_xyt": {
+                            "ann": "19.363"
+                        },
+                        "rms_devzm": {
+                            "ann": "8.547"
+                        },
+                        "std_xyt": {
+                            "ann": "62.446"
+                        },
+                        "rms_y": {
+                            "ann": "9.562"
+                        },
+                        "std-obs_xy": {
+                            "ann": "12.597",
+                            "djf": "29.186",
+                            "mam": "21.464",
+                            "jja": "37.770",
+                            "son": "20.136"
+                        },
+                        "bias_xy": {
+                            "ann": "8.145",
+                            "djf": "3.501",
+                            "mam": "8.676",
+                            "jja": "14.215",
+                            "son": "6.210"
+                        },
+                        "mae_xy": {
+                            "ann": "10.236",
+                            "djf": "5.258",
+                            "mam": "13.924",
+                            "jja": "22.468",
+                            "son": "7.564"
+                        }
+                    },
+                    "SHEX": {
+                        "mean-obs_xy": {
+                            "ann": "107.319",
+                            "son": "137.420",
+                            "mam": "71.153",
+                            "jja": "44.001",
+                            "djf": "175.803"
+                        },
+                        "rmsc_xy": {
+                            "ann": "9.247",
+                            "son": "13.301",
+                            "mam": "6.704",
+                            "jja": "4.162",
+                            "djf": "19.735"
+                        },
+                        "rms_xy": {
+                            "ann": "9.258",
+                            "son": "13.406",
+                            "mam": "6.705",
+                            "jja": "4.174",
+                            "djf": "19.974"
+                        },
+                        "std-obs_xy_devzm": {
+                            "ann": "7.986"
+                        },
+                        "mean_xy": {
+                            "ann": "107.777",
+                            "son": "135.747",
+                            "mam": "71.296",
+                            "jja": "44.307",
+                            "djf": "178.884"
+                        },
+                        "std_xy_devzm": {
+                            "ann": "8.886"
+                        },
+                        "std-obs_xyt": {
+                            "ann": "69.545"
+                        },
+                        "cor_xy": {
+                            "ann": "0.805",
+                            "son": "0.86",
+                            "mam": "0.94",
+                            "jja": "0.99",
+                            "djf": "0.95"
+                        },
+                        "std_xy": {
+                            "ann": "15.592",
+                            "son": "24.772",
+                            "mam": "18.864",
+                            "jja": "23.984",
+                            "djf": "60.857"
+                        },
+                        "rms_xyt": {
+                            "ann": "13.586"
+                        },
+                        "rms_devzm": {
+                            "ann": "6.188"
+                        },
+                        "std_xyt": {
+                            "ann": "71.071"
+                        },
+                        "rms_y": {
+                            "ann": "6.265"
+                        },
+                        "std-obs_xy": {
+                            "ann": "12.368",
+                            "son": "26.103",
+                            "mam": "18.529",
+                            "jja": "23.100",
+                            "djf": "55.541"
+                        },
+                        "bias_xy": {
+                            "ann": "0.458",
+                            "son": "-1.674",
+                            "mam": "0.143",
+                            "jja": "0.306",
+                            "djf": "3.081"
+                        },
+                        "mae_xy": {
+                            "ann": "7.308",
+                            "son": "9.817",
+                            "mam": "5.388",
+                            "jja": "2.925",
+                            "djf": "15.725"
+                        }
+                    }
+                }
+            },
+            "InputRegionMD5": null,
+            "InputClimatologyFileName": "CMIP6.historical.BCC-CSM2-MR.r1i1p1f1.mon.rsut.198101-200512.AC.v20190801.nc",
+            "units": "W m-2",
+            "InputClimatologyMD5": "e14c8603d364034d5a93bae920cac624",
+            "InputRegionFileName": null
+        },
+        "GISS-E2-1-G": {
+            "SimulationDescription": {
+                "ModellingGroup": "N/A",
+                "ModelFreeSpace": "N/A",
+                "MIPTable": "Amon",
+                "creation_date": "2018-08-27T12:08:41Z",
+                "ModelActivity": "N/A",
+                "Experiment": "all-forcing simulation of the recent past",
+                "tracking_id": "hdl:21.14100/30adfafd-1472-472d-8be0-66b20bc16d2e",
+                "Realization": "r1i1p1",
+                "Model": "GISS-E2-1-G"
+            },
+            "default": {
+                "source": "CERES-EBAF-4-0",
+                "r1i1p1": {
+                    "GLOBAL": {
+                        "mean-obs_xy": {
+                            "ann": "99.092",
+                            "djf": "104.984",
+                            "mam": "97.430",
+                            "jja": "94.044",
+                            "son": "99.858"
+                        },
+                        "rmsc_xy": {
+                            "ann": "11.883",
+                            "djf": "15.299",
+                            "mam": "14.592",
+                            "jja": "16.037",
+                            "son": "15.561"
+                        },
+                        "rms_xy": {
+                            "ann": "12.543",
+                            "djf": "15.420",
+                            "mam": "15.727",
+                            "jja": "16.929",
+                            "son": "15.827"
+                        },
+                        "std-obs_xy_devzm": {
+                            "ann": "15.669"
+                        },
+                        "mean_xy": {
+                            "ann": "103.108",
+                            "djf": "106.915",
+                            "mam": "103.298",
+                            "jja": "99.469",
+                            "son": "102.744"
+                        },
+                        "std_xy_devzm": {
+                            "ann": "15.174"
+                        },
+                        "std-obs_xyt": {
+                            "ann": "48.948"
+                        },
+                        "cor_xy": {
+                            "ann": "0.773",
+                            "djf": "0.96",
+                            "mam": "0.91",
+                            "jja": "0.95",
+                            "son": "0.89"
+                        },
+                        "std_xy": {
+                            "ann": "17.401",
+                            "djf": "56.506",
+                            "mam": "34.247",
+                            "jja": "52.486",
+                            "son": "30.415"
+                        },
+                        "rms_xyt": {
+                            "ann": "17.195"
+                        },
+                        "rms_devzm": {
+                            "ann": "10.792"
+                        },
+                        "std_xyt": {
+                            "ann": "49.607"
+                        },
+                        "rms_y": {
+                            "ann": "6.509"
+                        },
+                        "std-obs_xy": {
+                            "ann": "17.853",
+                            "djf": "57.774",
+                            "mam": "32.127",
+                            "jja": "48.216",
+                            "son": "33.455"
+                        },
+                        "bias_xy": {
+                            "ann": "4.015",
+                            "djf": "1.932",
+                            "mam": "5.868",
+                            "jja": "5.425",
+                            "son": "2.886"
+                        },
+                        "mae_xy": {
+                            "ann": "9.752",
+                            "djf": "11.203",
+                            "mam": "11.331",
+                            "jja": "11.803",
+                            "son": "11.801"
+                        }
+                    },
+                    "TROPICS": {
+                        "mean-obs_xy": {
+                            "ann": "93.898",
+                            "djf": "95.843",
+                            "mam": "91.844",
+                            "jja": "91.875",
+                            "son": "95.971"
+                        },
+                        "rmsc_xy": {
+                            "ann": "13.881",
+                            "djf": "17.148",
+                            "mam": "16.770",
+                            "jja": "17.644",
+                            "son": "19.139"
+                        },
+                        "rms_xy": {
+                            "ann": "14.611",
+                            "djf": "17.755",
+                            "mam": "17.950",
+                            "jja": "18.084",
+                            "son": "19.423"
+                        },
+                        "std-obs_xy_devzm": {
+                            "ann": "19.718"
+                        },
+                        "mean_xy": {
+                            "ann": "98.459",
+                            "djf": "100.444",
+                            "mam": "98.243",
+                            "jja": "95.841",
+                            "son": "99.280"
+                        },
+                        "std_xy_devzm": {
+                            "ann": "18.265"
+                        },
+                        "std-obs_xyt": {
+                            "ann": "27.889"
+                        },
+                        "cor_xy": {
+                            "ann": "0.760",
+                            "djf": "0.81",
+                            "mam": "0.74",
+                            "jja": "0.83",
+                            "son": "0.65"
+                        },
+                        "std_xy": {
+                            "ann": "19.495",
+                            "djf": "28.286",
+                            "mam": "22.405",
+                            "jja": "30.161",
+                            "son": "22.791"
+                        },
+                        "rms_xyt": {
+                            "ann": "19.534"
+                        },
+                        "rms_devzm": {
+                            "ann": "13.266"
+                        },
+                        "std_xyt": {
+                            "ann": "27.632"
+                        },
+                        "rms_y": {
+                            "ann": "5.917"
+                        },
+                        "std-obs_xy": {
+                            "ann": "20.457",
+                            "djf": "27.130",
+                            "mam": "24.180",
+                            "jja": "30.560",
+                            "son": "23.039"
+                        },
+                        "bias_xy": {
+                            "ann": "4.561",
+                            "djf": "4.601",
+                            "mam": "6.398",
+                            "jja": "3.966",
+                            "son": "3.309"
+                        },
+                        "mae_xy": {
+                            "ann": "11.504",
+                            "djf": "13.465",
+                            "mam": "13.755",
+                            "jja": "14.012",
+                            "son": "14.718"
+                        }
+                    },
+                    "global": {
+                        "mean-obs_xy": {
+                            "ann": "99.092",
+                            "son": "99.858",
+                            "mam": "97.430",
+                            "jja": "94.044",
+                            "djf": "104.984"
+                        },
+                        "rmsc_xy": {
+                            "ann": "11.883",
+                            "son": "15.561",
+                            "mam": "14.592",
+                            "jja": "16.037",
+                            "djf": "15.299"
+                        },
+                        "rms_xy": {
+                            "ann": "12.543",
+                            "son": "15.827",
+                            "mam": "15.727",
+                            "jja": "16.929",
+                            "djf": "15.420"
+                        },
+                        "std-obs_xy_devzm": {
+                            "ann": "15.669"
+                        },
+                        "mean_xy": {
+                            "ann": "103.108",
+                            "son": "102.744",
+                            "mam": "103.298",
+                            "jja": "99.469",
+                            "djf": "106.915"
+                        },
+                        "std_xy_devzm": {
+                            "ann": "15.174"
+                        },
+                        "std-obs_xyt": {
+                            "ann": "48.948"
+                        },
+                        "cor_xy": {
+                            "ann": "0.773",
+                            "son": "0.89",
+                            "mam": "0.91",
+                            "jja": "0.95",
+                            "djf": "0.96"
+                        },
+                        "std_xy": {
+                            "ann": "17.401",
+                            "son": "30.415",
+                            "mam": "34.247",
+                            "jja": "52.486",
+                            "djf": "56.506"
+                        },
+                        "rms_xyt": {
+                            "ann": "17.195"
+                        },
+                        "rms_devzm": {
+                            "ann": "10.792"
+                        },
+                        "std_xyt": {
+                            "ann": "49.607"
+                        },
+                        "rms_y": {
+                            "ann": "6.509"
+                        },
+                        "std-obs_xy": {
+                            "ann": "17.853",
+                            "son": "33.455",
+                            "mam": "32.127",
+                            "jja": "48.216",
+                            "djf": "57.774"
+                        },
+                        "bias_xy": {
+                            "ann": "4.015",
+                            "son": "2.886",
+                            "mam": "5.868",
+                            "jja": "5.425",
+                            "djf": "1.932"
+                        },
+                        "mae_xy": {
+                            "ann": "9.752",
+                            "son": "11.801",
+                            "mam": "11.331",
+                            "jja": "11.803",
+                            "djf": "11.203"
+                        }
+                    },
+                    "NHEX": {
+                        "mean-obs_xy": {
+                            "ann": "101.254",
+                            "djf": "52.446",
+                            "mam": "134.878",
+                            "jja": "148.425",
+                            "son": "70.067"
+                        },
+                        "rmsc_xy": {
+                            "ann": "8.229",
+                            "djf": "7.021",
+                            "mam": "14.427",
+                            "jja": "17.732",
+                            "son": "6.724"
+                        },
+                        "rms_xy": {
+                            "ann": "11.816",
+                            "djf": "7.587",
+                            "mam": "17.322",
+                            "jja": "21.740",
+                            "son": "11.202"
+                        },
+                        "std-obs_xy_devzm": {
+                            "ann": "11.861"
+                        },
+                        "mean_xy": {
+                            "ann": "109.734",
+                            "djf": "55.322",
+                            "mam": "144.466",
+                            "jja": "161.004",
+                            "son": "79.027"
+                        },
+                        "std_xy_devzm": {
+                            "ann": "13.599"
+                        },
+                        "std-obs_xyt": {
+                            "ann": "55.366"
+                        },
+                        "cor_xy": {
+                            "ann": "0.814",
+                            "djf": "0.97",
+                            "mam": "0.82",
+                            "jja": "0.91",
+                            "son": "0.95"
+                        },
+                        "std_xy": {
+                            "ann": "14.027",
+                            "djf": "30.689",
+                            "mam": "25.052",
+                            "jja": "42.887",
+                            "son": "22.112"
+                        },
+                        "rms_xyt": {
+                            "ann": "16.923"
+                        },
+                        "rms_devzm": {
+                            "ann": "7.669"
+                        },
+                        "std_xyt": {
+                            "ann": "60.136"
+                        },
+                        "rms_y": {
+                            "ann": "9.023"
+                        },
+                        "std-obs_xy": {
+                            "ann": "12.597",
+                            "djf": "29.186",
+                            "mam": "21.464",
+                            "jja": "37.770",
+                            "son": "20.136"
+                        },
+                        "bias_xy": {
+                            "ann": "8.480",
+                            "djf": "2.875",
+                            "mam": "9.588",
+                            "jja": "12.578",
+                            "son": "8.959"
+                        },
+                        "mae_xy": {
+                            "ann": "9.760",
+                            "djf": "5.066",
+                            "mam": "13.076",
+                            "jja": "16.461",
+                            "son": "9.354"
+                        }
+                    },
+                    "SHEX": {
+                        "mean-obs_xy": {
+                            "ann": "107.319",
+                            "son": "137.420",
+                            "mam": "71.153",
+                            "jja": "44.001",
+                            "djf": "175.803"
+                        },
+                        "rmsc_xy": {
+                            "ann": "7.770",
+                            "son": "10.279",
+                            "mam": "6.618",
+                            "jja": "4.279",
+                            "djf": "15.627"
+                        },
+                        "rms_xy": {
+                            "ann": "7.921",
+                            "son": "11.042",
+                            "mam": "6.706",
+                            "jja": "4.441",
+                            "djf": "16.221"
+                        },
+                        "std-obs_xy_devzm": {
+                            "ann": "7.986"
+                        },
+                        "mean_xy": {
+                            "ann": "105.778",
+                            "son": "133.389",
+                            "mam": "72.239",
+                            "jja": "45.192",
+                            "djf": "171.452"
+                        },
+                        "std_xy_devzm": {
+                            "ann": "8.299"
+                        },
+                        "std-obs_xyt": {
+                            "ann": "69.545"
+                        },
+                        "cor_xy": {
+                            "ann": "0.807",
+                            "son": "0.92",
+                            "mam": "0.94",
+                            "jja": "0.99",
+                            "djf": "0.96"
+                        },
+                        "std_xy": {
+                            "ann": "12.651",
+                            "son": "25.435",
+                            "mam": "18.689",
+                            "jja": "24.525",
+                            "djf": "57.609"
+                        },
+                        "rms_xyt": {
+                            "ann": "11.538"
+                        },
+                        "rms_devzm": {
+                            "ann": "7.421"
+                        },
+                        "std_xyt": {
+                            "ann": "67.866"
+                        },
+                        "rms_y": {
+                            "ann": "3.024"
+                        },
+                        "std-obs_xy": {
+                            "ann": "12.368",
+                            "son": "26.103",
+                            "mam": "18.529",
+                            "jja": "23.100",
+                            "djf": "55.541"
+                        },
+                        "bias_xy": {
+                            "ann": "-1.541",
+                            "son": "-4.032",
+                            "mam": "1.086",
+                            "jja": "1.190",
+                            "djf": "-4.351"
+                        },
+                        "mae_xy": {
+                            "ann": "6.241",
+                            "son": "8.413",
+                            "mam": "4.738",
+                            "jja": "2.726",
+                            "djf": "12.816"
+                        }
+                    }
+                }
+            },
+            "InputRegionMD5": null,
+            "InputClimatologyFileName": "CMIP6.historical.GISS-E2-1-G.r1i1p1f1.mon.rsut.198101-200512.AC.v20190801.nc",
+            "units": "W m-2",
+            "InputClimatologyMD5": "7aa26e86c68bcdb49c9532412e981d98",
+            "InputRegionFileName": null
+        },
+        "IPSL-CM6A-LR": {
+            "SimulationDescription": {
+                "ModellingGroup": "N/A",
+                "ModelFreeSpace": "N/A",
+                "MIPTable": "Amon",
+                "creation_date": "2018-07-11T07:36:41Z",
+                "ModelActivity": "N/A",
+                "Experiment": "all-forcing simulation of the recent past",
+                "tracking_id": "hdl:21.14100/b59c07dc-6967-4907-9b45-3a161249accf",
+                "Realization": "r1i1p1",
+                "Model": "IPSL-CM6A-LR"
+            },
+            "default": {
+                "source": "CERES-EBAF-4-0",
+                "r1i1p1": {
+                    "global": {
+                        "mean-obs_xy": {
+                            "ann": "99.092",
+                            "djf": "104.984",
+                            "mam": "97.430",
+                            "jja": "94.044",
+                            "son": "99.858"
+                        },
+                        "rmsc_xy": {
+                            "ann": "11.203",
+                            "djf": "13.858",
+                            "mam": "13.925",
+                            "jja": "15.986",
+                            "son": "13.593"
+                        },
+                        "rms_xy": {
+                            "ann": "11.900",
+                            "djf": "14.249",
+                            "mam": "14.757",
+                            "jja": "16.184",
+                            "son": "14.605"
+                        },
+                        "std-obs_xy_devzm": {
+                            "ann": "15.669"
+                        },
+                        "mean_xy": {
+                            "ann": "103.105",
+                            "djf": "108.299",
+                            "mam": "102.315",
+                            "jja": "96.568",
+                            "son": "105.199"
+                        },
+                        "std_xy_devzm": {
+                            "ann": "16.570"
+                        },
+                        "std-obs_xyt": {
+                            "ann": "48.948"
+                        },
+                        "cor_xy": {
+                            "ann": "0.818",
+                            "djf": "0.97",
+                            "mam": "0.91",
+                            "jja": "0.94",
+                            "son": "0.92"
+                        },
+                        "std_xy": {
+                            "ann": "19.102",
+                            "djf": "57.764",
+                            "mam": "32.721",
+                            "jja": "46.002",
+                            "son": "35.256"
+                        },
+                        "rms_xyt": {
+                            "ann": "16.247"
+                        },
+                        "rms_devzm": {
+                            "ann": "10.454"
+                        },
+                        "std_xyt": {
+                            "ann": "48.921"
+                        },
+                        "rms_y": {
+                            "ann": "5.420"
+                        },
+                        "std-obs_xy": {
+                            "ann": "17.853",
+                            "djf": "57.774",
+                            "mam": "32.127",
+                            "jja": "48.216",
+                            "son": "33.455"
+                        },
+                        "bias_xy": {
+                            "ann": "4.013",
+                            "djf": "3.315",
+                            "mam": "4.885",
+                            "jja": "2.524",
+                            "son": "5.341"
+                        },
+                        "mae_xy": {
+                            "ann": "8.911",
+                            "djf": "10.465",
+                            "mam": "11.036",
+                            "jja": "12.219",
+                            "son": "10.779"
+                        }
+                    },
+                    "TROPICS": {
+                        "mean-obs_xy": {
+                            "ann": "93.898",
+                            "son": "95.971",
+                            "mam": "91.844",
+                            "jja": "91.875",
+                            "djf": "95.843"
+                        },
+                        "rmsc_xy": {
+                            "ann": "12.897",
+                            "son": "16.681",
+                            "mam": "16.149",
+                            "jja": "16.751",
+                            "djf": "15.008"
+                        },
+                        "rms_xy": {
+                            "ann": "13.247",
+                            "son": "17.051",
+                            "mam": "16.340",
+                            "jja": "17.002",
+                            "djf": "15.342"
+                        },
+                        "std-obs_xy_devzm": {
+                            "ann": "19.718"
+                        },
+                        "mean_xy": {
+                            "ann": "96.926",
+                            "son": "99.504",
+                            "mam": "94.337",
+                            "jja": "94.789",
+                            "djf": "99.029"
+                        },
+                        "std_xy_devzm": {
+                            "ann": "20.129"
+                        },
+                        "std-obs_xyt": {
+                            "ann": "27.889"
+                        },
+                        "cor_xy": {
+                            "ann": "0.806",
+                            "son": "0.76",
+                            "mam": "0.79",
+                            "jja": "0.84",
+                            "djf": "0.86"
+                        },
+                        "std_xy": {
+                            "ann": "20.944",
+                            "son": "25.243",
+                            "mam": "25.026",
+                            "jja": "29.305",
+                            "djf": "29.182"
+                        },
+                        "rms_xyt": {
+                            "ann": "17.918"
+                        },
+                        "rms_devzm": {
+                            "ann": "12.715"
+                        },
+                        "std_xyt": {
+                            "ann": "29.087"
+                        },
+                        "rms_y": {
+                            "ann": "3.768"
+                        },
+                        "std-obs_xy": {
+                            "ann": "20.457",
+                            "son": "23.039",
+                            "mam": "24.180",
+                            "jja": "30.560",
+                            "djf": "27.130"
+                        },
+                        "bias_xy": {
+                            "ann": "3.028",
+                            "son": "3.533",
+                            "mam": "2.492",
+                            "jja": "2.914",
+                            "djf": "3.186"
+                        },
+                        "mae_xy": {
+                            "ann": "9.889",
+                            "son": "12.552",
+                            "mam": "11.872",
+                            "jja": "12.874",
+                            "djf": "11.239"
+                        }
+                    },
+                    "GLOBAL": {
+                        "mean-obs_xy": {
+                            "ann": "99.092",
+                            "son": "99.858",
+                            "mam": "97.430",
+                            "jja": "94.044",
+                            "djf": "104.984"
+                        },
+                        "rmsc_xy": {
+                            "ann": "11.203",
+                            "son": "13.593",
+                            "mam": "13.925",
+                            "jja": "15.986",
+                            "djf": "13.858"
+                        },
+                        "rms_xy": {
+                            "ann": "11.900",
+                            "son": "14.605",
+                            "mam": "14.757",
+                            "jja": "16.184",
+                            "djf": "14.249"
+                        },
+                        "std-obs_xy_devzm": {
+                            "ann": "15.669"
+                        },
+                        "mean_xy": {
+                            "ann": "103.105",
+                            "son": "105.199",
+                            "mam": "102.315",
+                            "jja": "96.568",
+                            "djf": "108.299"
+                        },
+                        "std_xy_devzm": {
+                            "ann": "16.570"
+                        },
+                        "std-obs_xyt": {
+                            "ann": "48.948"
+                        },
+                        "cor_xy": {
+                            "ann": "0.818",
+                            "son": "0.92",
+                            "mam": "0.91",
+                            "jja": "0.94",
+                            "djf": "0.97"
+                        },
+                        "std_xy": {
+                            "ann": "19.102",
+                            "son": "35.256",
+                            "mam": "32.721",
+                            "jja": "46.002",
+                            "djf": "57.764"
+                        },
+                        "rms_xyt": {
+                            "ann": "16.247"
+                        },
+                        "rms_devzm": {
+                            "ann": "10.454"
+                        },
+                        "std_xyt": {
+                            "ann": "48.921"
+                        },
+                        "rms_y": {
+                            "ann": "5.420"
+                        },
+                        "std-obs_xy": {
+                            "ann": "17.853",
+                            "son": "33.455",
+                            "mam": "32.127",
+                            "jja": "48.216",
+                            "djf": "57.774"
+                        },
+                        "bias_xy": {
+                            "ann": "4.013",
+                            "son": "5.341",
+                            "mam": "4.885",
+                            "jja": "2.524",
+                            "djf": "3.315"
+                        },
+                        "mae_xy": {
+                            "ann": "8.911",
+                            "son": "10.779",
+                            "mam": "11.036",
+                            "jja": "12.219",
+                            "djf": "10.465"
+                        }
+                    },
+                    "NHEX": {
+                        "mean-obs_xy": {
+                            "ann": "101.254",
+                            "son": "70.067",
+                            "mam": "134.878",
+                            "jja": "148.425",
+                            "djf": "52.446"
+                        },
+                        "rmsc_xy": {
+                            "ann": "9.680",
+                            "son": "8.690",
+                            "mam": "13.701",
+                            "jja": "18.813",
+                            "djf": "7.869"
+                        },
+                        "rms_xy": {
+                            "ann": "10.117",
+                            "son": "10.255",
+                            "mam": "14.896",
+                            "jja": "19.174",
+                            "djf": "8.914"
+                        },
+                        "std-obs_xy_devzm": {
+                            "ann": "11.861"
+                        },
+                        "mean_xy": {
+                            "ann": "104.196",
+                            "son": "75.513",
+                            "mam": "140.721",
+                            "jja": "144.722",
+                            "djf": "56.633"
+                        },
+                        "std_xy_devzm": {
+                            "ann": "14.547"
+                        },
+                        "std-obs_xyt": {
+                            "ann": "55.366"
+                        },
+                        "cor_xy": {
+                            "ann": "0.789",
+                            "son": "0.93",
+                            "mam": "0.79",
+                            "jja": "0.89",
+                            "djf": "0.97"
+                        },
+                        "std_xy": {
+                            "ann": "15.763",
+                            "son": "23.151",
+                            "mam": "20.244",
+                            "jja": "40.580",
+                            "djf": "32.079"
+                        },
+                        "rms_xyt": {
+                            "ann": "15.178"
+                        },
+                        "rms_devzm": {
+                            "ann": "9.139"
+                        },
+                        "std_xyt": {
+                            "ann": "54.812"
+                        },
+                        "rms_y": {
+                            "ann": "3.803"
+                        },
+                        "std-obs_xy": {
+                            "ann": "12.597",
+                            "son": "20.136",
+                            "mam": "21.464",
+                            "jja": "37.770",
+                            "djf": "29.186"
+                        },
+                        "bias_xy": {
+                            "ann": "2.942",
+                            "son": "5.446",
+                            "mam": "5.844",
+                            "jja": "-3.703",
+                            "djf": "4.187"
+                        },
+                        "mae_xy": {
+                            "ann": "6.774",
+                            "son": "7.037",
+                            "mam": "11.289",
+                            "jja": "14.975",
+                            "djf": "6.140"
+                        }
+                    },
+                    "SHEX": {
+                        "mean-obs_xy": {
+                            "ann": "107.319",
+                            "djf": "175.803",
+                            "mam": "71.153",
+                            "jja": "44.001",
+                            "son": "137.420"
+                        },
+                        "rmsc_xy": {
+                            "ann": "7.959",
+                            "djf": "15.958",
+                            "mam": "6.269",
+                            "jja": "6.195",
+                            "son": "9.392"
+                        },
+                        "rms_xy": {
+                            "ann": "10.635",
+                            "djf": "16.185",
+                            "mam": "10.733",
+                            "jja": "10.094",
+                            "son": "12.907"
+                        },
+                        "std-obs_xy_devzm": {
+                            "ann": "7.986"
+                        },
+                        "mean_xy": {
+                            "ann": "114.373",
+                            "djf": "178.504",
+                            "mam": "79.864",
+                            "jja": "51.970",
+                            "son": "146.274"
+                        },
+                        "std_xy_devzm": {
+                            "ann": "8.734"
+                        },
+                        "std-obs_xyt": {
+                            "ann": "69.545"
+                        },
+                        "cor_xy": {
+                            "ann": "0.778",
+                            "djf": "0.96",
+                            "mam": "0.97",
+                            "jja": "0.99",
+                            "son": "0.93"
+                        },
+                        "std_xy": {
+                            "ann": "11.370",
+                            "djf": "53.334",
+                            "mam": "22.667",
+                            "jja": "28.044",
+                            "son": "22.987"
+                        },
+                        "rms_xyt": {
+                            "ann": "13.539"
+                        },
+                        "rms_devzm": {
+                            "ann": "5.505"
+                        },
+                        "std_xyt": {
+                            "ann": "68.354"
+                        },
+                        "rms_y": {
+                            "ann": "7.695"
+                        },
+                        "std-obs_xy": {
+                            "ann": "12.368",
+                            "djf": "55.541",
+                            "mam": "18.529",
+                            "jja": "23.100",
+                            "son": "26.103"
+                        },
+                        "bias_xy": {
+                            "ann": "7.054",
+                            "djf": "2.701",
+                            "mam": "8.711",
+                            "jja": "7.969",
+                            "son": "8.854"
+                        },
+                        "mae_xy": {
+                            "ann": "9.091",
+                            "djf": "13.243",
+                            "mam": "9.113",
+                            "jja": "8.151",
+                            "son": "10.977"
+                        }
+                    }
+                }
+            },
+            "InputRegionMD5": null,
+            "InputClimatologyFileName": "CMIP6.historical.IPSL-CM6A-LR.r1i1p1f1.mon.rsut.198101-200512.AC.v20190801.nc",
+            "units": "W m-2",
+            "InputClimatologyMD5": "77e6cc8ad686a22668d25de9233d4647",
+            "InputRegionFileName": null
+        },
+        "BCC-ESM1": {
+            "SimulationDescription": {
+                "ModellingGroup": "N/A",
+                "ModelFreeSpace": "N/A",
+                "MIPTable": "Amon",
+                "creation_date": "2018-12-14T05:25:13Z",
+                "ModelActivity": "N/A",
+                "Experiment": "all-forcing simulation of the recent past",
+                "tracking_id": "hdl:21.14100/a7045f25-a956-443c-9624-993014eeaae0",
+                "Realization": "r1i1p1",
+                "Model": "BCC-ESM1"
+            },
+            "default": {
+                "source": "CERES-EBAF-4-0",
+                "r1i1p1": {
+                    "global": {
+                        "mean-obs_xy": {
+                            "ann": "99.092",
+                            "djf": "104.984",
+                            "mam": "97.430",
+                            "jja": "94.044",
+                            "son": "99.858"
+                        },
+                        "rmsc_xy": {
+                            "ann": "13.105",
+                            "djf": "17.916",
+                            "mam": "16.456",
+                            "jja": "19.510",
+                            "son": "15.518"
+                        },
+                        "rms_xy": {
+                            "ann": "14.563",
+                            "djf": "19.144",
+                            "mam": "17.929",
+                            "jja": "20.766",
+                            "son": "16.145"
+                        },
+                        "std-obs_xy_devzm": {
+                            "ann": "15.669"
+                        },
+                        "mean_xy": {
+                            "ann": "105.444",
+                            "djf": "111.728",
+                            "mam": "104.548",
+                            "jja": "101.158",
+                            "son": "104.313"
+                        },
+                        "std_xy_devzm": {
+                            "ann": "13.674"
+                        },
+                        "std-obs_xyt": {
+                            "ann": "48.948"
+                        },
+                        "cor_xy": {
+                            "ann": "0.723",
+                            "djf": "0.96",
+                            "mam": "0.88",
+                            "jja": "0.94",
+                            "son": "0.89"
+                        },
+                        "std_xy": {
+                            "ann": "17.327",
+                            "djf": "60.966",
+                            "mam": "34.339",
+                            "jja": "55.492",
+                            "son": "31.165"
+                        },
+                        "rms_xyt": {
+                            "ann": "19.863"
+                        },
+                        "rms_devzm": {
+                            "ann": "11.383"
+                        },
+                        "std_xyt": {
+                            "ann": "52.207"
+                        },
+                        "rms_y": {
+                            "ann": "9.034"
+                        },
+                        "std-obs_xy": {
+                            "ann": "17.853",
+                            "djf": "57.774",
+                            "mam": "32.127",
+                            "jja": "48.216",
+                            "son": "33.455"
+                        },
+                        "bias_xy": {
+                            "ann": "6.352",
+                            "djf": "6.744",
+                            "mam": "7.118",
+                            "jja": "7.114",
+                            "son": "4.456"
+                        },
+                        "mae_xy": {
+                            "ann": "11.722",
+                            "djf": "14.153",
+                            "mam": "13.546",
+                            "jja": "14.605",
+                            "son": "12.661"
+                        }
+                    },
+                    "TROPICS": {
+                        "mean-obs_xy": {
+                            "ann": "93.898",
+                            "son": "95.971",
+                            "mam": "91.844",
+                            "jja": "91.875",
+                            "djf": "95.843"
+                        },
+                        "rmsc_xy": {
+                            "ann": "15.138",
+                            "son": "18.566",
+                            "mam": "18.413",
+                            "jja": "19.331",
+                            "djf": "19.454"
+                        },
+                        "rms_xy": {
+                            "ann": "16.266",
+                            "son": "19.102",
+                            "mam": "19.641",
+                            "jja": "20.046",
+                            "djf": "20.740"
+                        },
+                        "std-obs_xy_devzm": {
+                            "ann": "19.718"
+                        },
+                        "mean_xy": {
+                            "ann": "99.850",
+                            "son": "100.465",
+                            "mam": "98.681",
+                            "jja": "97.183",
+                            "djf": "103.034"
+                        },
+                        "std_xy_devzm": {
+                            "ann": "15.359"
+                        },
+                        "std-obs_xyt": {
+                            "ann": "27.889"
+                        },
+                        "cor_xy": {
+                            "ann": "0.692",
+                            "son": "0.66",
+                            "mam": "0.67",
+                            "jja": "0.80",
+                            "djf": "0.77"
+                        },
+                        "std_xy": {
+                            "ann": "17.477",
+                            "son": "21.812",
+                            "mam": "20.195",
+                            "jja": "30.399",
+                            "djf": "29.799"
+                        },
+                        "rms_xyt": {
+                            "ann": "21.268"
+                        },
+                        "rms_devzm": {
+                            "ann": "14.092"
+                        },
+                        "std_xyt": {
+                            "ann": "27.939"
+                        },
+                        "rms_y": {
+                            "ann": "7.822"
+                        },
+                        "std-obs_xy": {
+                            "ann": "20.457",
+                            "son": "23.039",
+                            "mam": "24.180",
+                            "jja": "30.560",
+                            "djf": "27.130"
+                        },
+                        "bias_xy": {
+                            "ann": "5.952",
+                            "son": "4.493",
+                            "mam": "6.836",
+                            "jja": "5.308",
+                            "djf": "7.191"
+                        },
+                        "mae_xy": {
+                            "ann": "13.280",
+                            "son": "15.520",
+                            "mam": "15.613",
+                            "jja": "15.921",
+                            "djf": "15.967"
+                        }
+                    },
+                    "GLOBAL": {
+                        "mean-obs_xy": {
+                            "ann": "99.092",
+                            "son": "99.858",
+                            "mam": "97.430",
+                            "jja": "94.044",
+                            "djf": "104.984"
+                        },
+                        "rmsc_xy": {
+                            "ann": "13.105",
+                            "son": "15.518",
+                            "mam": "16.456",
+                            "jja": "19.510",
+                            "djf": "17.916"
+                        },
+                        "rms_xy": {
+                            "ann": "14.563",
+                            "son": "16.145",
+                            "mam": "17.929",
+                            "jja": "20.766",
+                            "djf": "19.144"
+                        },
+                        "std-obs_xy_devzm": {
+                            "ann": "15.669"
+                        },
+                        "mean_xy": {
+                            "ann": "105.444",
+                            "son": "104.313",
+                            "mam": "104.548",
+                            "jja": "101.158",
+                            "djf": "111.728"
+                        },
+                        "std_xy_devzm": {
+                            "ann": "13.674"
+                        },
+                        "std-obs_xyt": {
+                            "ann": "48.948"
+                        },
+                        "cor_xy": {
+                            "ann": "0.723",
+                            "son": "0.89",
+                            "mam": "0.88",
+                            "jja": "0.94",
+                            "djf": "0.96"
+                        },
+                        "std_xy": {
+                            "ann": "17.327",
+                            "son": "31.165",
+                            "mam": "34.339",
+                            "jja": "55.492",
+                            "djf": "60.966"
+                        },
+                        "rms_xyt": {
+                            "ann": "19.863"
+                        },
+                        "rms_devzm": {
+                            "ann": "11.383"
+                        },
+                        "std_xyt": {
+                            "ann": "52.207"
+                        },
+                        "rms_y": {
+                            "ann": "9.034"
+                        },
+                        "std-obs_xy": {
+                            "ann": "17.853",
+                            "son": "33.455",
+                            "mam": "32.127",
+                            "jja": "48.216",
+                            "djf": "57.774"
+                        },
+                        "bias_xy": {
+                            "ann": "6.352",
+                            "son": "4.456",
+                            "mam": "7.118",
+                            "jja": "7.114",
+                            "djf": "6.744"
+                        },
+                        "mae_xy": {
+                            "ann": "11.722",
+                            "son": "12.661",
+                            "mam": "13.546",
+                            "jja": "14.605",
+                            "djf": "14.153"
+                        }
+                    },
+                    "NHEX": {
+                        "mean-obs_xy": {
+                            "ann": "101.254",
+                            "son": "70.067",
+                            "mam": "134.878",
+                            "jja": "148.425",
+                            "djf": "52.446"
+                        },
+                        "rmsc_xy": {
+                            "ann": "10.051",
+                            "son": "6.856",
+                            "mam": "16.811",
+                            "jja": "25.083",
+                            "djf": "8.456"
+                        },
+                        "rms_xy": {
+                            "ann": "14.786",
+                            "son": "10.593",
+                            "mam": "21.672",
+                            "jja": "30.063",
+                            "djf": "9.884"
+                        },
+                        "std-obs_xy_devzm": {
+                            "ann": "11.861"
+                        },
+                        "mean_xy": {
+                            "ann": "112.100",
+                            "son": "78.142",
+                            "mam": "148.554",
+                            "jja": "164.996",
+                            "djf": "57.563"
+                        },
+                        "std_xy_devzm": {
+                            "ann": "13.958"
+                        },
+                        "std-obs_xyt": {
+                            "ann": "55.366"
+                        },
+                        "cor_xy": {
+                            "ann": "0.746",
+                            "son": "0.95",
+                            "mam": "0.71",
+                            "jja": "0.89",
+                            "djf": "0.97"
+                        },
+                        "std_xy": {
+                            "ann": "14.921",
+                            "son": "21.275",
+                            "mam": "22.591",
+                            "jja": "51.415",
+                            "djf": "32.831"
+                        },
+                        "rms_xyt": {
+                            "ann": "21.327"
+                        },
+                        "rms_devzm": {
+                            "ann": "8.672"
+                        },
+                        "std_xyt": {
+                            "ann": "62.876"
+                        },
+                        "rms_y": {
+                            "ann": "11.619"
+                        },
+                        "std-obs_xy": {
+                            "ann": "12.597",
+                            "son": "20.136",
+                            "mam": "21.464",
+                            "jja": "37.770",
+                            "djf": "29.186"
+                        },
+                        "bias_xy": {
+                            "ann": "10.845",
+                            "son": "8.075",
+                            "mam": "13.677",
+                            "jja": "16.571",
+                            "djf": "5.117"
+                        },
+                        "mae_xy": {
+                            "ann": "12.294",
+                            "son": "8.881",
+                            "mam": "17.584",
+                            "jja": "23.593",
+                            "djf": "6.556"
+                        }
+                    },
+                    "SHEX": {
+                        "mean-obs_xy": {
+                            "ann": "107.319",
+                            "djf": "175.803",
+                            "mam": "71.153",
+                            "jja": "44.001",
+                            "son": "137.420"
+                        },
+                        "rmsc_xy": {
+                            "ann": "9.668",
+                            "djf": "21.260",
+                            "mam": "6.584",
+                            "jja": "3.985",
+                            "son": "14.145"
+                        },
+                        "rms_xy": {
+                            "ann": "10.026",
+                            "djf": "22.537",
+                            "mam": "6.679",
+                            "jja": "4.182",
+                            "son": "14.165"
+                        },
+                        "std-obs_xy_devzm": {
+                            "ann": "7.986"
+                        },
+                        "mean_xy": {
+                            "ann": "109.976",
+                            "djf": "183.282",
+                            "mam": "72.276",
+                            "jja": "45.270",
+                            "son": "138.182"
+                        },
+                        "std_xy_devzm": {
+                            "ann": "9.019"
+                        },
+                        "std-obs_xyt": {
+                            "ann": "69.545"
+                        },
+                        "cor_xy": {
+                            "ann": "0.782",
+                            "djf": "0.94",
+                            "mam": "0.94",
+                            "jja": "0.99",
+                            "son": "0.85"
+                        },
+                        "std_xy": {
+                            "ann": "15.491",
+                            "djf": "61.714",
+                            "mam": "18.539",
+                            "jja": "24.402",
+                            "son": "24.884"
+                        },
+                        "rms_xyt": {
+                            "ann": "14.786"
+                        },
+                        "rms_devzm": {
+                            "ann": "6.775"
+                        },
+                        "std_xyt": {
+                            "ann": "72.528"
+                        },
+                        "rms_y": {
+                            "ann": "6.670"
+                        },
+                        "std-obs_xy": {
+                            "ann": "12.368",
+                            "djf": "55.541",
+                            "mam": "18.529",
+                            "jja": "23.100",
+                            "son": "26.103"
+                        },
+                        "bias_xy": {
+                            "ann": "2.657",
+                            "djf": "7.479",
+                            "mam": "1.123",
+                            "jja": "1.269",
+                            "son": "0.762"
+                        },
+                        "mae_xy": {
+                            "ann": "8.036",
+                            "djf": "18.121",
+                            "mam": "5.374",
+                            "jja": "2.986",
+                            "son": "10.724"
+                        }
+                    }
+                }
+            },
+            "InputRegionMD5": null,
+            "InputClimatologyFileName": "CMIP6.historical.BCC-ESM1.r1i1p1f1.mon.rsut.198101-200512.AC.v20190801.nc",
+            "units": "W m-2",
+            "InputClimatologyMD5": "27353530acc56fe68aa9a719321998a5",
+            "InputRegionFileName": null
+        },
+        "MRI-ESM2-0": {
+            "SimulationDescription": {
+                "ModellingGroup": "N/A",
+                "ModelFreeSpace": "N/A",
+                "MIPTable": "Amon",
+                "creation_date": "2019-02-20T02:45:03Z",
+                "ModelActivity": "N/A",
+                "Experiment": "all-forcing simulation of the recent past",
+                "tracking_id": "hdl:21.14100/405a2b90-dfa1-4482-97dc-1f18ac879500",
+                "Realization": "r1i1p1",
+                "Model": "MRI-ESM2-0"
+            },
+            "default": {
+                "source": "CERES-EBAF-4-0",
+                "r1i1p1": {
+                    "GLOBAL": {
+                        "mean-obs_xy": {
+                            "ann": "99.092",
+                            "djf": "104.984",
+                            "mam": "97.430",
+                            "jja": "94.044",
+                            "son": "99.858"
+                        },
+                        "rmsc_xy": {
+                            "ann": "8.907",
+                            "djf": "12.401",
+                            "mam": "11.450",
+                            "jja": "13.068",
+                            "son": "11.618"
+                        },
+                        "rms_xy": {
+                            "ann": "8.969",
+                            "djf": "12.425",
+                            "mam": "11.498",
+                            "jja": "13.162",
+                            "son": "11.647"
+                        },
+                        "std-obs_xy_devzm": {
+                            "ann": "15.669"
+                        },
+                        "mean_xy": {
+                            "ann": "100.143",
+                            "djf": "105.764",
+                            "mam": "98.480",
+                            "jja": "95.615",
+                            "son": "100.680"
+                        },
+                        "std_xy_devzm": {
+                            "ann": "15.104"
+                        },
+                        "std-obs_xyt": {
+                            "ann": "48.948"
+                        },
+                        "cor_xy": {
+                            "ann": "0.873",
+                            "djf": "0.98",
+                            "mam": "0.94",
+                            "jja": "0.96",
+                            "son": "0.94"
+                        },
+                        "std_xy": {
+                            "ann": "17.404",
+                            "djf": "57.700",
+                            "mam": "32.560",
+                            "jja": "48.624",
+                            "son": "33.486"
+                        },
+                        "rms_xyt": {
+                            "ann": "13.679"
+                        },
+                        "rms_devzm": {
+                            "ann": "8.532"
+                        },
+                        "std_xyt": {
+                            "ann": "49.236"
+                        },
+                        "rms_y": {
+                            "ann": "2.960"
+                        },
+                        "std-obs_xy": {
+                            "ann": "17.853",
+                            "djf": "57.774",
+                            "mam": "32.127",
+                            "jja": "48.216",
+                            "son": "33.455"
+                        },
+                        "bias_xy": {
+                            "ann": "1.051",
+                            "djf": "0.781",
+                            "mam": "1.050",
+                            "jja": "1.570",
+                            "son": "0.822"
+                        },
+                        "mae_xy": {
+                            "ann": "6.727",
+                            "djf": "8.926",
+                            "mam": "8.285",
+                            "jja": "9.275",
+                            "son": "8.336"
+                        }
+                    },
+                    "TROPICS": {
+                        "mean-obs_xy": {
+                            "ann": "93.898",
+                            "djf": "95.843",
+                            "mam": "91.844",
+                            "jja": "91.875",
+                            "son": "95.971"
+                        },
+                        "rmsc_xy": {
+                            "ann": "10.963",
+                            "djf": "14.850",
+                            "mam": "13.708",
+                            "jja": "15.358",
+                            "son": "14.350"
+                        },
+                        "rms_xy": {
+                            "ann": "10.994",
+                            "djf": "14.938",
+                            "mam": "13.712",
+                            "jja": "15.446",
+                            "son": "14.353"
+                        },
+                        "std-obs_xy_devzm": {
+                            "ann": "19.718"
+                        },
+                        "mean_xy": {
+                            "ann": "94.723",
+                            "djf": "97.460",
+                            "mam": "92.181",
+                            "jja": "93.522",
+                            "son": "95.691"
+                        },
+                        "std_xy_devzm": {
+                            "ann": "18.536"
+                        },
+                        "std-obs_xyt": {
+                            "ann": "27.889"
+                        },
+                        "cor_xy": {
+                            "ann": "0.850",
+                            "djf": "0.85",
+                            "mam": "0.83",
+                            "jja": "0.87",
+                            "son": "0.80"
+                        },
+                        "std_xy": {
+                            "ann": "19.466",
+                            "djf": "27.758",
+                            "mam": "23.364",
+                            "jja": "29.713",
+                            "son": "22.677"
+                        },
+                        "rms_xyt": {
+                            "ann": "16.336"
+                        },
+                        "rms_devzm": {
+                            "ann": "10.757"
+                        },
+                        "std_xyt": {
+                            "ann": "27.781"
+                        },
+                        "rms_y": {
+                            "ann": "2.302"
+                        },
+                        "std-obs_xy": {
+                            "ann": "20.457",
+                            "djf": "27.130",
+                            "mam": "24.180",
+                            "jja": "30.560",
+                            "son": "23.039"
+                        },
+                        "bias_xy": {
+                            "ann": "0.826",
+                            "djf": "1.617",
+                            "mam": "0.336",
+                            "jja": "1.647",
+                            "son": "-0.280"
+                        },
+                        "mae_xy": {
+                            "ann": "8.579",
+                            "djf": "11.394",
+                            "mam": "10.887",
+                            "jja": "11.772",
+                            "son": "10.838"
+                        }
+                    },
+                    "global": {
+                        "mean-obs_xy": {
+                            "ann": "99.092",
+                            "son": "99.858",
+                            "mam": "97.430",
+                            "jja": "94.044",
+                            "djf": "104.984"
+                        },
+                        "rmsc_xy": {
+                            "ann": "8.907",
+                            "son": "11.618",
+                            "mam": "11.450",
+                            "jja": "13.068",
+                            "djf": "12.401"
+                        },
+                        "rms_xy": {
+                            "ann": "8.969",
+                            "son": "11.647",
+                            "mam": "11.498",
+                            "jja": "13.162",
+                            "djf": "12.425"
+                        },
+                        "std-obs_xy_devzm": {
+                            "ann": "15.669"
+                        },
+                        "mean_xy": {
+                            "ann": "100.143",
+                            "son": "100.680",
+                            "mam": "98.480",
+                            "jja": "95.615",
+                            "djf": "105.764"
+                        },
+                        "std_xy_devzm": {
+                            "ann": "15.104"
+                        },
+                        "std-obs_xyt": {
+                            "ann": "48.948"
+                        },
+                        "cor_xy": {
+                            "ann": "0.873",
+                            "son": "0.94",
+                            "mam": "0.94",
+                            "jja": "0.96",
+                            "djf": "0.98"
+                        },
+                        "std_xy": {
+                            "ann": "17.404",
+                            "son": "33.486",
+                            "mam": "32.560",
+                            "jja": "48.624",
+                            "djf": "57.700"
+                        },
+                        "rms_xyt": {
+                            "ann": "13.679"
+                        },
+                        "rms_devzm": {
+                            "ann": "8.532"
+                        },
+                        "std_xyt": {
+                            "ann": "49.236"
+                        },
+                        "rms_y": {
+                            "ann": "2.960"
+                        },
+                        "std-obs_xy": {
+                            "ann": "17.853",
+                            "son": "33.455",
+                            "mam": "32.127",
+                            "jja": "48.216",
+                            "djf": "57.774"
+                        },
+                        "bias_xy": {
+                            "ann": "1.051",
+                            "son": "0.822",
+                            "mam": "1.050",
+                            "jja": "1.570",
+                            "djf": "0.781"
+                        },
+                        "mae_xy": {
+                            "ann": "6.727",
+                            "son": "8.336",
+                            "mam": "8.285",
+                            "jja": "9.275",
+                            "djf": "8.926"
+                        }
+                    },
+                    "NHEX": {
+                        "mean-obs_xy": {
+                            "ann": "101.254",
+                            "djf": "52.446",
+                            "mam": "134.878",
+                            "jja": "148.425",
+                            "son": "70.067"
+                        },
+                        "rmsc_xy": {
+                            "ann": "6.867",
+                            "djf": "7.288",
+                            "mam": "11.284",
+                            "jja": "14.093",
+                            "son": "5.936"
+                        },
+                        "rms_xy": {
+                            "ann": "7.136",
+                            "djf": "7.295",
+                            "mam": "11.556",
+                            "jja": "14.291",
+                            "son": "6.773"
+                        },
+                        "std-obs_xy_devzm": {
+                            "ann": "11.861"
+                        },
+                        "mean_xy": {
+                            "ann": "103.197",
+                            "djf": "52.124",
+                            "mam": "137.372",
+                            "jja": "150.793",
+                            "son": "73.329"
+                        },
+                        "std_xy_devzm": {
+                            "ann": "12.055"
+                        },
+                        "std-obs_xyt": {
+                            "ann": "55.366"
+                        },
+                        "cor_xy": {
+                            "ann": "0.863",
+                            "djf": "0.97",
+                            "mam": "0.86",
+                            "jja": "0.93",
+                            "son": "0.97"
+                        },
+                        "std_xy": {
+                            "ann": "13.426",
+                            "djf": "30.557",
+                            "mam": "21.376",
+                            "jja": "37.793",
+                            "son": "22.798"
+                        },
+                        "rms_xyt": {
+                            "ann": "11.912"
+                        },
+                        "rms_devzm": {
+                            "ann": "6.254"
+                        },
+                        "std_xyt": {
+                            "ann": "56.450"
+                        },
+                        "rms_y": {
+                            "ann": "3.451"
+                        },
+                        "std-obs_xy": {
+                            "ann": "12.597",
+                            "djf": "29.186",
+                            "mam": "21.464",
+                            "jja": "37.770",
+                            "son": "20.136"
+                        },
+                        "bias_xy": {
+                            "ann": "1.942",
+                            "djf": "-0.323",
+                            "mam": "2.494",
+                            "jja": "2.367",
+                            "son": "3.262"
+                        },
+                        "mae_xy": {
+                            "ann": "5.481",
+                            "djf": "4.790",
+                            "mam": "8.215",
+                            "jja": "11.083",
+                            "son": "4.778"
+                        }
+                    },
+                    "SHEX": {
+                        "mean-obs_xy": {
+                            "ann": "107.319",
+                            "son": "137.420",
+                            "mam": "71.153",
+                            "jja": "44.001",
+                            "djf": "175.803"
+                        },
+                        "rmsc_xy": {
+                            "ann": "5.358",
+                            "son": "9.185",
+                            "mam": "4.260",
+                            "jja": "3.343",
+                            "djf": "10.862"
+                        },
+                        "rms_xy": {
+                            "ann": "5.393",
+                            "son": "9.204",
+                            "mam": "4.384",
+                            "jja": "3.401",
+                            "djf": "10.864"
+                        },
+                        "std-obs_xy_devzm": {
+                            "ann": "7.986"
+                        },
+                        "mean_xy": {
+                            "ann": "107.928",
+                            "son": "138.007",
+                            "mam": "72.187",
+                            "jja": "44.622",
+                            "djf": "176.013"
+                        },
+                        "std_xy_devzm": {
+                            "ann": "8.948"
+                        },
+                        "std-obs_xyt": {
+                            "ann": "69.545"
+                        },
+                        "cor_xy": {
+                            "ann": "0.904",
+                            "son": "0.94",
+                            "mam": "0.98",
+                            "jja": "0.99",
+                            "djf": "0.98"
+                        },
+                        "std_xy": {
+                            "ann": "12.037",
+                            "son": "27.308",
+                            "mam": "20.217",
+                            "jja": "24.685",
+                            "djf": "53.779"
+                        },
+                        "rms_xyt": {
+                            "ann": "8.535"
+                        },
+                        "rms_devzm": {
+                            "ann": "4.545"
+                        },
+                        "std_xyt": {
+                            "ann": "69.555"
+                        },
+                        "rms_y": {
+                            "ann": "3.009"
+                        },
+                        "std-obs_xy": {
+                            "ann": "12.368",
+                            "son": "26.103",
+                            "mam": "18.529",
+                            "jja": "23.100",
+                            "djf": "55.541"
+                        },
+                        "bias_xy": {
+                            "ann": "0.609",
+                            "son": "0.587",
+                            "mam": "1.034",
+                            "jja": "0.620",
+                            "djf": "0.210"
+                        },
+                        "mae_xy": {
+                            "ann": "4.269",
+                            "son": "6.889",
+                            "mam": "3.151",
+                            "jja": "2.471",
+                            "djf": "8.125"
+                        }
+                    }
+                }
+            },
+            "InputRegionMD5": null,
+            "InputClimatologyFileName": "CMIP6.historical.MRI-ESM2-0.r1i1p1f1.mon.rsut.198101-200512.AC.v20190801.nc",
+            "units": "W m-2",
+            "InputClimatologyMD5": "ab4f2fd1b11fec5cfac3f599c829c1f2",
+            "InputRegionFileName": null
+        }
+    },
+    "METRICS": {
+        "rms_xy": {
+            "Abstract": "Compute Spatial Root Mean Square",
+            "Contact": "pcmdi-metrics@llnl.gov",
+            "Name": "Spatial Root Mean Square",
+            "URI": "http://uvcdat.llnl.gov/documentation/utilities/utilities-2.html"
+        },
+        "rmsc_xy": {
+            "Abstract": "Compute Centered Spatial Root Mean Square",
+            "Contact": "pcmdi-metrics@llnl.gov",
+            "Name": "Spatial Root Mean Square",
+            "URI": "http://uvcdat.llnl.gov/documentation/utilities/utilities-2.html"
+        },
+        "seasonal_mean": {
+            "Abstract": "Compute Seasonal Mean",
+            "Contact": "pcmdi-metrics@llnl.gov",
+            "Name": "Seasonal Mean",
+            "Comments": "Assumes input are 12 months climatology"
+        },
+        "mean_xy": {
+            "Abstract": "Area Mean (area weighted)",
+            "Contact": "pcmdi-metrics@llnl.gov",
+            "Name": "Mean"
+        },
+        "zonal_mean": {
+            "Abstract": "Compute Zonal Mean",
+            "Contact": "pcmdi-metrics@llnl.gov",
+            "Name": "Zonal Mean",
+            "Comments": "",
+            "URI": "http://uvcdat.llnl.gov/documentation/utilities/utilities-2.html"
+        },
+        "cor_xy": {
+            "Abstract": "Compute Spatial Correlation",
+            "Contact": "pcmdi-metrics@llnl.gov",
+            "Name": "Spatial Correlation",
+            "URI": "http://uvcdat.llnl.gov/documentation/utilities/utilities-2.html"
+        },
+        "std_xy": {
+            "Abstract": "Compute Spatial Standard Deviation",
+            "Contact": "pcmdi-metrics@llnl.gov",
+            "Name": "Spatial Standard Deviation",
+            "URI": "http://uvcdat.llnl.gov/documentation/utilities/utilities-2.html"
+        },
+        "rms_xyt": {
+            "Abstract": "Compute Spatial and Temporal Root Mean Square",
+            "Contact": "pcmdi-metrics@llnl.gov",
+            "Name": "Spatio-Temporal Root Mean Square",
+            "URI": "http://uvcdat.llnl.gov/documentation/utilities/utilities-2.html"
+        },
+        "std_xyt": {
+            "Abstract": "Compute Space-Time Standard Deviation",
+            "Contact": "pcmdi-metrics@llnl.gov",
+            "Name": "Spatial-temporal Standard Deviation",
+            "URI": "http://uvcdat.llnl.gov/documentation/utilities/utilities-2.html"
+        },
+        "annual_mean": {
+            "Abstract": "Compute Annual Mean",
+            "Contact": "pcmdi-metrics@llnl.gov",
+            "Name": "Annual Mean",
+            "Comments": "Assumes input are 12 months climatology",
+            "URI": "http://uvcdat.llnl.gov/documentation/utilities/utilities-2.html"
+        },
+        "bias_xy": {
+            "Abstract": "Compute Full Average of Model - Observation",
+            "Contact": "pcmdi-metrics@llnl.gov",
+            "Name": "Bias"
+        },
+        "mae_xy": {
+            "Abstract": "Compute Full Average of Absolute Difference Between Model And Observation",
+            "Contact": "pcmdi-metrics@llnl.gov",
+            "Name": "Mean Absolute Error"
+        }
+    },
+    "YAML": "name: pmpn_0718\nchannels:\n  - pcmdi/label/nightly\n  - cdat/label/nightly\n  - conda-forge\n  - defaults\ndependencies:\n  - _libgcc_mutex=0.1=main\n  - asn1crypto=0.24.0=py27_1003\n  - attrs=19.1.0=py_0\n  - backports=1.0=py_2\n  - backports.functools_lru_cache=1.5=py_1\n  - backports_abc=0.5=py_1\n  - bokeh=1.2.0=py27_0\n  - bzip2=1.0.8=h516909a_0\n  - ca-certificates=2019.6.16=hecc5488_0\n  - cdat_info=8.1.1=py_0\n  - cdp=1.4.2=py_1\n  - cdtime=3.1.2.2019.02.09.12.03.gba9e0cb=py27ha5dfbcb_0\n  - cdutil=8.1=py_1\n  - certifi=2019.6.16=py27_1\n  - cffi=1.12.3=py27h8022711_0\n  - chardet=3.0.4=py27_1003\n  - cia=0.0.6=0\n  - click=7.0=py_0\n  - cloudpickle=1.2.1=py_0\n  - cryptography=2.7=py27h72c5cf5_0\n  - curl=7.65.2=hf8cf82a_0\n  - cycler=0.10.0=py_1\n  - cytoolz=0.10.0=py27h516909a_0\n  - dask=1.2.2=py_3\n  - dask-core=1.2.2=py_0\n  - dbus=1.13.6=he372182_0\n  - decorator=4.4.0=py_0\n  - distarray=2.12.2=py_1\n  - distributed=1.28.1=py27_0\n  - dv3d=8.0.2019.02.27.00.48.g5714b60=py_0\n  - enum34=1.1.6=py27_1001\n  - esmf=7.1.0=h9a7cb89_1006\n  - esmpy=7.1.0=py27h24bf2e0_3\n  - expat=2.2.5=he1b5a44_1003\n  - ffmpeg=4.1.3=h167e202_0\n  - fontconfig=2.13.1=he4413a7_1000\n  - freetype=2.10.0=he983fc9_0\n  - functools32=3.2.3.2=py_3\n  - future=0.17.1=py27_1000\n  - futures=3.3.0=py27_0\n  - g2clib=1.6.0=hf3f1b0b_9\n  - genutil=8.1.2019.03.15.17.57.gd2395cd.npy1.14=py27hb3ffb1f_0\n  - gettext=0.19.8.1=hc5be6a0_1002\n  - ghostscript=9.22=hf484d3e_1001\n  - glib=2.58.3=h6f030ca_1002\n  - gmp=6.1.2=hf484d3e_1000\n  - gnutls=3.6.5=hd3a4fd2_1002\n  - gst-plugins-base=1.14.5=h0935bb2_0\n  - gstreamer=1.14.5=h36ae1b5_0\n  - hdf4=4.2.13=h9a582f1_1002\n  - hdf5=1.10.5=nompi_h3c11f04_1100\n  - heapdict=1.0.0=py27_1000\n  - icu=58.2=hf484d3e_1000\n  - idna=2.8=py27_1000\n  - ipaddress=1.0.22=py_1\n  - ipython_genutils=0.2.0=py_1\n  - jasper=1.900.1=h07fcdf6_1006\n  - jinja2=2.10.1=py_0\n  - jpeg=9c=h14c3975_1001\n  - jsonschema=3.0.1=py27_0\n  - jupyter_core=4.4.0=py_0\n  - kiwisolver=1.1.0=py27hc9558a2_0\n  - krb5=1.16.3=h05b26f9_1001\n  - lame=3.100=h14c3975_1001\n  - lazy-object-proxy=1.4.1=py27h516909a_0\n  - libblas=3.8.0=10_openblas\n  - libcblas=3.8.0=10_openblas\n  - libcdms=3.1.2.2019.02.09.03.57.g8f1cefe=h9ac9557_0\n  - libcf=3.1.0.2019.07.05.23.12.g01a0c63=py27h14c3975_0\n  - libcurl=7.65.2=hda55be3_0\n  - libdrs=3.1.2.2019.02.09.01.20.g0c04b0c=h9ac9557_0\n  - libdrs_f=3.1.2.2019.02.09.01.20.g0c04b0c=h9ac9557_0\n  - libedit=3.1.20170329=hf8c457e_1001\n  - libffi=3.2.1=he1b5a44_1006\n  - libgcc=7.2.0=h69d50b8_2\n  - libgcc-ng=9.1.0=hdf63c60_0\n  - libgfortran-ng=7.3.0=hdf63c60_0\n  - libiconv=1.15=h516909a_1005\n  - liblapack=3.8.0=10_openblas\n  - libnetcdf=4.6.2=h056eaf5_1002\n  - libopenblas=0.3.6=h6e990d7_4\n  - libpng=1.6.37=hed695b0_0\n  - libssh2=1.8.2=h22169c7_2\n  - libstdcxx-ng=9.1.0=hdf63c60_0\n  - libtiff=4.0.10=h57b8799_1003\n  - libuuid=2.32.1=h14c3975_1000\n  - libxcb=1.13=h14c3975_1002\n  - libxml2=2.9.9=h13577e0_1\n  - locket=0.2.0=py_2\n  - lz4-c=1.8.3=he1b5a44_1001\n  - markupsafe=1.1.1=py27h14c3975_0\n  - matplotlib=2.2.4=py27_0\n  - matplotlib-base=2.2.4=py27hfd891ef_0\n  - mpi=1.0=mpich\n  - mpich=3.2.1=hc99cbb1_1013\n  - msgpack-python=0.6.1=py27h6bb024c_0\n  - nbformat=4.4.0=py_1\n  - ncurses=6.1=hf484d3e_1002\n  - netcdf-fortran=4.4.5=hfc18c51_1001\n  - nettle=3.4.1=h1bed415_1002\n  - numpy=1.16.4=py27h95a1406_0\n  - olefile=0.46=py_0\n  - openblas=0.3.6=h6e990d7_4\n  - openh264=1.8.0=hdbcaa40_1000\n  - openssl=1.1.1c=h516909a_0\n  - output_viewer=1.2.6=py_0\n  - packaging=19.0=py_0\n  - pandas=0.24.2=py27hb3f55d8_0\n  - partd=1.0.0=py_0\n  - pcmdi_metrics=1.2.2019.07.18.19.25.g13d37ae=pyh39e3cac_0\n  - pcre=8.41=hf484d3e_1003\n  - pillow=6.1.0=py27he7afcd5_0\n  - pip=19.1.1=py27_0\n  - proj4=4.9.3=hc8507d1_7\n  - psutil=5.6.3=py27h516909a_0\n  - pthread-stubs=0.4=h14c3975_1001\n  - pycparser=2.19=py27_1\n  - pyopenssl=19.0.0=py27_0\n  - pyparsing=2.4.0=py_0\n  - pyqt=5.9.2=py27hcca6a23_0\n  - pyrsistent=0.15.3=py27h516909a_0\n  - pysocks=1.7.0=py27_0\n  - python=2.7.15=h5a48372_1009\n  - python-dateutil=2.8.0=py_0\n  - pytz=2019.1=py_0\n  - pyyaml=5.1.1=py27h516909a_0\n  - qt=5.9.7=h52cfd70_2\n  - readline=8.0=hf8c457e_0\n  - requests=2.22.0=py27_1\n  - setuptools=41.0.1=py27_0\n  - singledispatch=3.4.0.3=py27_1000\n  - sip=4.19.8=py27hf484d3e_1000\n  - six=1.12.0=py27_1000\n  - sortedcontainers=2.1.0=py_0\n  - sqlite=3.29.0=hcee41ef_0\n  - subprocess32=3.5.4=py27h516909a_0\n  - tblib=1.4.0=py_0\n  - tk=8.6.9=hed695b0_1002\n  - toolz=0.10.0=py_0\n  - tornado=5.1.1=py27h14c3975_1000\n  - traitlets=4.3.2=py27_1000\n  - udunits2=2.2.27.6=h4e0c4b3_1001\n  - urllib3=1.25.3=py27_0\n  - vcs=8.1.2019.07.11.14.20.gff404143=py_0\n  - vcsaddons=8.0.2019.07.09.20.59.g38002d6=py27h14c3975_0\n  - vtk-cdat=8.2.0.1916.8.0.2019.04.29.09.55.g5e9164e3da=py27h3df8362_0\n  - wheel=0.33.4=py27_0\n  - x264=1!152.20180806=h14c3975_0\n  - xorg-libxau=1.0.9=h14c3975_0\n  - xorg-libxdmcp=1.1.3=h516909a_0\n  - xz=5.2.4=h14c3975_1001\n  - yaml=0.1.7=h14c3975_1001\n  - zict=1.0.0=py_0\n  - zlib=1.2.11=h516909a_1005\n  - zstd=1.4.0=h3b9ef0a_0\n  - pip:\n    - cdms2==3.1.3\n    - regrid2==3.1.3\nprefix: /export_backup/gleckler1/anaconda3/envs/pmpn_0718\n\n",
+    "References": {
+        "default": {
+            "RefTrackingDate": "Wed Jul 31 16:13:17 2019",
+            "MD5sum": "3bbed5a5ebb07a71fab1a1ca647db7f6",
+            "RefName": "CERES-EBAF-4-0",
+            "period": "200003-201811",
+            "shape": "(12, 180, 360)",
+            "template": "/atmos/mon/rsut/CERES-EBAF-4-0/gn/v20190221/ac/rsut_mon_CERES-EBAF-4-0_BE_gn_200003-201811_AC.nc",
+            "filename": "rsut_mon_CERES-EBAF-4-0_BE_gn_200003-201811_AC.nc",
+            "CMIP_CMOR_TABLE": "Amon"
+        }
+    },
+    "RegionalMasking": {
+        "GLOBAL": {
+            "id": "GLOBAL"
+        },
+        "TROPICS": {
+            "domain": {
+                "TROPICS": "cdutil.region.domain(latitude=(-30.0, 30))"
+            },
+            "id": "TROPICS"
+        },
+        "global": {
+            "id": "global"
+        },
+        "NHEX": {
+            "domain": {
+                "NHEX": "cdutil.region.domain(latitude=(30.0, 90))"
+            },
+            "id": "NHEX"
+        },
+        "SHEX": {
+            "domain": {
+                "SHEX": "cdutil.region.domain(latitude=(-90.0, -30))"
+            },
+            "id": "SHEX"
+        }
+    },
+    "Variable": {
+        "id": "rsut"
+    },
+    "json_version": 3.0,
+    "GridInfo": {
+        "GridResolution": [
+            72,
+            144
+        ],
+        "GridName": "2.5x2.5",
+        "RegridMethod": "regrid2",
+        "RegridTool": "regrid2"
+    },
+    "DISCLAIMER": "USER-NOTICE: The results in this file were produced with the PMP v1.1 (https://github.com/PCMDI/pcmdi_metrics). They are for research purposes only. They are subject to ongoing quality control and change as the PMP software advances, interpolation methods are modified, observational data sets are updated, problems with model data are corrected, etc. Use of these results for research (presentation, publications, etc.) should reference: Gleckler, P. J., C. Doutriaux, P. J. Durack, K. E. Taylor, Y. Zhang, and D. N. Williams, E. Mason, and J. Servonnat (2016), A more powerful reality test for climate models, Eos, 97, doi:10.1029/2016EO051663. If any problems are uncovered in using these results please contact the PMP development team at pcmdi-metrics@llnl.gov\n"
+}
