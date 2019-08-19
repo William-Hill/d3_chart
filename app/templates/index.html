@@ -189,10 +189,10 @@
       <div class="level-item has-text-centered">
         <div class="control">
           <div class="field">
-            <input type="radio" class="is-checkradio" name="level" id="plotByVariable" value="plotByVariable" checked="checked">
-            <label for="plotByVariable">Plot by Variable</label>
-            <input type="radio" class="is-checkradio" id="plotBySeason" value="plotBySeason" name="level">
-            <label for="plotBySeason">Plot by Season</label>
+            <input type="radio" class="is-checkradio" name="level" id="plotAllSeasonsByVariable" value="plotAllSeasonsByVariable" checked="checked">
+            <label for="plotAllSeasonsByVariable">Plot all seasons for a given variable</label>
+            <input type="radio" class="is-checkradio" id="plotAllVariablesBySeason" value="plotAllVariablesBySeason" name="level">
+            <label for="plotAllVariablesBySeason">Plot all variables for a given season</label>
         </div>
           </div>
       </div>
@@ -201,19 +201,11 @@
       <div class="level-item has-text-centered">
         <form id="selector_form">
           <div class="field is-grouped">
-            <label class="label">Region</label>
-            <div class="select attribute_selector">
-              <select id="region_selector" name="region">
-                {% for region in regions %}
-                  <option value="{{ region }}" href="{{ region }}">{{ region }}</option>
-                {% endfor %}
-              </select>
-            </div>
-            <label class="label">Statistic</label>
-            <div class="select attribute_selector">
-              <select id="statistic_selector" name="statistic">
-                {% for statistic in statistics %}
-                  <option href="{{ statistic }}">{{ statistic }}</option>
+            <label id="variable_label" class="label">Variable</label>
+            <div class="select attribute_selector" id="variable_selector_div">
+              <select id="variable_selector" name="variable">
+                {% for variable in variables %}
+                  <option href="{{ variable }}">{{ variable }}</option>
                 {% endfor %}
               </select>
             </div>
@@ -225,11 +217,27 @@
                 {% endfor %}
               </select>
             </div>
-            <label id="variable_label" class="label">Variable</label>
-            <div class="select attribute_selector" id="variable_selector_div">
-              <select id="variable_selector" name="variable">
-                {% for variable in variables %}
-                  <option href="{{ variable }}">{{ variable }}</option>
+            <label id="model_generation_label" class="label">Model Generation</label>
+            <div class="select attribute_selector" id="model_generation_div">
+              <select id="model_generation" name="model_generation">
+                {% for model_generation in model_generations %}
+                  <option href="{{ model_generation }}">{{ model_generation }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <label class="label">Region</label>
+            <div class="select attribute_selector">
+              <select id="region_selector" name="region">
+                {% for region in regions %}
+                  <option value="{{ region }}" href="{{ region }}" {% if region=="global" %} selected="selected"{% endif %}>{{ region }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <label class="label">Statistic</label>
+            <div class="select attribute_selector">
+              <select id="statistic_selector" name="statistic">
+                {% for statistic in statistics %}
+                  <option href="{{ statistic }}">{{ statistic }}</option>
                 {% endfor %}
               </select>
             </div>
