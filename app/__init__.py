@@ -42,8 +42,8 @@ def get_json_attributes(filename):
     json_file_object.close()
 
     models_list = list(json_object["RESULTS"].keys())
-    regions = list(json_object['RESULTS'][models_list[0]]
-                   ['defaultReference']['r1i1p1'].keys())
+    regions = [x for x in json_object['RESULTS'][models_list[0]]
+               ['defaultReference']['r1i1p1'].keys() if x not in ("TROPICS", "ocean")]
 
     statistics = list(json_object['RESULTS'][models_list[0]]
                       ['defaultReference']["r1i1p1"][regions[0]].keys())
