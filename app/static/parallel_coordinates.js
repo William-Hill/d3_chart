@@ -471,12 +471,12 @@ let tooltipDiv = d3
 let slider = document.getElementById("slider");
 
 noUiSlider.create(slider, {
-  start: [0, 4],
+  start: [0, 30],
   tooltips: [true, true],
   connect: true,
   range: {
-    min: 0,
-    max: 20
+    min: -100,
+    max: 100
   }
 });
 
