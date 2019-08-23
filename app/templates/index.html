@@ -145,40 +145,22 @@
     </nav>
     <section class="section">
       <div id="container">
-        This is a <font color="red"><b>PROTOTYPE</b></font> of interactive
-        parallel coordinate plot that is for Modes of Variability Metrics for
-        <a href="https://pcmdi.llnl.gov/mips/cmip5/" target="_blank">CMIP5</a>
-        models. The Modes of Variability Metrics is developed at Program for
-        Climate Model Diagnosis and Intercomparison (<a
-          href="https://pcmdi.llnl.gov/"
-          target="_blank"
-          >PCMDI</a
-        >) of Lawrence Livermore Natioanal Laboratory (<a
-          href="https://www.llnl.gov/"
-          target="_blank"
-          >LLNL</a
-        >). Visualization is done by
-        <b><i>Jiwoo Lee and William Hill</i></b> and the metrics were developed
-        by
-        <b
-          ><i
-            >Jiwoo Lee, Ken Sperber, Peter Gleckler, Celine Bonfils, and Karl
-            Taylor</i
-          ></b
-        >. Detailed descriptions can be found at
-        <a
-          href="https://link.springer.com/article/10.1007/s00382-018-4355-4"
-          target="_blank"
-          >Lee et al. (2018) "Quantifying the agreement between observed and
-          simulated extratropical modes of interannual variability" (Climate
-          Dynamics)</a
-        >, especially from Fig. 14. Visualized statistical values are for ratio
-        of simulated to observed temporal variability as estimated by the
-        standard deviations of the PC time series. The CBF PC is used for
-        simulations. For sea-level pressure based modes (PNA, NPO, NAO, NAM, and
-        SAM) in the model results are shown relative to 20CR. For SST based
-        modes (PDO and NPGO), results are shown relative to HadISSTv1.1 The
-        ratios are unitless. Last updated in October 2018.<br />
+        This is a <font color="red"><b>PROTOTYPE</b></font> of PCMDI’s Interactive Parallel Coordinate Plot (iPCP) used to dynamically 
+        display the different mean climate statistics routinely generated with the PCMDI Metrics Package (PMP). 
+        Each vertical axis represents an independent scalar calculation or metric. The default displays results from each model as symbols. 
+        The user can highlight a given model by selecting a symbol on the plot or from the table below the plot.
+        This feature allows, for example, two versions of the same model to be contrasted against the backdrop of results from the multi-model ensemble (symbols).
+        <br /> 
+        <br />
+        The current version allows the user to display <a href="https://pcmdi.llnl.gov/mips/cmip5/" target="_blank">CMIP5</a> and <a href="https://pcmdi.llnl.gov/CMIP6/" target="_blank">CMIP6</a> results as: 
+        1) All variables for a given season, or 2) All seasons for a given variable.
+        <br />
+        <br /> 
+        The orthogonal decomposition of statistics is described in <a href="https://doi.org/10.1029/2007JD008972">Gleckler et al., 2008</a>. 
+        The software design and its use is being developed at PCMDI by William Hill, Jiwoo Lee, and Peter Gleckler. 
+        Comments can be sent to gleckler1@llnl.gov.
+        <br />
+        <br />
         <font color="red"
           >* Please note this page is optimized for screen resolution wider than
           1700 pixels.<br
