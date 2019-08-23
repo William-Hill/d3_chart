@@ -238,7 +238,9 @@ function createLegend(model_names, symbolScale, colorScale) {
   let legend = d3.select("#legendColumns");
 
   let pointRadius = 25;
-
+  model_names.sort(function (a, b) {
+    return a.localeCompare(b, 'en', {'sensitivity': 'base'});
+  });
   model_names.forEach(function(d, i) {
     var x = pointRadius + 10;
     var y = 23 + i * 20;
@@ -315,10 +317,28 @@ function drawCoordinateLines(data, calculatePath, variables, x, y, colorScale) {
 }
 
 /**
+ * @description A custom sorting function for sorting an array of climate data objects by model_name
+ */
+function compare(a, b) {
+  // Use toUpperCase() to ignore character casing
+  const model_nameA = a.model_name.toUpperCase();
+  const model_nameB = b.model_name.toUpperCase();
+
+  let comparison = 0;
+  if (model_nameA > model_nameB) {
+    comparison = 1;
+  } else if (model_nameA < model_nameB) {
+    comparison = -1;
+  }
+  return comparison;
+}
+
+/**
  * @description Create a text data table for the dataset
  * @param data An object representing the dataset that was parsed by D3.
  */
 function createTable(data) {
+  data.sort(compare);
   d3.select("#grid")
     .selectAll("*")
     .remove();
