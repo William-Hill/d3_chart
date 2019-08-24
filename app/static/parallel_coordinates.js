@@ -500,22 +500,11 @@ noUiSlider.create(slider, {
   }
 });
 
-// let data_file_name = "csv_files/test.csv";
-let file_selector = d3.select("#file_selector");
-let default_file_name = file_selector.property("options")[0].innerText;
-let data_file_name = `/static/mean_climate_json_files/cmip5_csv/${default_file_name}`;
+let default_file = "All_Seasons-pr-cmip5-global-bias_xy.csv"
+let data_file_name = `/static/mean_climate_json_files/cmip5_csv/${default_file}`;
 
+update_plot_title()
 updateChart(data_file_name);
-
-file_selector.on("change", function() {
-  var value = this.options[this.selectedIndex].value;
-  let modelGenerationSelector = document.getElementById("model_generation");
-  let modelGeneration =
-    modelGenerationSelector.options[modelGenerationSelector.selectedIndex]
-      .value;
-  data_file_name = `/static/mean_climate_json_files/${modelGeneration}_csv/${value}`;
-  updateChart(data_file_name);
-});
 
 let selector_form = document.getElementById("selector_form");
 
@@ -541,11 +530,39 @@ function chooseAPIEndpoint() {
   return urlEndpoint;
 }
 
+function update_plot_title(){
+
+  let model_generation = document.getElementById("model_generation");
+  var model_generation_value = model_generation.options[model_generation.selectedIndex].value;
+
+  let region = document.getElementById("region_selector");
+  var region_value = region.options[region.selectedIndex].value;
+
+  let statistic = document.getElementById("statistic_selector");
+  var statistic_value = statistic.options[statistic.selectedIndex].value;
+
+  let level = document.querySelector('input[name="level"]:checked').value;
+  let plot_title_string
+  if (level == "plotAllSeasonsByVariable") {
+    let variable = document.getElementById("variable_selector");
+    let variable_value = variable.options[variable.selectedIndex].value;
+
+    plot_title_string = `All Seasons for ${variable_value} ${region_value} ${statistic_value}  (${model_generation_value})`
+  } else {
+    let season = document.getElementById("season_selector");
+    let season_value = season.options[season.selectedIndex].value;
+    
+    plot_title_string = `All Variables for ${season_value} ${region_value} ${statistic_value}  (${model_generation_value})`
+  }
+  var plot_title = document.getElementById("plot_title");
+  plot_title.innerHTML = plot_title_string;
+}
+
 function generate_csv() {
   var formElement = document.getElementById("selector_form");
   let data = {};
   for (var i = 0; i < formElement.elements.length; i++) {
-    if (formElement.elements[i]["tagName"] == "SELECT") {
+    if (formElement.elements[i]["tagName"] == "SELECT" && !formElement.elements[i].disabled) {
       let name = formElement.elements[i]["name"];
       let value = formElement.elements[i]["value"];
       data[name] = value;
@@ -570,9 +587,7 @@ function generate_csv() {
     })
     .then(response => response.json())
     .then(data => {
-      var list = document.getElementById("file_selector");
-      list.add(new Option(data["latestfile"], data["latestfile"], false, true));
-      list.dispatchEvent(new Event("change"));
+      update_plot_title()
       bulmaToast.toast({
         message: `Created csv file for ${data["latestfile"]}`,
         duration: 4000,

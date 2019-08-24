@@ -230,20 +230,6 @@
     </nav>
     <nav class="level">
       <div class="level-item has-text-centered">
-        <div class="field">
-          <label class="label">Data File</label>
-          <div class="select csv_selector">
-            <select id="file_selector">
-              {% for file in files %}
-                <option href="{{ file }}">{{ file }}</option>
-              {% endfor %}
-            </select>
-          </div>
-        </div>
-      </div>
-    </nav>
-    <nav class="level">
-      <div class="level-item has-text-centered">
         <div class="control">
           <div class="field custom_scale_checkbox">
             <input type="checkbox" name="customScaleToggle" class="switch" id="customScaleToggle">
@@ -255,6 +241,9 @@
             Update Scale
         </button>
       </div>
+    </nav>
+    <nav class="level">
+      <h2 id="plot_title" class="level-item has-text-centered"></h2>
     </nav>
     <!-- Create a div where the graph will take place -->
     <div id="viz_div" class="columns">

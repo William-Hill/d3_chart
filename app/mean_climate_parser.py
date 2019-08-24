@@ -38,7 +38,7 @@ def all_seasons_for_variable(variable, model_generation, region, statistic):
 
     headerline = ['model_name'] + season_list
 
-    csv_file_name = "all_seasons_{}-{}-{}-{}.csv".format(
+    csv_file_name = "All_Seasons-{}-{}-{}-{}.csv".format(
         variable, model_generation, region, statistic)
 
     print("csv_file_name:", csv_file_name)
@@ -93,7 +93,7 @@ def all_variables_by_season(season, model_generation, region, statistic):
         output.append(values)
 
     rows = zip(*output)
-    csv_file_name = "all_variables_{}-{}-{}-{}.csv".format(season, model_generation,
+    csv_file_name = "All_Variables-{}-{}-{}-{}.csv".format(season, model_generation,
                                                            region, statistic)
     csv_directory_path = os.path.join(
         os.path.dirname(__file__), 'static', 'mean_climate_json_files', "{}_csv".format(model_generation))
