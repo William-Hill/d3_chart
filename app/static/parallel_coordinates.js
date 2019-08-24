@@ -448,6 +448,25 @@ function addScaleEventHandlers(data, variables, x, y) {
   });
 }
 
+function updateSliderRange(minValue, maxValue){
+    slider.noUiSlider.updateOptions({
+        start: [minValue, maxValue],
+        range: {
+            'min': minValue,
+            'max': maxValue
+        }
+    });
+}
+
+function findAbsoluteMinMax(data, variables){
+  let domainValues = [];
+  for (let i in variables) {
+    name = variables[i];
+      domainValues.push(...calculateDomain(data, name))
+  }
+  return d3.extent(domainValues)
+}
+
 function updateChart(data_file_name) {
   // Parse the Data
   d3.csv(data_file_name, function(data) {
@@ -465,7 +484,8 @@ function updateChart(data_file_name) {
     let x = createModelScale(variables, parentDiv.clientWidth);
 
     slider.setAttribute("disabled", true);
-
+    let [minValue, maxValue] = findAbsoluteMinMax(data, variables)
+    updateSliderRange(minValue, maxValue)
     addScaleEventHandlers(data, variables, x, y);
 
     drawCoordinateLines(data, calculatePath, variables, x, y, colorScale);
@@ -518,12 +538,9 @@ function handleErrors(response) {
 function chooseAPIEndpoint() {
   let level = document.querySelector('input[name="level"]:checked').value;
   let urlEndpoint;
-  console.log("level:", level);
   if (level == "plotAllSeasonsByVariable") {
-    console.log("plotting by variable");
     urlEndpoint = "/plot_by_variable";
   } else {
-    console.log("plotting by season");
     urlEndpoint = "/plot_by_season";
   }
 
@@ -569,7 +586,6 @@ function generate_csv() {
     }
   }
   let urlEndpoint = chooseAPIEndpoint();
-  console.log("form data:", data);
 
   fetch(urlEndpoint, {
     method: "POST",
@@ -588,6 +604,12 @@ function generate_csv() {
     .then(response => response.json())
     .then(data => {
       update_plot_title()
+      let modelGenerationSelector = document.getElementById("model_generation");
+      let modelGeneration =
+        modelGenerationSelector.options[modelGenerationSelector.selectedIndex]
+          .value;
+      let data_file_name = `/static/mean_climate_json_files/${modelGeneration}_csv/${data["latestfile"]}`;
+      updateChart(data_file_name);
       bulmaToast.toast({
         message: `Created csv file for ${data["latestfile"]}`,
         duration: 4000,
