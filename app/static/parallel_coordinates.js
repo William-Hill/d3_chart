@@ -485,7 +485,7 @@ function updateChart(data_file_name) {
     let y = createValueScale(variables, data, height);
 
     // Build the X scale -> it find the best position for each Y axisLeft
-    let x = createModelScale(variables, parentDiv.clientWidth);
+    let x = createModelScale(variables, svgWidth);
 
     slider.setAttribute("disabled", true);
     let [minValue, maxValue] = findAbsoluteMinMax(data, variables)
