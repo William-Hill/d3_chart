@@ -237,7 +237,7 @@ function createLegend(model_names, symbolScale, colorScale) {
 
   let legend = d3.select("#legendColumns");
 
-  let pointRadius = 25;
+  let pointRadius = 35;
   model_names.sort(function (a, b) {
     return a.localeCompare(b, 'en', {'sensitivity': 'base'});
   });
@@ -246,12 +246,19 @@ function createLegend(model_names, symbolScale, colorScale) {
     var y = 23 + i * 20;
     legend
       .append("div")
-      .attr("class", "column is-one-quarter-desktop is-one-third-widescreen")
+      .attr("class", "column is-one-quarter-desktop is-one-quarter-widescreen")
       .style("height", "9%")
       .attr("id", "column_" + d);
 
     let legendColumn = d3.select("#column_" + d);
-    legendColumn
+    legendColumn.append("div").attr("class", "columns").attr("id", `${d}_legend`)
+
+    let modelLegend = d3.select(`#${d}_legend`)
+    modelLegend.append("div").attr("class", "column is-one-third has-text-centered is-vcentered").attr("id", `${d}_symbol_column`)
+    modelLegend.append("div").attr("class", "column has-text-centered is-vcentered").attr("id", `${d}_model_name_column`)
+    let symbolColumn = d3.select(`#${d}_symbol_column`)
+    // legendColumn
+    symbolColumn
       .append("svg")
       .attr("class", "legendKey_" + d)
       .attr("width", "100%")
@@ -276,15 +283,18 @@ function createLegend(model_names, symbolScale, colorScale) {
       .attr("stroke-width", 1)
       .attr("transform", `translate(${symbolXCoord}, ${symbolYCoord})`);
 
-    legendSvg
-      .append("text")
-      .attr("class", "legend")
-      .attr("x", symbolXCoord + 15)
-      .attr("y", symbolYCoord)
-      .attr("dominant-baseline", "central")
-      .style("font-size", "0.5rem")
-      // .style("font-size", "0.75em")
-      .text(d);
+    let modelNameColumn = d3.select(`#${d}_model_name_column`)
+    modelNameColumn.append("p").attr("class", "is-size-7").text(d)
+    // legendColumn.append("p").text(d)
+    // legendSvg
+    //   .append("text")
+    //   .attr("class", "legend")
+    //   .attr("x", symbolXCoord + 15)
+    //   .attr("y", symbolYCoord)
+    //   .attr("dominant-baseline", "central")
+    //   .style("font-size", "0.5rem")
+    //   // .style("font-size", "0.75em")
+    //   .text(d);
   });
 }
 
