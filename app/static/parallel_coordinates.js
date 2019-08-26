@@ -7,7 +7,6 @@ var parentDiv = document.getElementById("my_dataviz");
 let width = parentDiv.clientWidth;
 let height = document.body.clientHeight;
 
-
 var svgParentDiv = document.getElementById("parallel_coords_div");
 let svgWidth = svgParentDiv.clientWidth;
 let svgHeight = svgParentDiv.clientHeight;
@@ -28,7 +27,7 @@ function setStaticScale(data, variables, scaleType, lowerBound, upperBound) {
   let valueScale = {};
   let domainValue;
   for (let i in variables) {
-    name = variables[i];
+    let name = variables[i];
     if (scaleType == "custom") {
       domainValue = [lowerBound, upperBound];
     } else {
@@ -242,25 +241,37 @@ function createLegend(model_names, symbolScale, colorScale) {
   let legend = d3.select("#legendColumns");
 
   let pointRadius = 35;
-  model_names.sort(function (a, b) {
-    return a.localeCompare(b, 'en', {'sensitivity': 'base'});
+  model_names.sort(function(a, b) {
+    return a.localeCompare(b, "en", { sensitivity: "base" });
   });
   model_names.forEach(function(d, i) {
     var x = pointRadius + 10;
     var y = 23 + i * 20;
     legend
       .append("div")
-      .attr("class", "column is-one-quarter-desktop is-one-quarter-widescreen is-one-third-touch")
+      .attr(
+        "class",
+        "column is-one-quarter-desktop is-one-quarter-widescreen is-one-third-touch"
+      )
       .style("height", "9%")
       .attr("id", "column_" + d);
 
     let legendColumn = d3.select("#column_" + d);
-    legendColumn.append("div").attr("class", "columns is-mobile").attr("id", `${d}_legend`)
+    legendColumn
+      .append("div")
+      .attr("class", "columns is-mobile")
+      .attr("id", `${d}_legend`);
 
-    let modelLegend = d3.select(`#${d}_legend`)
-    modelLegend.append("div").attr("class", "column is-one-third has-text-centered is-vcentered").attr("id", `${d}_symbol_column`)
-    modelLegend.append("div").attr("class", "column has-text-centered is-vcentered").attr("id", `${d}_model_name_column`)
-    let symbolColumn = d3.select(`#${d}_symbol_column`)
+    let modelLegend = d3.select(`#${d}_legend`);
+    modelLegend
+      .append("div")
+      .attr("class", "column is-one-third has-text-centered is-vcentered")
+      .attr("id", `${d}_symbol_column`);
+    modelLegend
+      .append("div")
+      .attr("class", "column has-text-centered is-vcentered")
+      .attr("id", `${d}_model_name_column`);
+    let symbolColumn = d3.select(`#${d}_symbol_column`);
     symbolColumn
       .append("svg")
       .attr("class", "legendKey_" + d)
@@ -286,8 +297,11 @@ function createLegend(model_names, symbolScale, colorScale) {
       .attr("stroke-width", 1)
       .attr("transform", `translate(${symbolXCoord}, ${symbolYCoord})`);
 
-    let modelNameColumn = d3.select(`#${d}_model_name_column`)
-    modelNameColumn.append("p").attr("class", "is-size-7-desktop is-size-7-touch").text(d)
+    let modelNameColumn = d3.select(`#${d}_model_name_column`);
+    modelNameColumn
+      .append("p")
+      .attr("class", "is-size-7-desktop is-size-7-touch")
+      .text(d);
   });
 }
 
@@ -386,6 +400,7 @@ function drawAxis(variables, x, y) {
       return d;
     })
     .style("font-size", "1.25em")
+    .style("font-weight", "bold")
     .style("fill", "black");
 }
 
@@ -452,23 +467,23 @@ function addScaleEventHandlers(data, variables, x, y) {
   });
 }
 
-function updateSliderRange(minValue, maxValue){
-    slider.noUiSlider.updateOptions({
-        start: [minValue, maxValue],
-        range: {
-            'min': minValue,
-            'max': maxValue
-        }
-    });
+function updateSliderRange(minValue, maxValue) {
+  slider.noUiSlider.updateOptions({
+    start: [minValue, maxValue],
+    range: {
+      min: minValue,
+      max: maxValue
+    }
+  });
 }
 
-function findAbsoluteMinMax(data, variables){
+function findAbsoluteMinMax(data, variables) {
   let domainValues = [];
   for (let i in variables) {
     name = variables[i];
-      domainValues.push(...calculateDomain(data, name))
+    domainValues.push(...calculateDomain(data, name));
   }
-  return d3.extent(domainValues)
+  return d3.extent(domainValues);
 }
 
 function updateChart(data_file_name) {
@@ -488,8 +503,8 @@ function updateChart(data_file_name) {
     let x = createModelScale(variables, svgWidth);
 
     slider.setAttribute("disabled", true);
-    let [minValue, maxValue] = findAbsoluteMinMax(data, variables)
-    updateSliderRange(minValue, maxValue)
+    let [minValue, maxValue] = findAbsoluteMinMax(data, variables);
+    updateSliderRange(minValue, maxValue);
     addScaleEventHandlers(data, variables, x, y);
 
     drawCoordinateLines(data, calculatePath, variables, x, y, colorScale);
@@ -524,10 +539,10 @@ noUiSlider.create(slider, {
   }
 });
 
-let default_file = "All_Seasons-pr-cmip5-global-bias_xy.csv"
+let default_file = "All_Seasons-pr-cmip5-global-bias_xy.csv";
 let data_file_name = `/static/mean_climate_json_files/cmip5_csv/${default_file}`;
 
-update_plot_title()
+update_plot_title();
 updateChart(data_file_name);
 
 let selector_form = document.getElementById("selector_form");
@@ -551,10 +566,10 @@ function chooseAPIEndpoint() {
   return urlEndpoint;
 }
 
-function update_plot_title(){
-
+function update_plot_title() {
   let model_generation = document.getElementById("model_generation");
-  var model_generation_value = model_generation.options[model_generation.selectedIndex].value;
+  var model_generation_value =
+    model_generation.options[model_generation.selectedIndex].value;
 
   let region = document.getElementById("region_selector");
   var region_value = region.options[region.selectedIndex].value;
@@ -563,17 +578,17 @@ function update_plot_title(){
   var statistic_value = statistic.options[statistic.selectedIndex].value;
 
   let level = document.querySelector('input[name="level"]:checked').value;
-  let plot_title_string
+  let plot_title_string;
   if (level == "plotAllSeasonsByVariable") {
     let variable = document.getElementById("variable_selector");
     let variable_value = variable.options[variable.selectedIndex].value;
 
-    plot_title_string = `All Seasons for ${variable_value} ${region_value} ${statistic_value}  (${model_generation_value})`
+    plot_title_string = `All Seasons for ${variable_value} ${region_value} ${statistic_value}  (${model_generation_value})`;
   } else {
     let season = document.getElementById("season_selector");
     let season_value = season.options[season.selectedIndex].value;
-    
-    plot_title_string = `All Variables for ${season_value} ${region_value} ${statistic_value}  (${model_generation_value})`
+
+    plot_title_string = `All Variables for ${season_value} ${region_value} ${statistic_value}  (${model_generation_value})`;
   }
   var plot_title = document.getElementById("plot_title");
   plot_title.innerHTML = plot_title_string;
@@ -583,7 +598,10 @@ function generate_csv() {
   var formElement = document.getElementById("selector_form");
   let data = {};
   for (var i = 0; i < formElement.elements.length; i++) {
-    if (formElement.elements[i]["tagName"] == "SELECT" && !formElement.elements[i].disabled) {
+    if (
+      formElement.elements[i]["tagName"] == "SELECT" &&
+      !formElement.elements[i].disabled
+    ) {
       let name = formElement.elements[i]["name"];
       let value = formElement.elements[i]["value"];
       data[name] = value;
@@ -607,12 +625,14 @@ function generate_csv() {
     })
     .then(response => response.json())
     .then(data => {
-      update_plot_title()
+      update_plot_title();
       let modelGenerationSelector = document.getElementById("model_generation");
       let modelGeneration =
         modelGenerationSelector.options[modelGenerationSelector.selectedIndex]
           .value;
-      let data_file_name = `/static/mean_climate_json_files/${modelGeneration}_csv/${data["latestfile"]}`;
+      let data_file_name = `/static/mean_climate_json_files/${modelGeneration}_csv/${
+        data["latestfile"]
+      }`;
       updateChart(data_file_name);
       bulmaToast.toast({
         message: `Created csv file for ${data["latestfile"]}`,
