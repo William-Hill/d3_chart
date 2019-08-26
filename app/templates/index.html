@@ -107,6 +107,21 @@
       .hide{
         display: none !important;
       }
+
+      .svg-container {
+        display: inline-block;
+        position: relative;
+        width: 100%;
+        padding-bottom: 100%;
+        vertical-align: top;
+        overflow: hidden;
+    }
+    .svg-content {
+        display: inline-block;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
     </style>
     <script src="https://d3js.org/d3.v4.js"></script>
     <script type="module" src="{{url_for('static', filename='divgrid.js')}}"></script>
@@ -250,7 +265,9 @@
       <div
         id="my_dataviz"
         class="column is-8-widescreen is-three-fifths-desktop is-three-fifths-touch"
-      ></div>
+      >
+        <div id="parallel_coords_div" class="container is-fluid"></div>
+      </div>
       <div id="legend" class="column">
         <div
           id="legendColumns"

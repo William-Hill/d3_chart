@@ -1,19 +1,27 @@
 import { parcoordsColors } from "./parcoords_colors.js";
 
 // set the dimensions and margins of the graph
-let margin = { top: 30, right: 10, bottom: 10, left: 0 };
+let margin = { top: 30, right: 10, bottom: 10, left: -35 };
 
 var parentDiv = document.getElementById("my_dataviz");
 let width = parentDiv.clientWidth;
 let height = document.body.clientHeight;
 
+
+var svgParentDiv = document.getElementById("parallel_coords_div");
+let svgWidth = svgParentDiv.clientWidth;
+let svgHeight = svgParentDiv.clientHeight;
 // append the svg object to the body of the page
 let svg = d3
-  .select("#my_dataviz")
+  // .select("#my_dataviz")
+  .select("#parallel_coords_div")
   .append("svg")
-  .attr("width", "100%")
-  .attr("height", "100%")
-  .attr("preserveAspectRatio", "xMinYMin")
+  .attr("preserveAspectRatio", "xMinYMin meet")
+  .attr("viewBox", "0 0 " + svgWidth + " " + svgHeight)
+  .classed("svg-content", true)
+  // .attr("width", "100%")
+  // .attr("height", "100%")
+  // .attr("preserveAspectRatio", "xMinYMin")
   .append("g")
   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -392,6 +400,7 @@ function drawAxis(variables, x, y) {
     .text(function(d) {
       return d;
     })
+    .style("font-size", "1.25em")
     .style("fill", "black");
 }
 
