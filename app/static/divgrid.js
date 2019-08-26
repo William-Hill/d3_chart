@@ -91,7 +91,7 @@ d3.divgrid = function(config) {
       .data([true])
       .enter()
       .append("div")
-      .attr("class", "columns header");
+      .attr("class", "columns is-centered is-mobile header");
 
     var header = selection
       .select(".header")
@@ -124,7 +124,7 @@ d3.divgrid = function(config) {
       .enter()
       .append("div")
       .attr("class", function(d) {
-        return "columns row " + d["model_name"];
+        return "columns is-centered is-mobile row " + d["model_name"];
       })
       .attr("data-model_name", function(d) {
         return d["model_name"];

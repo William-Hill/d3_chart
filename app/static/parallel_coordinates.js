@@ -1,19 +1,23 @@
 import { parcoordsColors } from "./parcoords_colors.js";
 
 // set the dimensions and margins of the graph
-let margin = { top: 30, right: 10, bottom: 10, left: 0 };
+let margin = { top: 30, right: 10, bottom: 10, left: -35 };
 
 var parentDiv = document.getElementById("my_dataviz");
 let width = parentDiv.clientWidth;
 let height = document.body.clientHeight;
 
+
+var svgParentDiv = document.getElementById("parallel_coords_div");
+let svgWidth = svgParentDiv.clientWidth;
+let svgHeight = svgParentDiv.clientHeight;
 // append the svg object to the body of the page
 let svg = d3
-  .select("#my_dataviz")
+  .select("#parallel_coords_div")
   .append("svg")
-  .attr("width", "100%")
-  .attr("height", "100%")
-  .attr("preserveAspectRatio", "xMinYMin")
+  .attr("preserveAspectRatio", "xMinYMin meet")
+  .attr("viewBox", "0 0 " + svgWidth + " " + svgHeight)
+  .classed("svg-content", true)
   .append("g")
   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -237,7 +241,7 @@ function createLegend(model_names, symbolScale, colorScale) {
 
   let legend = d3.select("#legendColumns");
 
-  let pointRadius = 25;
+  let pointRadius = 35;
   model_names.sort(function (a, b) {
     return a.localeCompare(b, 'en', {'sensitivity': 'base'});
   });
@@ -246,12 +250,18 @@ function createLegend(model_names, symbolScale, colorScale) {
     var y = 23 + i * 20;
     legend
       .append("div")
-      .attr("class", "column is-one-quarter-desktop is-one-third-widescreen")
+      .attr("class", "column is-one-quarter-desktop is-one-quarter-widescreen is-one-third-touch")
       .style("height", "9%")
       .attr("id", "column_" + d);
 
     let legendColumn = d3.select("#column_" + d);
-    legendColumn
+    legendColumn.append("div").attr("class", "columns is-mobile").attr("id", `${d}_legend`)
+
+    let modelLegend = d3.select(`#${d}_legend`)
+    modelLegend.append("div").attr("class", "column is-one-third has-text-centered is-vcentered").attr("id", `${d}_symbol_column`)
+    modelLegend.append("div").attr("class", "column has-text-centered is-vcentered").attr("id", `${d}_model_name_column`)
+    let symbolColumn = d3.select(`#${d}_symbol_column`)
+    symbolColumn
       .append("svg")
       .attr("class", "legendKey_" + d)
       .attr("width", "100%")
@@ -260,7 +270,7 @@ function createLegend(model_names, symbolScale, colorScale) {
     var clientHeight = document.getElementById("column_" + d).clientHeight;
     let symbolXCoord = +legendColumn.style("width").slice(0, -2) * 0.1;
     let symbolYCoord =
-      +document.getElementById("column_" + d).clientHeight * 0.4;
+      +document.getElementById("column_" + d).clientHeight * 0.2;
     var legendSymbol = d3
       .symbol()
       .type(symbolScale(d))
@@ -276,15 +286,8 @@ function createLegend(model_names, symbolScale, colorScale) {
       .attr("stroke-width", 1)
       .attr("transform", `translate(${symbolXCoord}, ${symbolYCoord})`);
 
-    legendSvg
-      .append("text")
-      .attr("class", "legend")
-      .attr("x", symbolXCoord + 15)
-      .attr("y", symbolYCoord)
-      .attr("dominant-baseline", "central")
-      .style("font-size", "0.5rem")
-      // .style("font-size", "0.75em")
-      .text(d);
+    let modelNameColumn = d3.select(`#${d}_model_name_column`)
+    modelNameColumn.append("p").attr("class", "is-size-7-desktop is-size-7-touch").text(d)
   });
 }
 
@@ -382,6 +385,7 @@ function drawAxis(variables, x, y) {
     .text(function(d) {
       return d;
     })
+    .style("font-size", "1.25em")
     .style("fill", "black");
 }
 
@@ -481,7 +485,7 @@ function updateChart(data_file_name) {
     let y = createValueScale(variables, data, height);
 
     // Build the X scale -> it find the best position for each Y axisLeft
-    let x = createModelScale(variables, parentDiv.clientWidth);
+    let x = createModelScale(variables, svgWidth);
 
     slider.setAttribute("disabled", true);
     let [minValue, maxValue] = findAbsoluteMinMax(data, variables)

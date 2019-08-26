@@ -107,6 +107,21 @@
       .hide{
         display: none !important;
       }
+
+      .svg-container {
+        display: inline-block;
+        position: relative;
+        width: 100%;
+        padding-bottom: 100%;
+        vertical-align: top;
+        overflow: hidden;
+    }
+    .svg-content {
+        display: inline-block;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
     </style>
     <script src="https://d3js.org/d3.v4.js"></script>
     <script type="module" src="{{url_for('static', filename='divgrid.js')}}"></script>
@@ -246,15 +261,17 @@
       <h2 id="plot_title" class="level-item has-text-centered"></h2>
     </nav>
     <!-- Create a div where the graph will take place -->
-    <div id="viz_div" class="columns">
+    <div id="viz_div" class="columns is-mobile">
       <div
         id="my_dataviz"
-        class="column is-8-widescreen is-three-fifths-desktop"
-      ></div>
+        class="column is-9-widescreen is-10-desktop is-8-touch"
+      >
+        <div id="parallel_coords_div" class="container is-fluid"></div>
+      </div>
       <div id="legend" class="column">
         <div
           id="legendColumns"
-          class="columns is-multiline custom-columns"
+          class="columns custom-columns is-mobile is-flex is-multiline is-2-desktop is-2-touch is-variable"
         ></div>
       </div>
     </div>
