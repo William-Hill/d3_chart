@@ -13,15 +13,11 @@ let svgWidth = svgParentDiv.clientWidth;
 let svgHeight = svgParentDiv.clientHeight;
 // append the svg object to the body of the page
 let svg = d3
-  // .select("#my_dataviz")
   .select("#parallel_coords_div")
   .append("svg")
   .attr("preserveAspectRatio", "xMinYMin meet")
   .attr("viewBox", "0 0 " + svgWidth + " " + svgHeight)
   .classed("svg-content", true)
-  // .attr("width", "100%")
-  // .attr("height", "100%")
-  // .attr("preserveAspectRatio", "xMinYMin")
   .append("g")
   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -265,7 +261,6 @@ function createLegend(model_names, symbolScale, colorScale) {
     modelLegend.append("div").attr("class", "column is-one-third has-text-centered is-vcentered").attr("id", `${d}_symbol_column`)
     modelLegend.append("div").attr("class", "column has-text-centered is-vcentered").attr("id", `${d}_model_name_column`)
     let symbolColumn = d3.select(`#${d}_symbol_column`)
-    // legendColumn
     symbolColumn
       .append("svg")
       .attr("class", "legendKey_" + d)
@@ -293,16 +288,6 @@ function createLegend(model_names, symbolScale, colorScale) {
 
     let modelNameColumn = d3.select(`#${d}_model_name_column`)
     modelNameColumn.append("p").attr("class", "is-size-7-desktop is-size-7-touch").text(d)
-    // legendColumn.append("p").text(d)
-    // legendSvg
-    //   .append("text")
-    //   .attr("class", "legend")
-    //   .attr("x", symbolXCoord + 15)
-    //   .attr("y", symbolYCoord)
-    //   .attr("dominant-baseline", "central")
-    //   .style("font-size", "0.5rem")
-    //   // .style("font-size", "0.75em")
-    //   .text(d);
   });
 }
 
