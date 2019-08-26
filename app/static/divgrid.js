@@ -1,16 +1,3 @@
-import { parcoordsColors } from "./parcoords_colors.js";
-/**
- * @description Create an ordinal scale to map climate models to unique colors
- * @param model_names An array of model names from the dataset
- * @returns d3 Ordinal scale - An ordinal scale that will map to colors
- */
-function createColorScale(model_names) {
-  return d3
-    .scaleOrdinal()
-    .domain(model_names)
-    .range(parcoordsColors);
-}
-
 d3.divgrid = function(config) {
   var columns = [];
   let active;
@@ -26,38 +13,38 @@ d3.divgrid = function(config) {
     }
   }
 
-  function rowClicked(rowDomElement, d, rowColors) {
+  function rowClicked(rowDomElement, d) {
     togglePathHighlight(d);
     let clickedRow = d3.select(rowDomElement);
     let modelName = rowDomElement.dataset.model_name;
     clickedRow.classed("row_highlight", !clickedRow.classed("row_highlight"));
     if (clickedRow.classed("row_highlight")) {
-      clickedRow.style("background-color", rowColors(modelName));
+      clickedRow.style("background-color", config.colorScale(modelName));
       clickedRow.style("color", "#deffffff");
     } else {
       clickedRow.style("background", "none").style("color", "#4a4a4a");
     }
   }
 
-  function highlightAll(d, rowColors) {
+  function highlightAll(d) {
     let rows = d3
       .selectAll(".row")
       .filter(function(d) {
         return !d3.select(this).classed("row_highlight");
       })
       .each(function(d) {
-        rowClicked(this, d, rowColors);
+        rowClicked(this, d);
       });
   }
 
-  function deselectAll(d, rowColors) {
+  function deselectAll(d) {
     let rows = d3
       .selectAll(".row")
       .filter(function(d) {
         return d3.select(this).classed("row_highlight");
       })
       .each(function(d) {
-        rowClicked(this, d, rowColors);
+        rowClicked(this, d);
       });
 
     let paths = d3.selectAll(".coordinate_path").filter(function() {
@@ -73,16 +60,12 @@ d3.divgrid = function(config) {
   var dg = function(selection) {
     if (columns.length == 0) columns = d3.keys(selection.data()[0][0]);
 
-    let modelNames = selection.data()[0].map(d => d["model_name"]);
-
-    let rowColors = createColorScale(modelNames);
-
     let selectAllButton = d3.select("#select_all").on("click", function(d) {
-      highlightAll(d, rowColors);
+      highlightAll(d);
     });
 
     let deselectAllButton = d3.select("#deselect_all").on("click", function(d) {
-      deselectAll(d, rowColors);
+      deselectAll(d);
     });
 
     // header
@@ -144,7 +127,7 @@ d3.divgrid = function(config) {
         }
       })
       .on("click", function(d, i) {
-        rowClicked(this, d, rowColors);
+        rowClicked(this, d);
       });
     // .attr("class", "row");
 

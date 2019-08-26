@@ -354,13 +354,13 @@ function compare(a, b) {
  * @description Create a text data table for the dataset
  * @param data An object representing the dataset that was parsed by D3.
  */
-function createTable(data) {
+function createTable(data, colorScale) {
   data.sort(compare);
   d3.select("#grid")
     .selectAll("*")
     .remove();
 
-  let grid = d3.divgrid();
+  let grid = d3.divgrid({ colorScale: colorScale });
   d3.select("#grid")
     .datum(data)
     .call(grid);
@@ -516,7 +516,7 @@ function updateChart(data_file_name) {
 
     drawAxis(variables, x, y);
 
-    createTable(data);
+    createTable(data, colorScale);
   });
 }
 
