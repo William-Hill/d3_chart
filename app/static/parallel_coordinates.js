@@ -246,12 +246,12 @@ function createLegend(model_names, symbolScale, colorScale) {
     var y = 23 + i * 20;
     legend
       .append("div")
-      .attr("class", "column is-one-quarter-desktop is-one-quarter-widescreen")
+      .attr("class", "column is-one-quarter-desktop is-one-quarter-widescreen is-one-third-touch")
       .style("height", "9%")
       .attr("id", "column_" + d);
 
     let legendColumn = d3.select("#column_" + d);
-    legendColumn.append("div").attr("class", "columns").attr("id", `${d}_legend`)
+    legendColumn.append("div").attr("class", "columns is-mobile").attr("id", `${d}_legend`)
 
     let modelLegend = d3.select(`#${d}_legend`)
     modelLegend.append("div").attr("class", "column is-one-third has-text-centered is-vcentered").attr("id", `${d}_symbol_column`)
@@ -267,7 +267,7 @@ function createLegend(model_names, symbolScale, colorScale) {
     var clientHeight = document.getElementById("column_" + d).clientHeight;
     let symbolXCoord = +legendColumn.style("width").slice(0, -2) * 0.1;
     let symbolYCoord =
-      +document.getElementById("column_" + d).clientHeight * 0.4;
+      +document.getElementById("column_" + d).clientHeight * 0.2;
     var legendSymbol = d3
       .symbol()
       .type(symbolScale(d))
@@ -284,7 +284,7 @@ function createLegend(model_names, symbolScale, colorScale) {
       .attr("transform", `translate(${symbolXCoord}, ${symbolYCoord})`);
 
     let modelNameColumn = d3.select(`#${d}_model_name_column`)
-    modelNameColumn.append("p").attr("class", "is-size-7").text(d)
+    modelNameColumn.append("p").attr("class", "is-size-7-desktop is-size-7-touch").text(d)
     // legendColumn.append("p").text(d)
     // legendSvg
     //   .append("text")
