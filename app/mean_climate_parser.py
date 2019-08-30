@@ -8,6 +8,29 @@ from pathlib import Path
 logging.basicConfig(level=logging.WARNING,
                     format="%(asctime)s:%(levelname)s:%(filename)s:%(funcName)s:%(lineno)d:%(message)s")
 
+ALLOWED_STATISTICS = ("bias_xy", "cor_xy", "mae_xy",
+                      "rms_xy", "rms_xyt", "rmsc_xy")
+
+
+def get_json_attributes(filename):
+    json_file_object = open(filename)
+    json_object = json.load(json_file_object)
+    json_file_object.close()
+
+    models = list(json_object["RESULTS"].keys())
+    models.sort()
+    regions = [x for x in json_object['RESULTS'][models[0]]
+               ['default']['r1i1p1'].keys() if x not in ("TROPICS", "ocean")]
+    regions.sort()
+    # statistics = list(json_object['RESULTS'][models[0]]
+    #                   ['default']["r1i1p1"][regions[0]].keys())
+    # statistics.sort()
+    statistics = ALLOWED_STATISTICS
+    seasons = list(json_object['RESULTS']['ACCESS1-0']
+                   ['default']['r1i1p1'][regions[0]][statistics[0]].keys())
+    seasons.sort()
+    return {"models": models, "regions": regions, "statistics": statistics, "seasons": seasons}
+
 
 def all_seasons_for_variable(variable, model_generation, region, statistic):
     output = {}

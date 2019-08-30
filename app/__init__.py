@@ -23,25 +23,6 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-def get_json_attributes(filename):
-    json_file_object = open(filename)
-    json_object = json.load(json_file_object)
-    json_file_object.close()
-
-    models = list(json_object["RESULTS"].keys())
-    models.sort()
-    regions = [x for x in json_object['RESULTS'][models[0]]
-               ['default']['r1i1p1'].keys() if x not in ("TROPICS", "ocean")]
-    regions.sort()
-    statistics = list(json_object['RESULTS'][models[0]]
-                      ['default']["r1i1p1"][regions[0]].keys())
-    statistics.sort()
-    seasons = list(json_object['RESULTS']['ACCESS1-0']
-                   ['default']['r1i1p1'][regions[0]][statistics[0]].keys())
-    seasons.sort()
-    return {"models": models, "regions": regions, "statistics": statistics, "seasons": seasons}
-
-
 @app.route('/', methods=['POST'])
 def upload_file():
     if request.method == 'POST':
@@ -116,6 +97,6 @@ def index(name=None):
     model_generations = (["cmip5"])
 
     data_directory = os.path.join(app.static_folder, "mean_climate_json_files")
-    json_attributes = get_json_attributes(os.path.join(
+    json_attributes = mean_climate_parser.get_json_attributes(os.path.join(
         data_directory, "cmip5_json", "pr.CMIP5.historical.regrid2.2p5x2p5.v20190801.json"))
     return render_template('index.html', files=climate_csv_files, statistics=json_attributes["statistics"], regions=json_attributes["regions"], seasons=json_attributes["seasons"], variables=variables, model_generations=model_generations)
