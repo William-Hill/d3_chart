@@ -49,22 +49,15 @@ def all_seasons_for_variable(variable, model_generation, region, statistic):
                        ['default'][run][region][statistic].keys())
 
     for model in sorted(models_list, key=lambda s: s.lower()):
-        print("model:", model)
-
         output[model] = {}
-        statistics = json_object['RESULTS'][model]['default'][run][region].keys(
-        )
-        print('statistics:', statistics)
         seasons = json_object["RESULTS"][model]["default"][run][region][statistic]
         output[model] = seasons
-        print("seasons:", seasons)
 
     headerline = ['model_name'] + season_list
 
     csv_file_name = "All_Seasons-{}-{}-{}-{}.csv".format(
         variable, model_generation, region, statistic)
 
-    print("csv_file_name:", csv_file_name)
     csv_directory_path = os.path.join(
         os.path.dirname(__file__), 'static', 'mean_climate_json_files', "{}_csv".format(model_generation))
     csv_file_path = os.path.join(csv_directory_path, csv_file_name)
@@ -72,7 +65,7 @@ def all_seasons_for_variable(variable, model_generation, region, statistic):
     with open(csv_file_path, 'w') as csvfile:
         csvwriter = csv.writer(csvfile)
         csvwriter.writerow(headerline)
-        for i, model in enumerate(models_list):
+        for model in models_list:
             try:
                 csvwriter.writerow(
                     [model]
@@ -121,7 +114,6 @@ def all_variables_by_season(season, model_generation, region, statistic):
     csv_directory_path = os.path.join(
         os.path.dirname(__file__), 'static', 'mean_climate_json_files', "{}_csv".format(model_generation))
     csv_file_path = os.path.join(csv_directory_path, csv_file_name)
-    print("csv_file_path:", csv_file_path)
     with open(csv_file_path, 'w') as csvfile:
         csvwriter = csv.writer(csvfile)
         csvwriter.writerow(headerline)
@@ -150,28 +142,16 @@ def get_variables_from_json_filenames(model_generation_directory):
 def main():
     cmip5_variables = get_variables_from_json_filenames("cmip5")
     cmip6_variables = get_variables_from_json_filenames("cmip6")
-    # cmip5_json_files_path = os.path.join(
-    #     os.path.dirname(__file__), '../mean_climate_json_files', "cmip5_json")
-
-    # mean_climate_files = glob.glob("{}/*.json".format(cmip5_json_files_path))
 
     region = "global"
     statistic = "bias_xy"
     season = "ann"
 
-    # Model Generation, Region, Statistic and Season
-
     for cmip5_var, cmip6_var in zip(cmip5_variables, cmip6_variables):
-        print("cmip5:", cmip5_var)
         all_seasons_for_variable(cmip5_var, "cmip5", region, statistic)
         all_variables_by_season(season, "cmip5", region, statistic)
-        print("cmip6:", cmip6_var)
         all_seasons_for_variable(cmip6_var, "cmip6", region, statistic)
         all_variables_by_season(season, "cmip6", region, statistic)
-
-    # for climate_file in mean_climate_files:
-    #     # Variable, Model Generation, Region, Statistic
-    #     all_seasons_for_variable(climate_file, region, statistic)
 
 
 if __name__ == "__main__":

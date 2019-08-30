@@ -48,7 +48,6 @@ def upload_file():
 @app.route("/plot_by_variable", methods=['POST'])
 def generate_all_seasons_for_variable():
     request_json = request.get_json()
-    print("request_json:", request_json)
     mean_climate_parser.all_seasons_for_variable(
         request_json["variable"], request_json["model_generation"], request_json["region"], request_json["statistic"])
     return ""
@@ -65,7 +64,6 @@ def generate_all_seasons_by_variable():
 @app.route('/newest_file')
 def get_newest_file():
     model_generation = request.args.get('model_generation')
-    print("newest_file arg:", model_generation)
     data_directory = os.path.join(
         app.static_folder, "mean_climate_json_files", "{}_csv".format(model_generation))
     climate_json_file_paths = glob.glob("{}/*.csv".format(data_directory))
