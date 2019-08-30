@@ -113,7 +113,7 @@ def index(name=None):
 
     variables = mean_climate_parser.get_variables_from_json_filenames("cmip5")
 
-    model_generations = ("cmip5", "cmip6")
+    model_generations = (["cmip5"])
 
     data_directory = os.path.join(app.static_folder, "mean_climate_json_files")
     json_attributes = get_json_attributes(os.path.join(
