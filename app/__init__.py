@@ -92,9 +92,9 @@ def index(name=None):
 
     variables = mean_climate_parser.get_variables_from_json_filenames("cmip5")
 
-    model_generations = (["cmip5"])
+    model_generations = (["cmip5", "cmip6"])
 
     data_directory = os.path.join(app.static_folder, "mean_climate_json_files")
     json_attributes = mean_climate_parser.get_json_attributes(os.path.join(
-        data_directory, "cmip5_json", "pr.CMIP5.historical.regrid2.2p5x2p5.v20190801.json"))
+        data_directory, "cmip5_json", "pr.CMIP5.historical.regrid2.2p5x2p5.v20190821.json"))
     return render_template('index.html', files=climate_csv_files, statistics=json_attributes["statistics"], regions=json_attributes["regions"], seasons=json_attributes["seasons"], variables=variables, model_generations=model_generations)
