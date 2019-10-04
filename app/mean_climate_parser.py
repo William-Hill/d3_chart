@@ -11,6 +11,9 @@ logging.basicConfig(level=logging.WARNING,
 ALLOWED_STATISTICS = ("bias_xy", "cor_xy", "mae_xy",
                       "rms_xy", "rms_xyt", "rmsc_xy")
 
+CMIP5_DATA_VERSION = "v20190821"
+CMIP6_DATA_VERSION = "v20190930"
+
 
 def get_json_attributes(filename):
     json_file_object = open(filename)
@@ -38,8 +41,12 @@ def all_seasons_for_variable(variable, model_generation, region, statistic):
 
     json_files_path = os.path.join(
         os.path.dirname(__file__), 'static', 'mean_climate_json_files', "{}_json".format(model_generation))
+    if model_generation == "cmip5":
+        data_version = CMIP5_DATA_VERSION
+    else:
+        data_version = CMIP6_DATA_VERSION
     variable_filename = os.path.join(
-        json_files_path, "{}.{}.historical.regrid2.2p5x2p5.v20190801.json".format(variable, model_generation.upper()))
+        json_files_path, "{}.{}.historical.regrid2.2p5x2p5.{}.json".format(variable, model_generation.upper(), data_version))
 
     json_file_object = open(variable_filename)
     json_object = json.load(json_file_object)
